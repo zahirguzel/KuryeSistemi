@@ -66,7 +66,9 @@ public class MerchantService : IMerchantService
             PasswordHash = _passwordHasherService.HashPassword(request.Password),
             PhoneNumber = request.PhoneNumber?.Trim() ?? string.Empty,
             Address = request.Address?.Trim() ?? string.Empty,
+            CourierCompanyId = request.CourierCompanyId,
             DefaultPackageFee = request.DefaultPackageFee ?? 50.00m,
+            CourierCutFee = request.CourierCutFee ?? 40.00m,
             DispatchMode = request.DispatchMode ?? Domain.Enums.DispatchMode.Pool,
             ReconciliationPeriod = request.ReconciliationPeriod ?? Domain.Enums.ReconciliationPeriod.Daily,
             Latitude = request.Latitude ?? 36.5867,
@@ -244,7 +246,7 @@ public class MerchantService : IMerchantService
         // Finansal denetim (audit log) için CashSettlement kaydı oluştur
         var settlement = new CashSettlement
         {
-            MerchantId = courier.MerchantId, // Kuryenin gerçek bağlı olduğu işletme
+            MerchantId = courier.MerchantId ?? merchantId,
             CourierId = courierId,
             SettledAmount = previousBalance,
             CashCollectedTotal = cashCollected,
@@ -334,6 +336,59 @@ public class MerchantService : IMerchantService
         return ServiceResult<IReadOnlyList<CashSettlementDto>>.Success(settlements);
     }
 
+    public async Task<ServiceResult<IReadOnlyList<CashSettlementDto>>> GetSettlementsAsync(
+        IReadOnlyCollection<Guid>? merchantIds,
+        CancellationToken cancellationToken = default)
+    {
+        var query = _db.CashSettlements
+            .AsNoTracking()
+            .Include(s => s.Courier)
+            .Where(s => !s.IsDeleted);
+
+        // merchantIds == null → kısıtsız (SuperAdmin)
+        if (merchantIds is not null)
+        {
+            query = query.Where(s => merchantIds.Contains(s.MerchantId));
+        }
+
+        var settlements = await query
+            .OrderByDescending(s => s.SettledAt)
+            .Select(s => new CashSettlementDto(
+                s.Id,
+                s.MerchantId,
+                s.CourierId,
+                $"{s.Courier.FirstName} {s.Courier.LastName}".Trim(),
+                s.Courier.PhoneNumber,
+                s.SettledAmount,
+                s.CashCollectedTotal,
+                s.CourierEarningsTotal,
+                s.DeliveredPackageCount,
+                s.SettledAt,
+                s.Notes
+            ))
+            .ToListAsync(cancellationToken);
+
+        return ServiceResult<IReadOnlyList<CashSettlementDto>>.Success(settlements);
+    }
+
+    private static readonly TimeZoneInfo TurkeyTz =
+        TimeZoneInfo.FindSystemTimeZoneById(OperatingSystem.IsWindows() ? "Turkey Standard Time" : "Europe/Istanbul");
+
+    /// <summary>
+    /// Saat dilimi belirtilmemiş (ör. "2026-10-01") tarihleri Türkiye saati kabul edip UTC'ye çevirir.
+    /// Bitiş tarihi gece yarısıysa o günün sonuna kadar kapsayıcı sayılır. UTC/Local gelenler olduğu gibi UTC'ye çevrilir.
+    /// </summary>
+    private static DateTime ToUtcFromTurkey(DateTime value, bool isEnd)
+    {
+        if (value.Kind == DateTimeKind.Utc) return value;
+        if (value.Kind == DateTimeKind.Local) return value.ToUniversalTime();
+
+        var local = value;
+        if (isEnd && local.TimeOfDay == TimeSpan.Zero)
+            local = local.Date.AddDays(1).AddTicks(-1);
+        return TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(local, DateTimeKind.Unspecified), TurkeyTz);
+    }
+
     public async Task<ServiceResult<MerchantFinanceSummaryDto>> GetMerchantFinanceSummaryAsync(
         Guid merchantId,
         DateTime? startDate = null,
@@ -358,13 +413,13 @@ public class MerchantService : IMerchantService
 
         if (startDate.HasValue)
         {
-            var startUtc = DateTime.SpecifyKind(startDate.Value, DateTimeKind.Utc);
+            var startUtc = ToUtcFromTurkey(startDate.Value, isEnd: false);
             query = query.Where(o => (o.DeliveredAt ?? o.CreatedAt) >= startUtc);
         }
 
         if (endDate.HasValue)
         {
-            var endUtc = DateTime.SpecifyKind(endDate.Value, DateTimeKind.Utc);
+            var endUtc = ToUtcFromTurkey(endDate.Value, isEnd: true);
             query = query.Where(o => (o.DeliveredAt ?? o.CreatedAt) <= endUtc);
         }
 

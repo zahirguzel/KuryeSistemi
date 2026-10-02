@@ -4,6 +4,7 @@ using KuryeSistemi.Application.DTOs.Merchants;
 using KuryeSistemi.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KuryeSistemi.API.Controllers.Reconciliation;
 
@@ -36,7 +37,33 @@ public sealed class ReconciliationController : BaseController
         [FromQuery] Guid? merchantId,
         CancellationToken cancellationToken)
     {
+        // Kasa sıfırlama para hareketidir: firma alt kullanıcısında "Finans Yönetimi" izni gerekir
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageFinance, cancellationToken))
+            return Forbid();
+
         var effectiveMerchantId = ResolveTenantId(merchantId);
+
+        // Firma paneli merchantId göndermez: mahsuplaşma kuryenin bağlı olduğu işletme üzerinden yapılır.
+        if (IsFirmOrAdmin() && effectiveMerchantId == Guid.Empty)
+        {
+            var db = HttpContext.RequestServices.GetService(typeof(KuryeSistemi.Application.Interfaces.IApplicationDbContext))
+                as KuryeSistemi.Application.Interfaces.IApplicationDbContext;
+
+            if (db is not null)
+            {
+                var courierMerchantId = await db.Couriers.AsNoTracking()
+                    .Where(c => c.Id == courierId)
+                    .Select(c => (Guid?)c.MerchantId)
+                    .FirstOrDefaultAsync(cancellationToken);
+
+                if (courierMerchantId.HasValue)
+                    effectiveMerchantId = courierMerchantId.Value;
+            }
+        }
+
+        if (IsFirmOrAdmin() && !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
+            return Forbid();
+
         var result = await _merchantService.ReconcileCourierAsync(effectiveMerchantId, courierId, cancellationToken);
         return CreateActionResult(result);
     }
@@ -49,7 +76,23 @@ public sealed class ReconciliationController : BaseController
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> GetSettlements([FromQuery] Guid? merchantId, CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageFinance, cancellationToken) && !await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ViewReports, cancellationToken))
+            return Forbid();
+
         var effectiveMerchantId = ResolveTenantId(merchantId);
+
+        // Firma paneli merchantId göndermez: kendi firmasının tüm işletmelerinin mahsuplaşma geçmişi döner.
+        if (IsFirmOrAdmin() && effectiveMerchantId == Guid.Empty)
+        {
+            var accessibleIds = await GetAccessibleMerchantIdsAsync(cancellationToken);
+            var all = await _merchantService.GetSettlementsAsync(accessibleIds, cancellationToken);
+            return CreateActionResult(all);
+        }
+
+        if (IsFirmOrAdmin() && !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
+            return Forbid();
+
         var result = await _merchantService.GetMerchantSettlementsAsync(effectiveMerchantId, cancellationToken);
         return CreateActionResult(result);
     }
@@ -70,7 +113,15 @@ public sealed class ReconciliationController : BaseController
         [FromQuery] string? paymentMethod,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageFinance, cancellationToken) && !await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ViewReports, cancellationToken))
+            return Forbid();
+
         var effectiveMerchantId = ResolveTenantId(merchantId);
+
+        if (IsFirmOrAdmin() && effectiveMerchantId != Guid.Empty &&
+            !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
+            return Forbid();
 
         var result = await _merchantService.GetMerchantFinanceSummaryAsync(
             effectiveMerchantId,

@@ -1,3 +1,4 @@
+using KuryeSistemi.Application.Common.Models;
 using KuryeSistemi.Application.DTOs.Orders;
 using KuryeSistemi.Application.Features.Orders.DTOs;
 using KuryeSistemi.Application.Repositories.Interfaces;
@@ -34,17 +35,30 @@ public sealed class OrdersController : BaseController
     public async Task<IActionResult> GetAll(
         [FromQuery] Guid? merchantId,
         [FromQuery] OrderStatus? status,
-        CancellationToken cancellationToken)
+        [FromQuery] bool today = false,
+        CancellationToken cancellationToken = default)
     {
         if (IsFirmOrAdmin())
         {
             if (merchantId.HasValue && merchantId.Value != Guid.Empty)
             {
+                if (!await CanAccessMerchantAsync(merchantId.Value, cancellationToken))
+                    return Forbid();
+
                 var result = await _orderService.GetOrdersByMerchantAsync(merchantId.Value, status, cancellationToken);
                 return CreateActionResult(result);
             }
 
-            var allResult = await _orderService.GetAllOrdersAsync(status, cancellationToken);
+            var allResult = await _orderService.GetAllOrdersAsync(status, today, cancellationToken);
+
+            // Tenant izolasyonu: firma kullanıcısı yalnızca kendi firmasının işletme siparişlerini görür
+            var accessibleIds = await GetAccessibleMerchantIdsAsync(cancellationToken);
+            if (accessibleIds is not null && allResult.IsSuccess && allResult.Data is not null)
+            {
+                var scoped = allResult.Data.Where(o => accessibleIds.Contains(o.MerchantId)).ToList().AsReadOnly();
+                allResult = ServiceResult<IReadOnlyList<OrderDto>>.Success(scoped);
+            }
+
             return CreateActionResult(allResult);
         }
 
@@ -64,6 +78,9 @@ public sealed class OrdersController : BaseController
         CancellationToken cancellationToken)
     {
         var effectiveMerchantId = ResolveTenantId(merchantId);
+        if (IsFirmOrAdmin() && !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
+            return Forbid();
+
         var result = await _orderService.GetActiveOrdersAsync(effectiveMerchantId, cancellationToken);
         return CreateActionResult(result);
     }
@@ -96,9 +113,16 @@ public sealed class OrdersController : BaseController
         [FromBody] CreateOrderRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageOrders, cancellationToken))
+            return Forbid();
+
         var effectiveMerchantId = IsFirmOrAdmin() && request.MerchantId != Guid.Empty
             ? request.MerchantId
             : GetMerchantId();
+
+        if (IsFirmOrAdmin() && !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
+            return Forbid();
 
         var effectiveRequest = request with { MerchantId = effectiveMerchantId };
         var result = await _orderService.CreateOrderAsync(effectiveRequest, cancellationToken);
@@ -120,11 +144,15 @@ public sealed class OrdersController : BaseController
         [FromBody] AssignOrderRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageOrders, cancellationToken))
+            return Forbid();
+
         var order = await _orderRepository.GetByIdAsync(id);
         if (order is null)
             return NotFound(new { message = $"Sipariş bulunamadı: {id}" });
 
-        if (!IsFirmOrAdmin() && order.MerchantId != GetMerchantId())
+        if (!await CanAccessMerchantAsync(order.MerchantId, cancellationToken))
             return Forbid();
 
         var result = await _orderService.AssignOrderAsync(id, request.CourierId, cancellationToken);
@@ -144,6 +172,10 @@ public sealed class OrdersController : BaseController
         [FromBody] UpdateOrderStatusRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageOrders, cancellationToken))
+            return Forbid();
+
         var order = await _orderRepository.GetByIdAsync(id);
         if (order is null)
             return NotFound(new { message = $"Sipariş bulunamadı: {id}" });
@@ -154,11 +186,16 @@ public sealed class OrdersController : BaseController
             // Kurye sadece kendi üzerine atanmış siparişi güncelleyebilir
             if (order.CourierId != courierId.Value && !IsFirmOrAdmin())
                 return Forbid();
+
+            // Kurye yalnızca saha aşamalarını ilerletebilir (Paketi Aldım / Teslim Ettim);
+            // iptal, havuza geri alma veya mutfak durumlarını değiştiremez.
+            if (request.NewStatus != OrderStatus.PickedUp && request.NewStatus != OrderStatus.Delivered)
+                return Forbid();
         }
         else
         {
-            // İşletme sadece kendi siparişini güncelleyebilir
-            if (!IsFirmOrAdmin() && order.MerchantId != GetMerchantId())
+            // İşletme sadece kendi siparişini, firma ise kendi firmasının siparişini güncelleyebilir
+            if (!await CanAccessMerchantAsync(order.MerchantId, cancellationToken))
                 return Forbid();
         }
 
@@ -171,6 +208,7 @@ public sealed class OrdersController : BaseController
     /// Kurye mobil uygulaması kokpit ekranı bu uç noktayı çağırır.
     /// </summary>
     [HttpGet("courier/active")]
+    [Authorize(Roles = "Courier")]
     [ProducesResponseType(typeof(IReadOnlyList<OrderDto>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCourierActiveOrders(CancellationToken cancellationToken)
     {

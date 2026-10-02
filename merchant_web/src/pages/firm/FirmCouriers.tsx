@@ -59,7 +59,7 @@ export const FirmCouriers: React.FC = () => {
 
   // Add/Edit Form State
   const [formData, setFormData] = useState({
-    merchantId: firmMerchantId,
+    merchantId: '', // '' = Ortak Filo (restorana tahsisli değil)
     firstName: '',
     lastName: '',
     phoneNumber: '',
@@ -104,7 +104,7 @@ export const FirmCouriers: React.FC = () => {
 
     // Restoran Filtresi
     if (filterMerchant !== 'all') {
-      list = list.filter(c => c.merchantId === filterMerchant);
+      list = list.filter(c => filterMerchant === 'fleet' ? !c.merchantId : c.merchantId === filterMerchant);
     }
 
     // Arama
@@ -164,7 +164,7 @@ export const FirmCouriers: React.FC = () => {
 
   const handleOpenAddModal = () => {
     setFormData({
-      merchantId: firmMerchantId || (merchants[0]?.id || ''),
+      merchantId: '',
       firstName: '',
       lastName: '',
       phoneNumber: '',
@@ -190,7 +190,7 @@ export const FirmCouriers: React.FC = () => {
     }
 
     setFormData({
-      merchantId: courier.merchantId || firmMerchantId,
+      merchantId: courier.merchantId || '',
       firstName: courier.firstName,
       lastName: courier.lastName,
       phoneNumber: courier.phoneNumber,
@@ -206,8 +206,8 @@ export const FirmCouriers: React.FC = () => {
 
   const handleSaveAdd = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.firstName || !formData.lastName || !formData.phoneNumber || !formData.merchantId) {
-      setErrorMsg('Lütfen zorunlu alanları (Ad, Soyad, Telefon, İşletme) doldurun.');
+    if (!formData.firstName || !formData.lastName || !formData.phoneNumber) {
+      setErrorMsg('Lütfen zorunlu alanları (Ad, Soyad, Telefon) doldurun.');
       return;
     }
 
@@ -398,9 +398,7 @@ export const FirmCouriers: React.FC = () => {
               className="px-3 py-2 text-xs font-semibold bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 text-slate-700"
             >
               <option value="all">Tüm Filo Kuryeleri ({couriers.length})</option>
-              {firmMerchantId && (
-                <option value={firmMerchantId}>🌟 Ortak Filo (Tüm Restoranlar)</option>
-              )}
+              <option value="fleet">🌟 Ortak Filo (Tüm Restoranlar)</option>
               {merchants.map(m => (
                 <option key={m.id} value={m.id}>🏪 {m.name} (Zimmetli)</option>
               ))}
@@ -468,7 +466,7 @@ export const FirmCouriers: React.FC = () => {
               const bal = courier.currentBalance ?? 0;
               const isReconciling = reconciling === courier.id;
               const merchant = merchants.find(m => m.id === courier.merchantId);
-              const isSharedFleet = courier.merchantId === firmMerchantId || !merchant;
+              const isSharedFleet = !courier.merchantId || courier.merchantId === firmMerchantId || !merchant;
 
               return (
                 <div
@@ -620,12 +618,9 @@ export const FirmCouriers: React.FC = () => {
                 <select
                   value={formData.merchantId}
                   onChange={e => setFormData({ ...formData, merchantId: e.target.value })}
-                  required
                   className="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 font-bold text-slate-800"
                 >
-                  {firmMerchantId && (
-                    <option value={firmMerchantId}>🌟 Ortak Filo / Tüm Restoranlar (Havuz Dağıtım)</option>
-                  )}
+                  <option value="">🌟 Ortak Filo / Tüm Restoranlar (Havuz Dağıtım)</option>
                   {merchants.map(m => (
                     <option key={m.id} value={m.id}>🏪 {m.name} (Özel / Zimmetli)</option>
                   ))}
@@ -768,12 +763,9 @@ export const FirmCouriers: React.FC = () => {
                 <select
                   value={formData.merchantId}
                   onChange={e => setFormData({ ...formData, merchantId: e.target.value })}
-                  required
                   className="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-500/20 font-bold text-slate-800"
                 >
-                  {firmMerchantId && (
-                    <option value={firmMerchantId}>🌟 Ortak Filo / Tüm Restoranlar (Havuz Dağıtım)</option>
-                  )}
+                  <option value="">🌟 Ortak Filo / Tüm Restoranlar (Havuz Dağıtım)</option>
                   {merchants.map(m => (
                     <option key={m.id} value={m.id}>🏪 {m.name} (Özel / Zimmetli)</option>
                   ))}

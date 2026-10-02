@@ -15,6 +15,23 @@ import { isCoordinateOnLand, clipCoordinateToLand } from './coastlineRegistry';
 /** Şehir içi kurye dağıtımı için standart Uber H3 çözünürlüğü (~460m kenar, ~0.74 km² alan) */
 export const DEFAULT_H3_RESOLUTION = 8;
 
+/**
+ * Ayarlardaki HexagonSizeMeters (hücre çapı) değerine en yakın H3 çözünürlüğünü seçer.
+ * H3 yalnızca ayrık çözünürlükleri destekler; çap ≈ 2 × ortalama kenar uzunluğu:
+ * r6 ≈ 6460 m, r7 ≈ 2440 m, r8 ≈ 920 m, r9 ≈ 350 m, r10 ≈ 130 m.
+ */
+export function hexSizeToH3Resolution(meters?: number | null): number {
+  if (!meters || meters <= 0) return DEFAULT_H3_RESOLUTION;
+  const diameters: Array<[number, number]> = [[6, 6460], [7, 2440], [8, 920], [9, 350], [10, 130]];
+  let best = DEFAULT_H3_RESOLUTION;
+  let bestDiff = Infinity;
+  for (const [res, d] of diameters) {
+    const diff = Math.abs(Math.log(meters / d));
+    if (diff < bestDiff) { bestDiff = diff; best = res; }
+  }
+  return best;
+}
+
 export interface H3GlobalCell {
   id: string; // H3 index e.g. "882da12299fffff"
   boundary: [number, number][]; // [[lat, lng], [lat, lng], ...]

@@ -1,6 +1,8 @@
 using System.Security.Claims;
+using KuryeSistemi.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KuryeSistemi.API.Hubs;
 
@@ -65,20 +67,20 @@ public sealed class LocationHub : Hub
         var merchantIdClaim = Context.User?.FindFirst("merchantId")?.Value 
                            ?? Context.User?.FindFirst("MerchantId")?.Value;
 
-        var targetGroups = new HashSet<string> { "firm_admin" };
-        if (!string.IsNullOrEmpty(merchantIdClaim))
+        // Tenant izolasyonu: konum yalnızca kuryenin işletmesine, bağlı olduğu firmaya (veya firmaya
+        // bağlanmamış eski kayıtlar için ortak kovaya) ve SuperAdmin'e yayınlanır.
+        var targetGroups = new HashSet<string> { "superadmin" };
+        if (IsRealMerchantClaim(merchantIdClaim))
         {
             targetGroups.Add($"merchant_{merchantIdClaim}");
         }
 
         var companyIdClaim = Context.User?.FindFirst("companyId")?.Value 
                           ?? Context.User?.FindFirst("courierCompanyId")?.Value
-                          ?? Context.User?.FindFirst("CourierCompanyId")?.Value;
+                          ?? Context.User?.FindFirst("CourierCompanyId")?.Value
+                          ?? (Context.Items.TryGetValue("companyId", out var cachedCompany) ? cachedCompany as string : null);
 
-        if (!string.IsNullOrEmpty(companyIdClaim))
-        {
-            targetGroups.Add($"company_{companyIdClaim}");
-        }
+        targetGroups.Add(!string.IsNullOrEmpty(companyIdClaim) ? $"company_{companyIdClaim}" : "firm_admin");
 
         await Clients.Groups(targetGroups.ToList()).SendAsync(
             "ReceiveLocationUpdate",
@@ -103,6 +105,13 @@ public sealed class LocationHub : Hub
     }
 
     /// <summary>
+    /// Ortak filo kuryelerinin token'ında merchantId boş Guid gelir; bu değer gerçek bir işletme grubu değildir
+    /// ve tüm firmaların filo kuryelerini aynı gruba toplayıp konum yayınlarını sızdırır.
+    /// </summary>
+    private static bool IsRealMerchantClaim(string? claim)
+        => Guid.TryParse(claim, out var id) && id != Guid.Empty;
+
+    /// <summary>
     /// Bağlanan istemciyi rollerine ve tenant claim'lerine göre gruplara ayırır.
     /// </summary>
     public override async Task OnConnectedAsync()
@@ -110,9 +119,14 @@ public sealed class LocationHub : Hub
         var merchantIdClaim = Context.User?.FindFirst("merchantId")?.Value 
                            ?? Context.User?.FindFirst("MerchantId")?.Value;
 
-        if (!string.IsNullOrEmpty(merchantIdClaim))
+        if (IsRealMerchantClaim(merchantIdClaim))
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, $"merchant_{merchantIdClaim}");
+        }
+
+        if (Context.User?.IsInRole("SuperAdmin") == true)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, "superadmin");
         }
 
         var isFirmUser = Context.User?.IsInRole("CourierFirm") == true 
@@ -142,7 +156,21 @@ public sealed class LocationHub : Hub
         if (!string.IsNullOrEmpty(courierIdClaim))
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, $"courier_{courierIdClaim}");
-            await Groups.AddToGroupAsync(Context.ConnectionId, "courier_pool");
+
+            // Havuz bildirimi kuryenin bağlı olduğu firmanın havuzuna gider (tenant izolasyonu).
+            var courierCompanyId = !string.IsNullOrEmpty(companyIdClaim) && Guid.TryParse(companyIdClaim, out var parsedCompId)
+                ? (Guid?)parsedCompId
+                : await ResolveCourierCompanyIdAsync(courierIdClaim);
+
+            if (courierCompanyId.HasValue)
+            {
+                Context.Items["companyId"] = courierCompanyId.Value.ToString();
+                await Groups.AddToGroupAsync(Context.ConnectionId, $"courier_pool_{courierCompanyId.Value}");
+            }
+            else
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, "courier_pool");
+            }
         }
 
         await base.OnConnectedAsync();
@@ -150,6 +178,36 @@ public sealed class LocationHub : Hub
 
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
+        // Sıklık sınırlayıcı sözlüğünün sonsuz büyümesini önle
+        var courierIdClaim = Context.User?.FindFirst("courierId")?.Value
+                          ?? Context.User?.FindFirst("CourierId")?.Value;
+        if (Guid.TryParse(courierIdClaim, out var courierId))
+        {
+            _lastLocationUpdates.TryRemove(courierId, out _);
+        }
+
         await base.OnDisconnectedAsync(exception);
+    }
+
+    /// <summary>Kuryenin işletmesinin bağlı olduğu kurye firması. Bağlı değilse veya okunamazsa null.</summary>
+    private async Task<Guid?> ResolveCourierCompanyIdAsync(string courierIdClaim)
+    {
+        if (!Guid.TryParse(courierIdClaim, out var courierId))
+            return null;
+
+        try
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+            return await db.Couriers.AsNoTracking()
+                .Where(c => c.Id == courierId)
+                .Select(c => (Guid?)c.CourierCompanyId)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "--> [LocationHub] Kurye firma bilgisi okunamadı: {CourierId}", courierId);
+            return null;
+        }
     }
 }

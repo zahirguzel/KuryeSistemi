@@ -96,9 +96,12 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
         builder.Property(c => c.UpdatedBy)
                .HasMaxLength(100);
 
-        // --- Multi-Tenant: MerchantId ---
-        builder.Property(c => c.MerchantId)
+        // --- Multi-Tenant: CourierCompanyId & MerchantId ---
+        builder.Property(c => c.CourierCompanyId)
                .IsRequired();
+
+        builder.Property(c => c.MerchantId)
+               .IsRequired(false);
 
         // --- Unique & Index kısıtlamalar ---
         builder.HasIndex(c => c.LicensePlate)
@@ -109,14 +112,22 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
                .IsUnique()
                .HasDatabaseName("UQ_Couriers_PhoneNumber");
 
+        builder.HasIndex(c => c.CourierCompanyId)
+               .HasDatabaseName("IX_Couriers_CourierCompanyId");
+
         builder.HasIndex(c => c.MerchantId)
                .HasDatabaseName("IX_Couriers_MerchantId");
 
-        // --- İlişkiler: Merchant ile OneToMany ---
-        // İlişki Merchant tarafında tanımlandı; burada sadece FK belirtilir.
+        // --- İlişkiler ---
+        builder.HasOne(c => c.CourierCompany)
+               .WithMany(cc => cc.Couriers)
+               .HasForeignKey(c => c.CourierCompanyId)
+               .OnDelete(DeleteBehavior.Restrict);
+
         builder.HasOne(c => c.Merchant)
                .WithMany(m => m.Couriers)
                .HasForeignKey(c => c.MerchantId)
-               .OnDelete(DeleteBehavior.Restrict);
+               .IsRequired(false)
+               .OnDelete(DeleteBehavior.SetNull);
     }
 }

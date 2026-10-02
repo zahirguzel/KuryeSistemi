@@ -39,11 +39,28 @@ public sealed class CouriersController : BaseController
         {
             if (merchantId.HasValue && merchantId.Value != Guid.Empty)
             {
+                if (!await CanAccessMerchantAsync(merchantId.Value, cancellationToken))
+                    return Forbid();
+
                 var result = await _courierService.GetCouriersByMerchantAsync(merchantId.Value, isAvailable, cancellationToken);
                 return CreateActionResult(result);
             }
 
             var allResult = await _courierService.GetAllCouriersAsync(cancellationToken);
+
+            // Tenant izolasyonu: firma kullanıcısı yalnızca kendi firmasının kuryelerini görür
+            var accessibleIds = await GetAccessibleMerchantIdsAsync(cancellationToken);
+            var callerCompanyId = await ResolveCallerCompanyIdAsync(cancellationToken);
+            if (allResult.IsSuccess && allResult.Data is not null)
+            {
+                var scoped = allResult.Data.Where(c => 
+                    IsAdmin() ||
+                    (callerCompanyId.HasValue && c.CourierCompanyId == callerCompanyId.Value) ||
+                    (c.MerchantId.HasValue && accessibleIds != null && accessibleIds.Contains(c.MerchantId.Value))
+                ).ToList().AsReadOnly();
+                allResult = KuryeSistemi.Application.Common.Models.ServiceResult<IReadOnlyList<CourierDto>>.Success(scoped);
+            }
+
             return CreateActionResult(allResult);
         }
 
@@ -66,11 +83,31 @@ public sealed class CouriersController : BaseController
         [FromBody] CreateCourierRequestDto request,
         CancellationToken cancellationToken)
     {
-        var effectiveMerchantId = IsFirmOrAdmin() && request.MerchantId != Guid.Empty
-            ? request.MerchantId
-            : GetMerchantId();
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageCouriers, cancellationToken))
+            return Forbid();
 
-        var secureRequest = request with { MerchantId = effectiveMerchantId };
+        Guid? effectiveMerchantId = null;
+        var callerCompanyId = await ResolveCallerCompanyIdAsync(cancellationToken);
+
+        if (IsFirmOrAdmin())
+        {
+            if (request.MerchantId.HasValue && request.MerchantId.Value != Guid.Empty)
+            {
+                if (!await CanAccessMerchantAsync(request.MerchantId.Value, cancellationToken))
+                    return Forbid();
+                effectiveMerchantId = request.MerchantId.Value;
+            }
+        }
+        else
+        {
+            effectiveMerchantId = GetMerchantId();
+        }
+
+        var secureRequest = request with { 
+            MerchantId = effectiveMerchantId,
+            CourierCompanyId = callerCompanyId ?? request.CourierCompanyId
+        };
         var result = await _courierService.CreateCourierAsync(secureRequest, cancellationToken);
         return CreateActionResult(result);
     }
@@ -90,16 +127,27 @@ public sealed class CouriersController : BaseController
         [FromBody] UpdateCourierRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageCouriers, cancellationToken))
+            return Forbid();
+
         var courier = await _courierRepository.GetByIdAsync(courierId);
         if (courier is null)
             return NotFound(new { message = $"Kurye bulunamadı: {courierId}" });
 
-        if (!IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
-        // Standart işletmeler kuryenin MerchantId'sini başka işletmeye aktaramaz (Tenant Koruma)
+        // Firma, kuryeyi yalnızca kendi firmasının işletmesine aktarabilir
+        if (IsFirmOrAdmin() && request.MerchantId.HasValue && request.MerchantId.Value != Guid.Empty &&
+            request.MerchantId.Value != courier.MerchantId &&
+            !await CanAccessMerchantAsync(request.MerchantId.Value, cancellationToken))
+            return Forbid();
+
+        // Standart işletmeler kuryenin MerchantId'sini başka işletmeye aktaramaz (Tenant Koruma).
+        // Firma/admin için Guid.Empty = "ortak filoya al" (restoran tahsisini kaldır) anlamına gelir.
         var secureRequest = request;
-        if (!IsFirmOrAdmin() || !request.MerchantId.HasValue || request.MerchantId.Value == Guid.Empty)
+        if (!IsFirmOrAdmin() || !request.MerchantId.HasValue)
         {
             secureRequest = request with { MerchantId = courier.MerchantId };
         }
@@ -120,11 +168,15 @@ public sealed class CouriersController : BaseController
         Guid courierId,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageCouriers, cancellationToken))
+            return Forbid();
+
         var courier = await _courierRepository.GetByIdAsync(courierId);
         if (courier is null)
             return NotFound(new { message = $"Kurye bulunamadı: {courierId}" });
 
-        if (!IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
         var result = await _courierService.DeleteCourierAsync(courierId, cancellationToken);
@@ -150,7 +202,7 @@ public sealed class CouriersController : BaseController
         if (callerCourierId.HasValue && callerCourierId.Value != courierId)
             return Forbid();
 
-        if (!callerCourierId.HasValue && !IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!callerCourierId.HasValue && !await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
         var result = await _courierService.GetTodayEarningsAsync(courierId, cancellationToken);
@@ -215,7 +267,7 @@ public sealed class CouriersController : BaseController
         if (callerCourierId.HasValue && callerCourierId.Value != courierId)
             return Forbid();
 
-        if (!callerCourierId.HasValue && !IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!callerCourierId.HasValue && !await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
         var result = await _courierService.GetEarningsByDateRangeAsync(courierId, startDate, endDate, cancellationToken);
@@ -268,7 +320,7 @@ public sealed class CouriersController : BaseController
         if (callerCourierId.HasValue && callerCourierId.Value != courierId)
             return Forbid();
 
-        if (!callerCourierId.HasValue && !IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!callerCourierId.HasValue && !await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
         var result = await _courierService.GetProfileAsync(courierId, cancellationToken);
@@ -317,11 +369,15 @@ public sealed class CouriersController : BaseController
         [FromBody] ToggleShiftRequest request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageCouriers, cancellationToken))
+            return Forbid();
+
         var courier = await _courierRepository.GetByIdAsync(courierId);
         if (courier is null)
             return NotFound(new { message = $"Kurye bulunamadı: {courierId}" });
 
-        if (!IsFirmOrAdmin() && courier.MerchantId != GetMerchantId())
+        if (!await CanAccessCourierAsync(courier, cancellationToken))
             return Forbid();
 
         var result = await _courierService.ToggleShiftAsync(courierId, request.IsOnline, cancellationToken);

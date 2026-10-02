@@ -7,7 +7,7 @@ namespace KuryeSistemi.Application.Features.Couriers.DTOs;
 /// </summary>
 public sealed record CourierDto(
     Guid        Id,
-    Guid        MerchantId,
+    Guid?       MerchantId,
     string      FirstName,
     string      LastName,
     string      PhoneNumber,
@@ -22,5 +22,6 @@ public sealed record CourierDto(
     bool        IsOnline = false,
     double?     CurrentLatitude = null,
     double?     CurrentLongitude = null,
-    DateTime?   LastLocationUpdate = null
+    DateTime?   LastLocationUpdate = null,
+    Guid        CourierCompanyId = default
 );

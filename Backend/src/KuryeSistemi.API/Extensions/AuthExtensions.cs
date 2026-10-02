@@ -24,6 +24,17 @@ public static class AuthExtensions
             throw new InvalidOperationException("KRİTİK HATA: JwtSettings:SecretKey tanımlanmamış veya en az 32 karakter uzunluğunda değil! Uygulama başlatılamaz.");
         }
 
+        // Üretimde varsayılan / şablon anahtar kullanılamaz (anahtar ortam değişkeni veya secret store'dan gelmeli)
+        if (!environment.IsDevelopment() &&
+            (jwtSettings.SecretKey.Contains("SuperSecret", StringComparison.OrdinalIgnoreCase) ||
+             jwtSettings.SecretKey.Contains("YOUR_", StringComparison.OrdinalIgnoreCase) ||
+             jwtSettings.SecretKey.Contains("CHANGE_ME", StringComparison.OrdinalIgnoreCase)))
+        {
+            throw new InvalidOperationException(
+                "GÜVENLİK: Üretim ortamında varsayılan/şablon JwtSettings:SecretKey kullanılamaz. " +
+                "Ortam değişkeni tanımlayın: JwtSettings__SecretKey");
+        }
+
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

@@ -67,11 +67,6 @@ public class CourierService : ICourierService
         CreateCourierRequestDto request,
         CancellationToken cancellationToken = default)
     {
-        if (request.MerchantId == Guid.Empty)
-        {
-            return ServiceResult<CourierDto>.BadRequest("Geçersiz işletme ID'si.");
-        }
-
         if (string.IsNullOrWhiteSpace(request.FirstName) ||
             string.IsNullOrWhiteSpace(request.LastName) ||
             string.IsNullOrWhiteSpace(request.PhoneNumber) ||
@@ -83,10 +78,32 @@ public class CourierService : ICourierService
             return ServiceResult<CourierDto>.BadRequest("Tüm zorunlu alanlar doldurulmalıdır.");
         }
 
-        var merchant = await _merchantRepository.GetByIdAsync(request.MerchantId);
-        if (merchant is null)
+        Guid resolvedCompanyId = Guid.Empty;
+        Guid? resolvedMerchantId = null;
+
+        if (request.CourierCompanyId.HasValue && request.CourierCompanyId.Value != Guid.Empty)
         {
-            return ServiceResult<CourierDto>.NotFound($"İşletme bulunamadı: {request.MerchantId}");
+            resolvedCompanyId = request.CourierCompanyId.Value;
+        }
+
+        if (request.MerchantId.HasValue && request.MerchantId.Value != Guid.Empty)
+        {
+            var merchant = await _merchantRepository.GetByIdAsync(request.MerchantId.Value);
+            if (merchant is null)
+            {
+                return ServiceResult<CourierDto>.NotFound($"İşletme bulunamadı: {request.MerchantId}");
+            }
+            // Firmanın kendi hesabı (CourierFirm) bir "restoran" değildir: bu seçim ortak filo anlamına gelir (MerchantId = null)
+            resolvedMerchantId = merchant.Role == "CourierFirm" ? null : merchant.Id;
+            if (resolvedCompanyId == Guid.Empty && merchant.CourierCompanyId.HasValue)
+            {
+                resolvedCompanyId = merchant.CourierCompanyId.Value;
+            }
+        }
+
+        if (resolvedCompanyId == Guid.Empty)
+        {
+            return ServiceResult<CourierDto>.BadRequest("Kuryenin bağlı olacağı kurye lojistik firması (CourierCompanyId) veya geçerli bir işletme belirtilmelidir.");
         }
 
         var isConflict = await _courierRepository.IsPlateOrPhoneExistsAsync(
@@ -112,18 +129,19 @@ public class CourierService : ICourierService
 
         var courier = new Courier
         {
-            MerchantId = request.MerchantId,
-            FirstName = request.FirstName.Trim(),
-            LastName = request.LastName.Trim(),
-            PhoneNumber = request.PhoneNumber.Trim(),
-            Email = normalizedEmail,
-            PasswordHash = _passwordHasherService.HashPassword(request.Password),
-            VehicleType = request.VehicleType,
-            LicensePlate = request.LicensePlate.Trim().ToUpperInvariant(),
-            VehicleBrand = request.VehicleBrand.Trim(),
-            VehicleModel = request.VehicleModel.Trim(),
-            IsAvailable = true,
-            CreatedBy = "system"
+            CourierCompanyId = resolvedCompanyId,
+            MerchantId       = resolvedMerchantId,
+            FirstName        = request.FirstName.Trim(),
+            LastName         = request.LastName.Trim(),
+            PhoneNumber      = request.PhoneNumber.Trim(),
+            Email            = normalizedEmail,
+            PasswordHash     = _passwordHasherService.HashPassword(request.Password),
+            VehicleType      = request.VehicleType,
+            LicensePlate     = request.LicensePlate.Trim().ToUpperInvariant(),
+            VehicleBrand     = request.VehicleBrand.Trim(),
+            VehicleModel     = request.VehicleModel.Trim(),
+            IsAvailable      = true,
+            CreatedBy        = "system"
         };
 
         await _courierRepository.AddAsync(courier);
@@ -273,7 +291,8 @@ public class CourierService : ICourierService
             completedDeliveriesToday,
             totalEarningsToday,
             totalDeliveriesAllTime,
-            courier.IsOnline
+            courier.IsOnline,
+            courier.CourierCompanyId
         );
 
         return ServiceResult<CourierProfileDto>.Success(profileDto, "Kurye profil ve kasa bilgileri getirildi.");
@@ -291,18 +310,17 @@ public class CourierService : ICourierService
         if (courier is null)
             return ServiceResult<bool>.NotFound($"Kurye bulunamadı: {courierId}");
 
-        if (!isOnline)
+        var activeOrdersCount = await _orderRepository.CountActiveOrdersByCourierAsync(courierId);
+        if (!isOnline && activeOrdersCount > 0)
         {
-            var activeOrdersCount = await _orderRepository.CountActiveOrdersByCourierAsync(courierId);
-            if (activeOrdersCount > 0)
-            {
-                return ServiceResult<bool>.Conflict(
-                    $"Kurye üzerinde henüz teslim edilmemiş {activeOrdersCount} adet aktif sipariş varken mesai sonlandırılamaz.");
-            }
+            return ServiceResult<bool>.Conflict(
+                $"Kurye üzerinde henüz teslim edilmemiş {activeOrdersCount} adet aktif sipariş varken mesai sonlandırılamaz.");
         }
 
         courier.IsOnline = isOnline;
-        courier.IsAvailable = isOnline; // Mesaiye başlayınca müsait, mesai bitince meşgul/kapalı
+        // Mesaiye başlayınca müsait, mesai bitince kapalı. Zaten aktif işi olan kurye (uygulama yeniden
+        // açıldığında mesai senkronu gibi) tekrar "müsait" yapılıp tur kapasitesi bozulmaz.
+        courier.IsAvailable = isOnline && (activeOrdersCount == 0 || courier.IsAvailable);
         if (isOnline)
         {
             courier.LastLocationUpdate = DateTime.UtcNow;
@@ -379,7 +397,18 @@ public class CourierService : ICourierService
                 return ServiceResult<CourierDto>.Conflict("Bu plaka veya telefon numarası başka bir kurye tarafından kullanılıyor.");
         }
 
-        if (request.MerchantId.HasValue && request.MerchantId.Value != Guid.Empty) courier.MerchantId = request.MerchantId.Value;
+        if (request.MerchantId.HasValue)
+        {
+            if (request.MerchantId.Value == Guid.Empty)
+            {
+                courier.MerchantId = null; // Açık "ortak filo" talebi (yalnızca firma/admin controller'dan buraya ulaştırır)
+            }
+            else
+            {
+                var targetMerchant = await _merchantRepository.GetByIdAsync(request.MerchantId.Value);
+                courier.MerchantId = targetMerchant?.Role == "CourierFirm" ? null : request.MerchantId.Value;
+            }
+        }
         if (request.VehicleType.HasValue)                  courier.VehicleType = request.VehicleType.Value;
         if (!string.IsNullOrWhiteSpace(request.FirstName))  courier.FirstName  = request.FirstName.Trim();
         if (!string.IsNullOrWhiteSpace(request.LastName))   courier.LastName   = request.LastName.Trim();
@@ -447,6 +476,7 @@ public class CourierService : ICourierService
             courier.IsOnline,
             courier.CurrentLatitude,
             courier.CurrentLongitude,
-            courier.LastLocationUpdate);
+            courier.LastLocationUpdate,
+            courier.CourierCompanyId);
     }
 }

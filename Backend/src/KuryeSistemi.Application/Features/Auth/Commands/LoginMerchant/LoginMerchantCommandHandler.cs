@@ -113,17 +113,19 @@ public sealed class LoginMerchantCommandHandler
             if (!isPasswordValid)
                 throw new UnauthorizedAccessException(invalidMessage);
 
-            var token     = _jwtService.GenerateToken(courier.MerchantId, courier.Email, courier.Id, role: "Courier");
+            var effectiveMerchantId = courier.MerchantId ?? Guid.Empty;
+            var token     = _jwtService.GenerateToken(effectiveMerchantId, courier.Email, courier.Id, role: "Courier", courierCompanyId: courier.CourierCompanyId);
             var expiresAt = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
 
             return new AuthTokenDto(
                 token,
-                courier.MerchantId,
+                effectiveMerchantId,
                 $"{courier.FirstName} {courier.LastName}",
                 courier.Email,
                 expiresAt,
                 CourierId: courier.Id,
-                Roles: new[] { "Courier" });
+                Roles: new[] { "Courier" },
+                CourierCompanyId: courier.CourierCompanyId);
         }
 
         throw new UnauthorizedAccessException(invalidMessage);

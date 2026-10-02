@@ -12,7 +12,8 @@ public sealed class CreateCourierCommandValidator
     public CreateCourierCommandValidator()
     {
         RuleFor(x => x.MerchantId)
-            .NotEmpty().WithMessage("MerchantId zorunludur.");
+            .Must(id => !id.HasValue || id.Value != Guid.Empty)
+            .WithMessage("Geçersiz MerchantId.");
 
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("Ad boş olamaz.")

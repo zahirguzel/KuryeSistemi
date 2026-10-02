@@ -22,14 +22,14 @@ public sealed class JwtService : IJwtService
         _settings = settings.Value;
     }
 
-    public string GenerateToken(Guid merchantId, string email, Guid? courierId = null, string role = "Merchant")
+    public string GenerateToken(Guid merchantId, string email, Guid? courierId = null, string role = "Merchant", Guid? courierCompanyId = null)
     {
         var key         = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_settings.SecretKey));
         var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub,   merchantId.ToString()),
+            new(JwtRegisteredClaimNames.Sub,   courierId.HasValue ? courierId.Value.ToString() : merchantId.ToString()),
             new(JwtRegisteredClaimNames.Email, email),
             new(JwtRegisteredClaimNames.Jti,   Guid.NewGuid().ToString()),
             new(JwtRegisteredClaimNames.Iat,
@@ -43,6 +43,13 @@ public sealed class JwtService : IJwtService
         {
             claims.Add(new Claim("courierId", courierId.Value.ToString()));
             claims.Add(new Claim("CourierId", courierId.Value.ToString()));
+        }
+
+        if (courierCompanyId.HasValue)
+        {
+            claims.Add(new Claim("courierCompanyId", courierCompanyId.Value.ToString()));
+            claims.Add(new Claim("CourierCompanyId", courierCompanyId.Value.ToString()));
+            claims.Add(new Claim("companyId", courierCompanyId.Value.ToString()));
         }
 
         var token = new JwtSecurityToken(

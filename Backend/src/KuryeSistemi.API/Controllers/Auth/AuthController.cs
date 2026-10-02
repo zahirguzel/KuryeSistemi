@@ -48,10 +48,11 @@ public sealed class AuthController : BaseController
         [FromBody] ChangePasswordRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Kullanıcı tipine göre gerçek kimlik: Kurye → CompanyUser → SuperAdmin → İşletme
         var courierId = GetCourierId();
-        var userId = (courierId.HasValue && courierId.Value != Guid.Empty) 
-            ? courierId.Value 
-            : GetMerchantId();
+        var userId = (courierId.HasValue && courierId.Value != Guid.Empty)
+            ? courierId.Value
+            : (GetCompanyUserId() ?? GetAdminUserId() ?? GetMerchantId());
 
         var result = await _authService.ChangePasswordAsync(userId, request, cancellationToken);
         return CreateActionResult(result);

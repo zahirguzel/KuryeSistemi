@@ -9,7 +9,7 @@ namespace KuryeSistemi.Application.Features.Couriers.Commands.CreateCourier;
 /// MerchantId zorunludur — kurye mutlaka bir işletmeye bağlı olmalıdır (multi-tenant).
 /// </summary>
 public sealed record CreateCourierCommand(
-    Guid        MerchantId,
+    Guid?       MerchantId,
     string      FirstName,
     string      LastName,
     string      PhoneNumber,
@@ -18,5 +18,6 @@ public sealed record CreateCourierCommand(
     string      LicensePlate,
     string      VehicleBrand,
     string      VehicleModel,
-    string?     Password = null
+    string?     Password = null,
+    Guid        CourierCompanyId = default
 ) : IRequest<CourierDto>;

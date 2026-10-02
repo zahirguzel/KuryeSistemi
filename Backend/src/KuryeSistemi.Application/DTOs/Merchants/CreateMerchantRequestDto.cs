@@ -14,5 +14,8 @@ public sealed record CreateMerchantRequestDto(
     DispatchMode? DispatchMode = null,
     ReconciliationPeriod? ReconciliationPeriod = null,
     double? Latitude = null,
-    double? Longitude = null
+    double? Longitude = null,
+    decimal? CourierCutFee = null,
+    /// <summary>Bağlı kurye firması. Firma kullanıcıları için sunucu tarafında token'dan doldurulur.</summary>
+    Guid? CourierCompanyId = null
 );

@@ -2,7 +2,9 @@
 
 using System.Security.Claims;
 using KuryeSistemi.Application.Common.Models;
+using KuryeSistemi.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KuryeSistemi.API.Controllers;
 
@@ -12,9 +14,10 @@ public class BaseController : ControllerBase
 {
     protected Guid GetMerchantId()
     {
+        // NOT: ClaimTypes.NameIdentifier ("sub") bilerek kullanılmaz. Firma/SuperAdmin tokenlarında "sub",
+        // işletme değil kullanıcı kimliğidir; işletme ID'si sanılırsa yanlış tenant sorgulanır.
         var claim = User.FindFirst("MerchantId")?.Value
-                 ?? User.FindFirst("merchantId")?.Value
-                 ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                 ?? User.FindFirst("merchantId")?.Value;
 
         if (!string.IsNullOrEmpty(claim) && Guid.TryParse(claim, out var merchantId) && merchantId != Guid.Empty)
             return merchantId;
@@ -109,6 +112,124 @@ public class BaseController : ControllerBase
 
         var callerMerchantId = GetMerchantId();
         return callerMerchantId;
+    }
+
+    // ──────────────────────────────────────────────────────────────────────────
+    // Tenant (Firma) Kapsamı — firma kullanıcıları yalnızca kendi firmalarının
+    // işletmelerine / kurye / siparişlerine erişebilir.
+    // Kural: işletmenin CourierCompanyId'si boşsa (eski/bağlanmamış kayıt) tüm firmalara açıktır;
+    // doluysa yalnızca o firmanın kullanıcılarına ve SuperAdmin'e açıktır.
+    // ──────────────────────────────────────────────────────────────────────────
+
+    private IApplicationDbContext? ScopeDb
+        => HttpContext?.RequestServices?.GetService(typeof(IApplicationDbContext)) as IApplicationDbContext;
+
+    private Guid? TryGetOwnMerchantId()
+    {
+        var claim = User.FindFirst("MerchantId")?.Value ?? User.FindFirst("merchantId")?.Value;
+        return Guid.TryParse(claim, out var id) && id != Guid.Empty ? id : null;
+    }
+
+    /// <summary>Çağıranın bağlı olduğu kurye firması (CompanyUser claim'i veya eski tip firma hesabının kendi işletme kaydı).</summary>
+    protected async Task<Guid?> ResolveCallerCompanyIdAsync(CancellationToken ct = default)
+    {
+        var claimCompany = GetCourierCompanyId();
+        if (claimCompany.HasValue && claimCompany.Value != Guid.Empty)
+            return claimCompany;
+
+        var db = ScopeDb;
+        var ownId = TryGetOwnMerchantId();
+        if (db is null || !ownId.HasValue)
+            return null;
+
+        return await db.Merchants.AsNoTracking()
+            .Where(m => m.Id == ownId.Value)
+            .Select(m => m.CourierCompanyId)
+            .FirstOrDefaultAsync(ct);
+    }
+
+    /// <summary>Çağıran, verilen işletmenin verilerine erişebilir mi?</summary>
+    protected async Task<bool> CanAccessMerchantAsync(Guid merchantId, CancellationToken ct = default)
+    {
+        if (merchantId == Guid.Empty) return false;
+        if (IsAdmin()) return true;
+
+        // Standart işletme: yalnızca kendisi
+        if (!IsFirmOrAdmin())
+            return TryGetOwnMerchantId() == merchantId;
+
+        var db = ScopeDb;
+        if (db is null) return true; // DI olmayan (birim test) ortam: eski davranış
+
+        var target = await db.Merchants.AsNoTracking()
+            .Where(m => m.Id == merchantId)
+            .Select(m => new { m.CourierCompanyId })
+            .FirstOrDefaultAsync(ct);
+
+        if (target is null) return false;
+
+        var callerCompanyId = await ResolveCallerCompanyIdAsync(ct);
+        return target.CourierCompanyId == null || target.CourierCompanyId == callerCompanyId;
+    }
+
+    /// <summary>Çağıran, verilen kuryenin verilerine erişebilir mi?</summary>
+    protected async Task<bool> CanAccessCourierAsync(KuryeSistemi.Domain.Entities.Courier courier, CancellationToken ct = default)
+    {
+        if (IsAdmin()) return true;
+
+        var callerCompanyId = await ResolveCallerCompanyIdAsync(ct);
+        if (callerCompanyId.HasValue && courier.CourierCompanyId == callerCompanyId.Value)
+            return true;
+
+        if (courier.MerchantId.HasValue)
+            return await CanAccessMerchantAsync(courier.MerchantId.Value, ct);
+
+        return false;
+    }
+
+    /// <summary>
+    /// Firma alt kullanıcısının (CompanyUser) ilgili iznine sahip olup olmadığını kontrol eder.
+    /// SuperAdmin, işletme ve eski tip firma hesapları için true döner (rol politikasıyla zaten yetkilidir).
+    /// </summary>
+    protected async Task<bool> HasCompanyPermissionAsync(
+        KuryeSistemi.Domain.Entities.CompanyPermission permission,
+        CancellationToken ct = default)
+    {
+        if (!IsCompanyUser()) return true;
+
+        var userId = GetCompanyUserId();
+        if (!userId.HasValue) return false;
+
+        var db = ScopeDb;
+        if (db is null) return true;
+
+        var user = await db.CompanyUsers.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId.Value, ct);
+
+        return user is not null && user.IsActive && user.HasPermission(permission);
+    }
+
+    /// <summary>Çağıranın erişebildiği işletme ID'leri. null = kısıtsız (SuperAdmin).</summary>
+    protected async Task<HashSet<Guid>?> GetAccessibleMerchantIdsAsync(CancellationToken ct = default)
+    {
+        if (IsAdmin()) return null;
+
+        if (!IsFirmOrAdmin())
+        {
+            var own = TryGetOwnMerchantId();
+            return own.HasValue ? new HashSet<Guid> { own.Value } : new HashSet<Guid>();
+        }
+
+        var db = ScopeDb;
+        if (db is null) return null;
+
+        var callerCompanyId = await ResolveCallerCompanyIdAsync(ct);
+        var ids = await db.Merchants.AsNoTracking()
+            .Where(m => m.CourierCompanyId == null || m.CourierCompanyId == callerCompanyId)
+            .Select(m => m.Id)
+            .ToListAsync(ct);
+
+        return ids.ToHashSet();
     }
 
     protected Guid GetUserId()

@@ -1,6 +1,8 @@
+using System.Collections.Concurrent;
 using KuryeSistemi.API.Hubs;
 using KuryeSistemi.Application.Interfaces;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.EntityFrameworkCore;
 
 namespace KuryeSistemi.API.Services;
 
@@ -11,14 +13,95 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
 {
     private readonly IHubContext<LocationHub> _hubContext;
     private readonly ILogger<SignalRHubNotificationService> _logger;
+    private readonly IServiceScopeFactory? _scopeFactory;
+
+    // İşletme → firma eşlemesi kısa süreli önbelleğe alınır (her bildirimde DB'ye gitmemek için)
+    private static readonly ConcurrentDictionary<Guid, (Guid? CompanyId, DateTime ExpiresAt)> CompanyCache = new();
 
     public SignalRHubNotificationService(
         IHubContext<LocationHub> hubContext,
-        ILogger<SignalRHubNotificationService> logger)
+        ILogger<SignalRHubNotificationService> logger,
+        IServiceScopeFactory? scopeFactory = null)
     {
         _hubContext = hubContext;
         _logger = logger;
+        _scopeFactory = scopeFactory;
     }
+
+    /// <summary>İşletmenin bağlı olduğu kurye firması. Bağlı değilse (eski kayıt) null.</summary>
+    private async Task<Guid?> ResolveCompanyIdAsync(Guid? merchantId)
+    {
+        if (_scopeFactory is null || !merchantId.HasValue || merchantId.Value == Guid.Empty)
+            return null;
+
+        if (CompanyCache.TryGetValue(merchantId.Value, out var hit) && hit.ExpiresAt > DateTime.UtcNow)
+            return hit.CompanyId;
+
+        try
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+            var companyId = await db.Merchants.AsNoTracking()
+                .Where(m => m.Id == merchantId.Value)
+                .Select(m => m.CourierCompanyId)
+                .FirstOrDefaultAsync();
+
+            CompanyCache[merchantId.Value] = (companyId, DateTime.UtcNow.AddMinutes(5));
+            return companyId;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "--> [SIGNALR] İşletme firma eşlemesi okunamadı: {MerchantId}", merchantId);
+            return null;
+        }
+    }
+
+    /// <summary>Kuryenin bağlı olduğu kurye firması (restoranı olmayan ortak filo kuryeleri için).</summary>
+    private async Task<Guid?> ResolveCompanyIdForCourierAsync(Guid courierId)
+    {
+        if (_scopeFactory is null || courierId == Guid.Empty)
+            return null;
+
+        if (CompanyCache.TryGetValue(courierId, out var hit) && hit.ExpiresAt > DateTime.UtcNow)
+            return hit.CompanyId;
+
+        try
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+            var companyId = await db.Couriers.AsNoTracking()
+                .Where(c => c.Id == courierId)
+                .Select(c => (Guid?)c.CourierCompanyId)
+                .FirstOrDefaultAsync();
+
+            CompanyCache[courierId] = (companyId, DateTime.UtcNow.AddMinutes(5));
+            return companyId;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "--> [SIGNALR] Kurye firma eşlemesi okunamadı: {CourierId}", courierId);
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Firma tarafı hedef grupları (tenant izolasyonu):
+    ///  - "superadmin": platform sahibi her şeyi görür
+    ///  - "company_{id}": işletme bir firmaya bağlıysa yalnızca o firmanın kullanıcıları
+    ///  - "firm_admin": firmaya bağlanmamış (eski) işletmeler için ortak kova
+    /// </summary>
+    private IEnumerable<string> BuildFirmGroups(Guid? companyId)
+    {
+        yield return "superadmin";
+
+        if (companyId.HasValue)
+            yield return $"company_{companyId.Value}";
+        else
+            yield return "firm_admin";
+    }
+
+    private static string PoolGroup(Guid? companyId)
+        => companyId.HasValue ? $"courier_pool_{companyId.Value}" : "courier_pool";
 
     public async Task SendOrderStatusChangedAsync(
         Guid merchantId,
@@ -51,7 +134,9 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
                 payload["CourierId"] = courierId.Value.ToString();
             }
 
-            var targetGroups = new HashSet<string> { $"merchant_{merchantId}", "firm_admin" };
+            var companyId = await ResolveCompanyIdAsync(merchantId);
+            var targetGroups = new HashSet<string> { $"merchant_{merchantId}" };
+            foreach (var g in BuildFirmGroups(companyId)) targetGroups.Add(g);
 
             // Atanmış kurye varsa doğrudan kurye kanalına gönder
             if (courierId.HasValue && courierId.Value != Guid.Empty)
@@ -64,7 +149,7 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
             var statusLower = newStatus.ToLowerInvariant();
             if (courierId != Guid.Empty && (statusLower == "pending" || statusLower == "created" || !courierId.HasValue))
             {
-                targetGroups.Add("courier_pool");
+                targetGroups.Add(PoolGroup(companyId));
             }
 
             await _hubContext.Clients.Groups(targetGroups.ToList()).SendAsync(
@@ -107,9 +192,10 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
                 ["Timestamp"] = now.ToString("o")
             };
 
-            var targetGroups = merchantId.HasValue
-                ? new List<string> { $"merchant_{merchantId.Value}", "firm_admin" }
-                : new List<string> { "firm_admin" };
+            var companyId = await ResolveCompanyIdAsync(merchantId) ?? await ResolveCompanyIdForCourierAsync(courierId);
+            var targetGroups = new List<string>();
+            if (merchantId.HasValue) targetGroups.Add($"merchant_{merchantId.Value}");
+            targetGroups.AddRange(BuildFirmGroups(companyId));
 
             await _hubContext.Clients.Groups(targetGroups).SendAsync(
                 "ReceiveCourierStatusUpdate",
@@ -135,9 +221,10 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
     {
         try
         {
-            var targetGroups = merchantId.HasValue
-                ? new List<string> { $"merchant_{merchantId.Value}", "firm_admin" }
-                : new List<string> { "firm_admin" };
+            var companyId = await ResolveCompanyIdAsync(merchantId) ?? await ResolveCompanyIdForCourierAsync(courierId);
+            var targetGroups = new List<string>();
+            if (merchantId.HasValue) targetGroups.Add($"merchant_{merchantId.Value}");
+            targetGroups.AddRange(BuildFirmGroups(companyId));
 
             await _hubContext.Clients.Groups(targetGroups).SendAsync(
                 "ReceiveLocationUpdate",

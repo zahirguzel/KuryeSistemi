@@ -5,7 +5,7 @@ namespace KuryeSistemi.Application.DTOs.Couriers;
 /// </summary>
 public sealed record CourierProfileDto(
     Guid Id,
-    Guid MerchantId,
+    Guid? MerchantId,
     string MerchantName,
     string FirstName,
     string LastName,
@@ -21,5 +21,6 @@ public sealed record CourierProfileDto(
     int CompletedDeliveriesToday,
     decimal TotalEarningsToday,
     int TotalDeliveriesAllTime,
-    bool IsOnline = false
+    bool IsOnline = false,
+    Guid CourierCompanyId = default
 );

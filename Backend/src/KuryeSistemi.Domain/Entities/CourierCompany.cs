@@ -51,6 +51,9 @@ public sealed class CourierCompany : BaseEntity
     /// <summary>Bu firmaya ait restoran/işletmeler (Tenants).</summary>
     public ICollection<Merchant> Merchants { get; set; } = new List<Merchant>();
 
+    /// <summary>Bu firmaya bağlı kuryeler (Firma Filosu).</summary>
+    public ICollection<Courier> Couriers { get; set; } = new List<Courier>();
+
     /// <summary>Bu firmaya ait alt kullanıcılar (Müdür, Operatör vb.).</summary>
     public ICollection<CompanyUser> Users { get; set; } = new List<CompanyUser>();
 

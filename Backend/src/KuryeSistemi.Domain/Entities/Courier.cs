@@ -11,11 +11,18 @@ namespace KuryeSistemi.Domain.Entities;
 public sealed class Courier : BaseEntity
 {
     // -------------------------------------------------------------------------
-    // Multi-Tenant: Kuryenin hangi işletmeye ait olduğu
+    // Multi-Tenant: Kuryenin bağlı olduğu kurye firması ve isteğe bağlı tahsisli restoran
     // -------------------------------------------------------------------------
 
-    /// <summary>Kuryenin bağlı olduğu işletmenin Id'si (Tenant Discriminator).</summary>
-    public Guid MerchantId { get; set; }
+    /// <summary>Kuryenin bağlı olduğu kurye lojistik firmasının Id'si (Platform Tenant / Filo Sahibi).</summary>
+    public Guid CourierCompanyId { get; set; }
+
+    /// <summary>
+    /// Kuryenin tahsis edildiği işletmenin Id'si (İsteğe bağlı).
+    /// Null ise: Firmanın genel havuz kuryesidir (tüm restoranlara hizmet verir).
+    /// Dolu ise: Belirtilen restorana özel tahsis edilmiş kuryedir.
+    /// </summary>
+    public Guid? MerchantId { get; set; }
 
     // -------------------------------------------------------------------------
     // Kişisel Bilgiler
@@ -95,8 +102,11 @@ public sealed class Courier : BaseEntity
     // Navigation Properties
     // -------------------------------------------------------------------------
 
-    /// <summary>Kuryenin bağlı olduğu işletme.</summary>
-    public Merchant Merchant { get; set; } = null!;
+    /// <summary>Kuryenin bağlı olduğu kurye firması.</summary>
+    public CourierCompany CourierCompany { get; set; } = null!;
+
+    /// <summary>Kuryenin tahsis edildiği işletme (opsiyonel).</summary>
+    public Merchant? Merchant { get; set; }
 
     /// <summary>Kuryeye atanmış siparişler.</summary>
     public ICollection<Order> Orders { get; set; } = new List<Order>();

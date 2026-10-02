@@ -30,6 +30,11 @@ public interface IMerchantService
     Task<ServiceResult<IReadOnlyList<CashSettlementDto>>> GetMerchantSettlementsAsync(Guid merchantId, CancellationToken cancellationToken = default);
 
     /// <summary>
+    /// Verilen işletmelerin mahsuplaşma geçmişini listeler (firma paneli). merchantIds null ise kısıtsızdır (SuperAdmin).
+    /// </summary>
+    Task<ServiceResult<IReadOnlyList<CashSettlementDto>>> GetSettlementsAsync(IReadOnlyCollection<Guid>? merchantIds, CancellationToken cancellationToken = default);
+
+    /// <summary>
     /// İşletmenin teslim edilen paketlerine göre kurye firmasıyla olan net mahsuplaşma özetini hesaplar.
     /// Web ve Mobil istemciler için tekil, optimize ve hafif veri kaynağıdır.
     /// </summary>

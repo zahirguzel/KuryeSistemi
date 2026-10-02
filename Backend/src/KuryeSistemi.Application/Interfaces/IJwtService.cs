@@ -8,9 +8,9 @@ namespace KuryeSistemi.Application.Interfaces;
 public interface IJwtService
 {
     /// <summary>
-    /// Merchant (restoran) hesabı için JWT token üretir.
+    /// Merchant (restoran) veya Kurye hesabı için JWT token üretir.
     /// </summary>
-    string GenerateToken(Guid merchantId, string email, Guid? courierId = null, string role = "Merchant");
+    string GenerateToken(Guid merchantId, string email, Guid? courierId = null, string role = "Merchant", Guid? courierCompanyId = null);
 
     /// <summary>
     /// Kurye firması alt kullanıcısı (CompanyUser) için JWT token üretir.

@@ -75,6 +75,8 @@ def extract_key_frames(video_path, output_dir, sample_interval_sec=5, min_diff_t
     print(f"\nDone! Saved {saved_count} frames to {output_dir}")
 
 if __name__ == "__main__":
-    video = "c:/kuryesistemi/loji.mp4"
-    out = "c:/kuryesistemi/loji_frames"
+    import os
+    base = os.path.dirname(os.path.abspath(__file__))
+    video = os.path.join(base, "loji.mp4")
+    out = os.path.join(base, "loji_frames")
     extract_key_frames(video, out, sample_interval_sec=5, min_diff_threshold=0.06, max_interval_sec=40)

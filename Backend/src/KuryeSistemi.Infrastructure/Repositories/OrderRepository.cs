@@ -14,7 +14,7 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
     }
 
-    public async Task<IReadOnlyList<Order>> GetAllWithDetailsAsync(OrderStatus? status = null)
+    public async Task<IReadOnlyList<Order>> GetAllWithDetailsAsync(OrderStatus? status = null, bool todayAndActiveOnly = false)
     {
         var query = _dbSet
             .AsNoTracking()
@@ -25,6 +25,20 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
         if (status.HasValue)
         {
             query = query.Where(o => o.Status == status.Value);
+        }
+
+        if (todayAndActiveOnly)
+        {
+            // Kumanda paneli: tüm geçmiş yerine "aktif siparişler + Türkiye saatine göre bugün açılan/teslim edilenler"
+            var nowTurkey = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, TurkeyTz).Date;
+            var startOfDayUtc = TimeZoneInfo.ConvertTimeToUtc(DateTime.SpecifyKind(nowTurkey, DateTimeKind.Unspecified), TurkeyTz);
+            var endOfDayUtc = startOfDayUtc.AddDays(1);
+            var activeStatuses = new[] { OrderStatus.Pending, OrderStatus.Preparing, OrderStatus.Ready, OrderStatus.Assigned, OrderStatus.PickedUp };
+
+            query = query.Where(o =>
+                activeStatuses.Contains(o.Status) ||
+                (o.CreatedAt >= startOfDayUtc && o.CreatedAt < endOfDayUtc) ||
+                (o.DeliveredAt != null && o.DeliveredAt >= startOfDayUtc && o.DeliveredAt < endOfDayUtc));
         }
 
         return await query
@@ -82,13 +96,38 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
 
     public async Task<IReadOnlyList<Order>> GetCourierActiveOrdersAsync(Guid? courierId)
     {
+        // Multi-tenant koruması: havuz siparişleri (müşteri adı/telefon/adres içerir) yalnızca kuryenin bağlı olduğu
+        // kurye firmasının işletmeleri için listelenir. Firmaya bağlanmamış (eski) kayıtlar kendi aralarında eşleşir.
+        Guid? courierMerchantId = null;   // null => firmanın ortak filo kuryesi (tüm restoranlara hizmet verir)
+        Guid? courierCompanyId = null;
+        var courierKnown = false;
+
+        if (courierId.HasValue)
+        {
+            var info = await _context.Couriers
+                .AsNoTracking()
+                .Where(c => c.Id == courierId.Value)
+                .Select(c => new { c.MerchantId, CompanyId = (Guid?)c.CourierCompanyId })
+                .FirstOrDefaultAsync();
+
+            if (info is not null)
+            {
+                courierKnown = true;
+                courierMerchantId = info.MerchantId;
+                courierCompanyId = info.CompanyId;
+            }
+        }
+
         return await _dbSet
             .AsNoTracking()
             .Include(o => o.Merchant)
             .Include(o => o.Courier)
             .Where(o =>
                 (courierId.HasValue && o.CourierId == courierId.Value && (o.Status == OrderStatus.Assigned || o.Status == OrderStatus.PickedUp)) ||
-                (o.CourierId == null && (o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready) && o.Merchant.DispatchMode == DispatchMode.Pool))
+                (courierKnown && o.CourierId == null && (o.Status == OrderStatus.Pending || o.Status == OrderStatus.Ready) &&
+                 o.Merchant.DispatchMode == DispatchMode.Pool && o.Merchant.CourierCompanyId == courierCompanyId &&
+                 // Restorana tahsisli kurye yalnızca o restoranın siparişlerini görür; ortak filo hepsini görür.
+                 (courierMerchantId == null || o.MerchantId == courierMerchantId)))
             .OrderByDescending(o => courierId.HasValue && o.CourierId == courierId.Value)
             .ThenByDescending(o => o.CreatedAt)
             .ToListAsync();

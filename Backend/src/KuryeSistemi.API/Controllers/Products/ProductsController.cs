@@ -35,6 +35,9 @@ public class ProductsController : BaseController
             ? (merchantId ?? GetMerchantId())
             : GetMerchantId();
 
+        if (IsFirmOrAdmin() && tenantId != Guid.Empty && !await CanAccessMerchantAsync(tenantId, cancellationToken))
+            return Forbid();
+
         var result = await _productService.GetProductsAsync(tenantId, category, onlyAvailable, cancellationToken);
         return CreateActionResult(result);
     }
@@ -51,6 +54,9 @@ public class ProductsController : BaseController
         var tenantId = IsFirmOrAdmin()
             ? (merchantId ?? GetMerchantId())
             : GetMerchantId();
+
+        if (IsFirmOrAdmin() && tenantId != Guid.Empty && !await CanAccessMerchantAsync(tenantId, cancellationToken))
+            return Forbid();
 
         var result = await _productService.GetCategoriesAsync(tenantId, cancellationToken);
         return CreateActionResult(result);
@@ -84,6 +90,9 @@ public class ProductsController : BaseController
         var merchantId = IsFirmOrAdmin() && request.MerchantId.HasValue
             ? request.MerchantId.Value
             : GetMerchantId();
+
+        if (IsFirmOrAdmin() && merchantId != Guid.Empty && !await CanAccessMerchantAsync(merchantId, cancellationToken))
+            return Forbid();
 
         var email = GetUserEmail();
         var result = await _productService.BulkCreateProductsAsync(merchantId, request.Products, email, cancellationToken);

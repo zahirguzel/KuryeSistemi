@@ -671,7 +671,8 @@ export const FirmDashboard: React.FC = () => {
     try {
       const [couriersRes, ordersRes, merchantsRes] = await Promise.allSettled([
         courierService.getAllCouriers(),
-        api.get<ServiceResult<Order[]>>('/orders'),
+        // Kumanda paneli: tüm geçmiş yerine aktif siparişler + bugünün siparişleri (sayaçlar "bugün" için doğru olsun)
+        api.get<ServiceResult<Order[]>>('/orders', { params: { today: true } }),
         merchantService.getAllMerchants(),
       ]);
 

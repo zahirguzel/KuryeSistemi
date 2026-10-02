@@ -41,7 +41,7 @@ import {
 } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
 import { useNotificationStore } from '../stores/notificationStore';
-import { merchantService } from '../services/merchantService';
+import { merchantService, type UpdateMerchantSettingsRequest } from '../services/merchantService';
 import { DispatchMode, ReconciliationPeriod } from '../types';
 import { DISTRICTS, DISTRICT_NEIGHBORHOODS } from '../constants/locations';
 
@@ -107,7 +107,8 @@ type TabType = 'all' | 'dispatch' | 'location' | 'finance';
 
 // ── Ana Bileşen ────────────────────────────────────────────────────────────
 export const Settings: React.FC = () => {
-  const { merchant, updateMerchant } = useAuthStore();
+  const { merchant, user, updateMerchant } = useAuthStore();
+  const isFirmAdmin = Boolean(user?.roles?.some((r) => ['CourierFirm', 'Admin', 'FirmAdmin', 'SuperAdmin', 'CompanyUser'].includes(r) || r.startsWith('CompanyUser_')));
   const [activeTab, setActiveTab] = useState<TabType>('all');
 
   // ── Bölüm A: Lokasyon ve İletişim State'leri (Restoran Düzenleyebilir) ────
@@ -355,8 +356,8 @@ export const Settings: React.FC = () => {
       return;
     }
 
-    // Restoran profil bilgilerini, harita konumunu, dağıtım modelini, algoritma ve finansal ayarları gönderir
-    const payload = {
+    // Restoran profil bilgilerini ve harita konumunu gönderir (finans/dağıtım sözleşme alanları yalnızca firma yetkilisi ise iletilir)
+    const payload: UpdateMerchantSettingsRequest = {
       name: storeName,
       phoneNumber: phone,
       address: fullAddress,
@@ -364,44 +365,53 @@ export const Settings: React.FC = () => {
       latitude: lat,
       longitude: lng,
       workingHours,
-      dispatchMode,
-      defaultPackageFee: Number(packageFee),
-      reconciliationPeriod,
-      hexagonSizeMeters: Number(hexagonSizeMeters) || 1120,
-      maxCourierDistanceKm: Number(maxCourierDistanceKm) || 6,
-      maxOrdersPerTour: Number(maxOrdersPerTour) || 2,
-      orderBatchingTimeMinutes: Number(orderBatchingTimeMinutes) || 15,
-      crossRestaurantDistanceMeters: Number(crossRestaurantDistanceMeters) || 200,
     };
+
+    if (isFirmAdmin) {
+      payload.dispatchMode = dispatchMode;
+      payload.defaultPackageFee = Number(packageFee);
+      payload.reconciliationPeriod = reconciliationPeriod;
+      payload.hexagonSizeMeters = Number(hexagonSizeMeters) || 1120;
+      payload.maxCourierDistanceKm = Number(maxCourierDistanceKm) || 6;
+      payload.maxOrdersPerTour = Number(maxOrdersPerTour) || 2;
+      payload.orderBatchingTimeMinutes = Number(orderBatchingTimeMinutes) || 15;
+      payload.crossRestaurantDistanceMeters = Number(crossRestaurantDistanceMeters) || 200;
+    }
 
     try {
       if (merchant?.id) {
         const result = await merchantService.updateSettings(merchant.id, payload);
 
         if (result.isSuccess) {
-          updateMerchant({
-            name: storeName,
-            phoneNumber: phone,
-            address: fullAddress,
-            isOpen,
-            latitude: lat,
-            longitude: lng,
-            workingHours,
-            dispatchMode,
-            defaultPackageFee: Number(packageFee),
-            reconciliationPeriod,
-            hexagonSizeMeters: Number(hexagonSizeMeters) || 1120,
-            maxCourierDistanceKm: Number(maxCourierDistanceKm) || 6,
-            maxOrdersPerTour: Number(maxOrdersPerTour) || 2,
-            orderBatchingTimeMinutes: Number(orderBatchingTimeMinutes) || 15,
-            crossRestaurantDistanceMeters: Number(crossRestaurantDistanceMeters) || 200,
-          });
+          if (result.data) {
+            updateMerchant(result.data);
+          } else {
+            updateMerchant({
+              name: storeName,
+              phoneNumber: phone,
+              address: fullAddress,
+              isOpen,
+              latitude: lat,
+              longitude: lng,
+              workingHours,
+              ...(isFirmAdmin ? {
+                dispatchMode,
+                defaultPackageFee: Number(packageFee),
+                reconciliationPeriod,
+                hexagonSizeMeters: Number(hexagonSizeMeters) || 1120,
+                maxCourierDistanceKm: Number(maxCourierDistanceKm) || 6,
+                maxOrdersPerTour: Number(maxOrdersPerTour) || 2,
+                orderBatchingTimeMinutes: Number(orderBatchingTimeMinutes) || 15,
+                crossRestaurantDistanceMeters: Number(crossRestaurantDistanceMeters) || 200,
+              } : {}),
+            });
+          }
 
           // Yeşil Toast bildirimi ve başarı durumu
           useNotificationStore.getState().addNotification({
             type: 'delivered',
             title: '✅ Ayarlar Başarıyla Kaydedildi',
-            message: 'İşletme profili ve H3 lojistik dağıtım motoru ayarları güncellendi.',
+            message: 'İşletme profili ve operasyonel ayarlar güncellendi.',
           });
 
           setSavedSuccess(true);
@@ -419,14 +429,16 @@ export const Settings: React.FC = () => {
           latitude: lat,
           longitude: lng,
           workingHours,
-          dispatchMode,
-          defaultPackageFee: Number(packageFee),
-          reconciliationPeriod,
-          hexagonSizeMeters: Number(hexagonSizeMeters) || 1120,
-          maxCourierDistanceKm: Number(maxCourierDistanceKm) || 6,
-          maxOrdersPerTour: Number(maxOrdersPerTour) || 2,
-          orderBatchingTimeMinutes: Number(orderBatchingTimeMinutes) || 15,
-          crossRestaurantDistanceMeters: Number(crossRestaurantDistanceMeters) || 200,
+          ...(isFirmAdmin ? {
+            dispatchMode,
+            defaultPackageFee: Number(packageFee),
+            reconciliationPeriod,
+            hexagonSizeMeters: Number(hexagonSizeMeters) || 1120,
+            maxCourierDistanceKm: Number(maxCourierDistanceKm) || 6,
+            maxOrdersPerTour: Number(maxOrdersPerTour) || 2,
+            orderBatchingTimeMinutes: Number(orderBatchingTimeMinutes) || 15,
+            crossRestaurantDistanceMeters: Number(crossRestaurantDistanceMeters) || 200,
+          } : {}),
         });
 
         useNotificationStore.getState().addNotification({

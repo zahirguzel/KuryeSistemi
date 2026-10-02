@@ -5,14 +5,15 @@ using KuryeSistemi.Domain.Enums;
 namespace KuryeSistemi.Application.DTOs.Couriers;
 
 public sealed record CreateCourierRequestDto(
-    Guid MerchantId,
-    string FirstName,
-    string LastName,
-    string PhoneNumber,
-    string Email,
-    VehicleType VehicleType,
-    string LicensePlate,
-    string VehicleBrand,
-    string VehicleModel,
-    string? Password = null
+    Guid? MerchantId = null,
+    string FirstName = "",
+    string LastName = "",
+    string PhoneNumber = "",
+    string Email = "",
+    VehicleType VehicleType = VehicleType.Motorcycle,
+    string LicensePlate = "",
+    string VehicleBrand = "",
+    string VehicleModel = "",
+    string? Password = null,
+    Guid? CourierCompanyId = null
 );

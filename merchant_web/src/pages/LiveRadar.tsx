@@ -10,7 +10,7 @@ import React, { useEffect, useMemo, useRef, useCallback, useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, Polygon, useMap } from 'react-leaflet';
 import { Link } from 'react-router-dom';
 import L from 'leaflet';
-import { computeGlobalH3Grid, computeFitBounds } from '../utils/h3Geometry';
+import { computeGlobalH3Grid, computeFitBounds, hexSizeToH3Resolution } from '../utils/h3Geometry';
 import {
   Bike,
   Navigation,
@@ -337,8 +337,8 @@ export const LiveRadar: React.FC = () => {
     }
 
     // Sadece işletmenin kendi merkezini baz alarak sabit çekirdek kapsama alanını (k=2 -> 19 petek) üretir
-    return computeGlobalH3Grid([{ lat: mapCenter[0], lng: mapCenter[1] }], 2, 8);
-  }, [mapCenter, showH3Grid]);
+    return computeGlobalH3Grid([{ lat: mapCenter[0], lng: mapCenter[1] }], 2, hexSizeToH3Resolution(merchant?.hexagonSizeMeters));
+  }, [mapCenter, showH3Grid, merchant?.hexagonSizeMeters]);
 
   // İstatistikler
   const stats = useMemo(() => ({

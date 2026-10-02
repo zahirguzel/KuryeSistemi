@@ -70,3 +70,10 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
+
+# Uygulama logları
+Backend/src/KuryeSistemi.API/logs/
+
+# Python
+__pycache__/
+*.pyc

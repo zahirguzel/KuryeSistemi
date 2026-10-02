@@ -58,7 +58,7 @@ public sealed class AssignOrderCommandHandler
                 $"Aktif bir siparişi bulunuyor olabilir.");
 
         // --- Tenant kontrolü: Kurye ve sipariş aynı işletmeye mi ait? ---
-        if (courier.MerchantId != order.MerchantId)
+        if (courier.MerchantId.HasValue && courier.MerchantId.Value != order.MerchantId)
             throw new InvalidOperationException(
                 "Kurye, bu siparişin ait olduğu işletmeye kayıtlı değil.");
 

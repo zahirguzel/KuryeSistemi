@@ -88,7 +88,8 @@ public class CourierServiceTests
         var email = "kurye@test.com";
 
         var merchantId = Guid.NewGuid();
-        _merchantRepoMock.Setup(r => r.GetByIdAsync(merchantId)).ReturnsAsync(new Merchant { Id = merchantId, Name = "Test Restoran" });
+        var companyId = Guid.NewGuid();
+        _merchantRepoMock.Setup(r => r.GetByIdAsync(merchantId)).ReturnsAsync(new Merchant { Id = merchantId, Name = "Test Restoran", CourierCompanyId = companyId });
 
         var existingCourier = new Courier { Id = Guid.NewGuid(), Email = email };
         _courierRepoMock.Setup(r => r.GetByEmailAsync(email)).ReturnsAsync(existingCourier);

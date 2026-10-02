@@ -30,6 +30,15 @@ public sealed class MerchantsController : BaseController
         if (IsFirmOrAdmin())
         {
             var result = await _merchantService.GetAllAsync(cancellationToken);
+
+            // Tenant izolasyonu: firma kullanıcısı yalnızca kendi firmasının işletmelerini görür
+            var accessibleIds = await GetAccessibleMerchantIdsAsync(cancellationToken);
+            if (accessibleIds is not null && result.IsSuccess && result.Data is not null)
+            {
+                var scoped = result.Data.Where(m => accessibleIds.Contains(m.Id)).ToList().AsReadOnly();
+                result = KuryeSistemi.Application.Common.Models.ServiceResult<IReadOnlyList<MerchantDto>>.Success(scoped);
+            }
+
             return CreateActionResult(result);
         }
 
@@ -56,10 +65,20 @@ public sealed class MerchantsController : BaseController
         [FromBody] CreateMerchantRequestDto request,
         CancellationToken cancellationToken)
     {
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageMerchants, cancellationToken))
+            return Forbid();
+
         if (!IsFirmOrAdmin())
             return Forbid();
 
-        var result = await _merchantService.CreateAsync(request, cancellationToken);
+        // Yeni işletme, oluşturan firma kullanıcısının firmasına bağlanır (istekteki değer yok sayılır).
+        // SuperAdmin ise istekte belirtilen firmayı kullanabilir.
+        var companyId = IsAdmin()
+            ? request.CourierCompanyId
+            : await ResolveCallerCompanyIdAsync(cancellationToken);
+
+        var result = await _merchantService.CreateAsync(request with { CourierCompanyId = companyId }, cancellationToken);
         return CreateActionResult(result);
     }
 
@@ -73,7 +92,7 @@ public sealed class MerchantsController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> GetById(Guid merchantId, CancellationToken cancellationToken)
     {
-        if (!IsFirmOrAdmin() && GetMerchantId() != merchantId)
+        if (!await CanAccessMerchantAsync(merchantId, cancellationToken))
             return Forbid();
 
         var result = await _merchantService.GetByIdAsync(merchantId, cancellationToken);
@@ -95,8 +114,30 @@ public sealed class MerchantsController : BaseController
         [FromBody] UpdateMerchantSettingsDto request,
         CancellationToken cancellationToken)
     {
-        if (!IsFirmOrAdmin() && GetMerchantId() != merchantId)
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageMerchants, cancellationToken))
             return Forbid();
+
+        if (!await CanAccessMerchantAsync(merchantId, cancellationToken))
+            return Forbid();
+
+        // Sözleşme/finans alanlarını yalnızca firma belirler: restoran kendi paket ücretini,
+        // kurye hakedişini veya mahsuplaşma periyodunu değiştiremez.
+        if (!IsFirmOrAdmin())
+        {
+            request.DefaultPackageFee = null;
+            request.CourierCutFee = null;
+            request.ReconciliationPeriod = null;
+
+            // Dağıtım stratejisi ve algoritma parametreleri de sözleşme kapsamındadır (arayüzde kilitli;
+            // API üzerinden de değiştirilemez). Yalnızca kurye firması / admin belirler.
+            request.DispatchMode = null;
+            request.HexagonSizeMeters = null;
+            request.MaxCourierDistanceKm = null;
+            request.MaxOrdersPerTour = null;
+            request.OrderBatchingTimeMinutes = null;
+            request.CrossRestaurantDistanceMeters = null;
+        }
 
         var result = await _merchantService.UpdateSettingsAsync(merchantId, request, cancellationToken);
         return CreateActionResult(result);
@@ -112,7 +153,11 @@ public sealed class MerchantsController : BaseController
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(Guid merchantId, CancellationToken cancellationToken)
     {
-        if (!IsFirmOrAdmin())
+        // Firma alt kullanıcıları için yetki matrisi
+        if (!await HasCompanyPermissionAsync(KuryeSistemi.Domain.Entities.CompanyPermission.ManageMerchants, cancellationToken))
+            return Forbid();
+
+        if (!IsFirmOrAdmin() || !await CanAccessMerchantAsync(merchantId, cancellationToken))
             return Forbid();
 
         var result = await _merchantService.DeleteAsync(merchantId, cancellationToken);

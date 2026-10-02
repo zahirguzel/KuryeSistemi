@@ -5,9 +5,11 @@ import speech_recognition as sr
 import json
 
 ffmpeg_exe = imageio_ffmpeg.get_ffmpeg_exe()
-mp4_path = "c:/kuryesistemi/loji.mp4"
-temp_wav = "c:/kuryesistemi/temp_chunk.wav"
-output_file = "c:/kuryesistemi/loji_audio_transcript.txt"
+import os
+base = os.path.dirname(os.path.abspath(__file__))
+mp4_path = os.path.join(base, "loji.mp4")
+temp_wav = os.path.join(base, "temp_chunk.wav")
+output_file = os.path.join(base, "loji_audio_transcript.txt")
 
 # Total duration ~27m09s = 1629s
 chunk_duration = 45 # seconds per chunk

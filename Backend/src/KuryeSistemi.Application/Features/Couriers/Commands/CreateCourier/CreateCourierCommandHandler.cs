@@ -29,13 +29,32 @@ public sealed class CreateCourierCommandHandler
         CreateCourierCommand command,
         CancellationToken cancellationToken)
     {
-        // --- İşletme var mı? (Tenant doğrulaması) ---
-        var merchantExists = await _db.Merchants
-            .AnyAsync(m => m.Id == command.MerchantId, cancellationToken);
+        Guid resolvedCompanyId = command.CourierCompanyId;
+        Guid? resolvedMerchantId = null;
 
-        if (!merchantExists)
-            throw new InvalidOperationException(
-                $"MerchantId '{command.MerchantId}' bulunamadı.");
+        if (command.MerchantId.HasValue && command.MerchantId.Value != Guid.Empty)
+        {
+            var merchant = await _db.Merchants
+                .FirstOrDefaultAsync(m => m.Id == command.MerchantId.Value, cancellationToken);
+
+            if (merchant is null)
+                throw new InvalidOperationException($"MerchantId '{command.MerchantId}' bulunamadı.");
+
+            resolvedMerchantId = merchant.Id;
+            if (resolvedCompanyId == Guid.Empty && merchant.CourierCompanyId.HasValue)
+            {
+                resolvedCompanyId = merchant.CourierCompanyId.Value;
+            }
+        }
+
+        if (resolvedCompanyId == Guid.Empty)
+        {
+            var defaultCompany = await _db.CourierCompanies.FirstOrDefaultAsync(cancellationToken);
+            if (defaultCompany != null)
+                resolvedCompanyId = defaultCompany.Id;
+            else
+                throw new InvalidOperationException("Kuryenin bağlanabileceği aktif bir kurye firması bulunamadı.");
+        }
 
         // --- Plaka benzersizlik kontrolü ---
         var plateExists = await _db.Couriers
@@ -58,18 +77,19 @@ public sealed class CreateCourierCommandHandler
 
         var courier = new Courier
         {
-            MerchantId   = command.MerchantId,
-            FirstName    = command.FirstName.Trim(),
-            LastName     = command.LastName.Trim(),
-            PhoneNumber  = command.PhoneNumber.Trim(),
-            Email        = command.Email.Trim().ToLowerInvariant(),
-            PasswordHash = _passwordHasherService.HashPassword(rawPassword),
-            VehicleType  = command.VehicleType,
-            LicensePlate = command.LicensePlate.Trim().ToUpperInvariant(),
-            VehicleBrand = command.VehicleBrand.Trim(),
-            VehicleModel = command.VehicleModel.Trim(),
-            IsAvailable  = true,
-            CreatedBy    = "system" // İleride ICurrentUserService'ten alınacak
+            CourierCompanyId = resolvedCompanyId,
+            MerchantId       = resolvedMerchantId,
+            FirstName        = command.FirstName.Trim(),
+            LastName         = command.LastName.Trim(),
+            PhoneNumber      = command.PhoneNumber.Trim(),
+            Email            = command.Email.Trim().ToLowerInvariant(),
+            PasswordHash     = _passwordHasherService.HashPassword(rawPassword),
+            VehicleType      = command.VehicleType,
+            LicensePlate     = command.LicensePlate.Trim().ToUpperInvariant(),
+            VehicleBrand     = command.VehicleBrand.Trim(),
+            VehicleModel     = command.VehicleModel.Trim(),
+            IsAvailable      = true,
+            CreatedBy        = "system"
         };
 
         _db.Couriers.Add(courier);
@@ -88,6 +108,11 @@ public sealed class CreateCourierCommandHandler
             courier.VehicleModel,
             courier.IsAvailable,
             courier.CurrentBalance,
-            courier.CreatedAt);
+            courier.CreatedAt,
+            courier.IsOnline,
+            courier.CurrentLatitude,
+            courier.CurrentLongitude,
+            courier.LastLocationUpdate,
+            courier.CourierCompanyId);
     }
 }

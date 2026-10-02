@@ -10,7 +10,8 @@ import type { CourierState } from '../types/courier';
 // Backend CourierDto → Frontend CourierState dönüşüm tip guard
 interface BackendCourierDto {
   id: string;
-  merchantId: string;
+  merchantId?: string | null;
+  courierCompanyId?: string;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -40,7 +41,7 @@ function mapToCourierState(dto: BackendCourierDto): CourierState {
 
   return {
     id: dto.id,
-    merchantId: dto.merchantId,
+    merchantId: dto.merchantId ?? '',
     firstName: dto.firstName,
     lastName: dto.lastName,
     phoneNumber: dto.phoneNumber,
@@ -139,7 +140,7 @@ export const courierService = {
    * POST /api/couriers
    */
   async createCourier(courierData: {
-    merchantId: string;
+    merchantId?: string; // boş/undefined = ortak filo
     firstName: string;
     lastName: string;
     phoneNumber: string;
@@ -150,7 +151,10 @@ export const courierService = {
     vehicleModel?: string;
   }): Promise<ServiceResult<CourierState>> {
     try {
-      const response = await api.post<ServiceResult<BackendCourierDto>>('/couriers', courierData);
+      const response = await api.post<ServiceResult<BackendCourierDto>>('/couriers', {
+        ...courierData,
+        merchantId: courierData.merchantId || undefined,
+      });
       const result = response.data;
       if (result.isSuccess && result.data) {
         return {
@@ -196,7 +200,11 @@ export const courierService = {
     }>
   ): Promise<ServiceResult<CourierState>> {
     try {
-      const response = await api.put<ServiceResult<BackendCourierDto>>(`/couriers/${id}`, courierData);
+      const response = await api.put<ServiceResult<BackendCourierDto>>(`/couriers/${id}`, {
+        ...courierData,
+        // '' = ortak filoya al (backend Guid.Empty'yi "restoran tahsisini kaldır" olarak yorumlar)
+        ...(courierData.merchantId === '' ? { merchantId: '00000000-0000-0000-0000-000000000000' } : {}),
+      });
       const result = response.data;
       if (result.isSuccess && result.data) {
         return {

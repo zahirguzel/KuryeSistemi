@@ -16,6 +16,9 @@ export interface CreateOrderRequest {
   deliveryCity?: string;
   deliveryLatitude?: number;
   deliveryLongitude?: number;
+  deliveryNeighborhood?: string;
+  source?: string;
+  orderCode?: string;
   recipientName: string;
   recipientPhone: string;
   notes?: string;

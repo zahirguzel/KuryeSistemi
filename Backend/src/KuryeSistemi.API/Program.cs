@@ -23,6 +23,25 @@ try
 {
     Log.Information("--> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...");
 
+    // --- Üretim güvenlik ön kontrolleri ---
+    if (!builder.Environment.IsDevelopment())
+    {
+        var dbConn = builder.Configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+        if (string.IsNullOrWhiteSpace(dbConn) ||
+            dbConn.Contains("YOUR_DB_PASSWORD", StringComparison.OrdinalIgnoreCase) ||
+            dbConn.Contains("Password123", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                "GÜVENLİK: Üretimde varsayılan/şablon veritabanı şifresi kullanılamaz. " +
+                "Ortam değişkeni tanımlayın: ConnectionStrings__DefaultConnection");
+        }
+
+        if (builder.Configuration["AllowedHosts"] is null or "*")
+        {
+            Log.Warning("--> [GÜVENLİK] AllowedHosts '*' olarak ayarlı. Üretimde alan adlarınızla sınırlayın (ortam değişkeni: AllowedHosts=api.alanadiniz.com).");
+        }
+    }
+
     // --- 2. Modüler Servis Kayıtları ---
     // Veritabanı (PostgreSQL, Redis, Hangfire)
     builder.Services.AddDatabase(builder.Configuration);
@@ -51,7 +70,7 @@ try
     builder.Services.AddSwaggerWithJwt();
 
     // CORS Politikası (SignalR & Mobile)
-    builder.Services.AddCorsPolicy(builder.Configuration);
+    builder.Services.AddCorsPolicy(builder.Configuration, builder.Environment);
 
     // SignalR
     builder.Services.AddSignalR()
@@ -117,6 +136,12 @@ try
     // Her 1 dakikada bir sinyali kesilen/uzun süre hareketsiz kalan kuryeleri otomatik çevrimdışı yap
     RecurringJob.AddOrUpdate<KuryeSistemi.Application.Jobs.CourierPresenceJob>(
         "courier-presence-check",
+        job => job.ExecuteAsync(),
+        "*/1 * * * *");
+
+    // Her 1 dakikada bir, akıllı GPS modunda kurye bulunamamış bekleyen siparişleri yeniden dene
+    RecurringJob.AddOrUpdate<KuryeSistemi.Application.Jobs.SmartAutoRetryJob>(
+        "smart-auto-retry",
         job => job.ExecuteAsync(),
         "*/1 * * * *");
 

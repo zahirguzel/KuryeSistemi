@@ -53,7 +53,8 @@ public sealed class GetCouriersByMerchantQueryHandler
                 c.IsOnline,
                 c.CurrentLatitude,
                 c.CurrentLongitude,
-                c.LastLocationUpdate))
+                c.LastLocationUpdate,
+                c.CourierCompanyId))
             .ToListAsync(cancellationToken);
     }
 }

@@ -49,9 +49,10 @@ public class OrderService : IOrderService
 
     public async Task<ServiceResult<IReadOnlyList<OrderDto>>> GetAllOrdersAsync(
         OrderStatus? status = null,
+        bool todayAndActiveOnly = false,
         CancellationToken cancellationToken = default)
     {
-        var orders = await _orderRepository.GetAllWithDetailsAsync(status);
+        var orders = await _orderRepository.GetAllWithDetailsAsync(status, todayAndActiveOnly);
         var dtos = orders.Select(MapToDto).ToList().AsReadOnly();
         return ServiceResult<IReadOnlyList<OrderDto>>.Success(dtos);
     }
@@ -184,6 +185,7 @@ public class OrderService : IOrderService
             RecipientPhone = request.RecipientPhone.Trim(),
             Notes = request.Notes?.Trim(),
             PaymentMethod = request.PaymentMethod,
+            TotalOrderAmount = request.TotalOrderAmount,
             CourierEarning = (merchant != null && merchant.CourierCutFee > 0) ? merchant.CourierCutFee : 40.00m,
             FirmFee = (merchant != null && merchant.DefaultPackageFee > 0 && merchant.CourierCutFee > 0)
                 ? Math.Max(0, merchant.DefaultPackageFee - merchant.CourierCutFee)
@@ -271,10 +273,24 @@ public class OrderService : IOrderService
                 $"Kurye '{courier.FirstName} {courier.LastName}' şu anda mesaide (çevrimdışı) değil.");
         }
 
+        // Multi-tenant koruması: kurye, siparişin işletmesiyle aynı kurye firmasına bağlı olmalıdır.
+        var orderMerchant = await _merchantRepository.GetByIdAsync(order.MerchantId);
+        if (orderMerchant is not null && orderMerchant.CourierCompanyId.HasValue &&
+            courier.CourierCompanyId != orderMerchant.CourierCompanyId.Value)
+        {
+            return ServiceResult<OrderDto>.Conflict("Bu kurye siparişin bağlı olduğu kurye firmasına ait değildir.");
+        }
+
+        // Kurye başka bir işletmeye özel tahsis edilmişse (MerchantId dolu ve farklıysa) atanamaz
+        if (courier.MerchantId.HasValue && courier.MerchantId.Value != order.MerchantId)
+        {
+            return ServiceResult<OrderDto>.Conflict("Bu kurye başka bir işletmeye özel tahsis edilmiştir.");
+        }
+
         // Eğer daha önce başka bir kurye atanmışsa onu boşa çıkar
         if (order.CourierId.HasValue && order.CourierId.Value != courierId)
         {
-            await FreeCourierAsync(order.CourierId.Value);
+            await FreeCourierAsync(order.CourierId.Value, order.MerchantId, IsCountedAsActive(order.Status));
         }
 
         order.CourierId = courier.Id;
@@ -300,10 +316,32 @@ public class OrderService : IOrderService
         return ServiceResult<OrderDto>.Success(MapToDto(order), "Kurye siparişe başarıyla atandı.");
     }
 
+    // Aynı siparişi aynı anda alan iki kuryeden yalnızca birinin başarılı olması için şeritli kilit.
+    // (Tek API örneği için yeterlidir; çoklu örnekte DB seviyesinde concurrency token gerekir.)
+    private static readonly SemaphoreSlim[] ClaimLocks =
+        Enumerable.Range(0, 64).Select(_ => new SemaphoreSlim(1, 1)).ToArray();
+
     public async Task<ServiceResult<OrderDto>> ClaimOrderAsync(
         Guid orderId,
         Guid courierId,
         CancellationToken cancellationToken = default)
+    {
+        var gate = ClaimLocks[(orderId.GetHashCode() & int.MaxValue) % ClaimLocks.Length];
+        await gate.WaitAsync(cancellationToken);
+        try
+        {
+            return await ClaimOrderCoreAsync(orderId, courierId, cancellationToken);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    private async Task<ServiceResult<OrderDto>> ClaimOrderCoreAsync(
+        Guid orderId,
+        Guid courierId,
+        CancellationToken cancellationToken)
     {
         var order = await _orderRepository.GetByIdAsync(orderId);
         if (order is null)
@@ -380,7 +418,7 @@ public class OrderService : IOrderService
         // Eğer sipariş geri beklemeye/havuza alınıyorsa (Pending / Preparing) ve kuryesi varsa, kuryeyi serbest bırak
         if ((newStatus == OrderStatus.Pending || newStatus == OrderStatus.Preparing) && order.CourierId.HasValue)
         {
-            await FreeCourierAsync(order.CourierId.Value);
+            await FreeCourierAsync(order.CourierId.Value, order.MerchantId, IsCountedAsActive(order.Status));
             order.CourierId = null;
             order.Courier = null;
         }
@@ -391,7 +429,7 @@ public class OrderService : IOrderService
             // Eğer sipariş önceden atanmışsa ve hazır aşamasına geri çekildiyse kuryeyi boşa çıkar
             if (order.Status == OrderStatus.Assigned && order.CourierId.HasValue)
             {
-                await FreeCourierAsync(order.CourierId.Value);
+                await FreeCourierAsync(order.CourierId.Value, order.MerchantId, IsCountedAsActive(order.Status));
                 order.CourierId = null;
                 order.Courier = null;
             }
@@ -461,7 +499,7 @@ public class OrderService : IOrderService
             case OrderStatus.Cancelled:
                 if (order.CourierId.HasValue)
                 {
-                    await FreeCourierAsync(order.CourierId.Value);
+                    await FreeCourierAsync(order.CourierId.Value, order.MerchantId, IsCountedAsActive(order.Status));
                 }
                 break;
         }
@@ -491,7 +529,64 @@ public class OrderService : IOrderService
         return ServiceResult<OrderDto>.Success(MapToDto(order), "Sipariş durumu güncellendi.");
     }
 
+    // Aynı firmanın kuryeleri için eşzamanlı akıllı atamaları sıraya sokar: iki sipariş aynı anda aynı kuryeyi
+    // seçip tur kapasitesini aşmasın (aday sayımı ve kayıt kilit içinde yapılır).
+    private static readonly SemaphoreSlim[] SmartAssignLocks =
+        Enumerable.Range(0, 64).Select(_ => new SemaphoreSlim(1, 1)).ToArray();
+
+    /// <summary>Konum bilgisi bu süreden eskiyse kuryenin GPS'i güvenilmez sayılır.</summary>
+    private static readonly TimeSpan GpsFreshness = TimeSpan.FromMinutes(2);
+
     private async Task<bool> TrySmartAutoAssignAsync(
+        Order order,
+        Merchant merchant,
+        CancellationToken cancellationToken = default)
+    {
+        var lockKey = merchant.CourierCompanyId ?? merchant.Id;
+        var gate = SmartAssignLocks[(lockKey.GetHashCode() & int.MaxValue) % SmartAssignLocks.Length];
+        await gate.WaitAsync(cancellationToken);
+        try
+        {
+            return await TrySmartAutoAssignCoreAsync(order, merchant, cancellationToken);
+        }
+        finally
+        {
+            gate.Release();
+        }
+    }
+
+    /// <summary>
+    /// Akıllı GPS modundaki işletmelerin kurye atanamamış siparişlerini yeniden dener
+    /// (örn. sipariş geldiğinde uygun kurye yoktu, sonra kurye mesaiye girdi / müsait oldu).
+    /// Atanan sipariş sayısını döner.
+    /// </summary>
+    public async Task<int> RetryUnassignedSmartAutoOrdersAsync(CancellationToken cancellationToken = default)
+    {
+        var waiting = await _orderRepository.GetAllAsync(o =>
+            o.CourierId == null && !o.IsDeleted &&
+            (o.Status == OrderStatus.Pending || o.Status == OrderStatus.Preparing || o.Status == OrderStatus.Ready) &&
+            o.Merchant.DispatchMode == DispatchMode.SmartAuto);
+
+        var assigned = 0;
+        var skipMerchants = new HashSet<Guid>(); // Adayı olmayan işletmeyi bu turda tekrar tekrar sorgulama
+
+        foreach (var order in waiting.OrderBy(o => o.CreatedAt))
+        {
+            if (skipMerchants.Contains(order.MerchantId)) continue;
+
+            var merchant = await _merchantRepository.GetByIdAsync(order.MerchantId);
+            if (merchant is null || merchant.DispatchMode != DispatchMode.SmartAuto) continue;
+
+            if (await TrySmartAutoAssignAsync(order, merchant, cancellationToken))
+                assigned++;
+            else
+                skipMerchants.Add(order.MerchantId);
+        }
+
+        return assigned;
+    }
+
+    private async Task<bool> TrySmartAutoAssignCoreAsync(
         Order order,
         Merchant merchant,
         CancellationToken cancellationToken = default)
@@ -500,11 +595,18 @@ public class OrderService : IOrderService
         var maxOrdersPerTour = merchant.MaxOrdersPerTour > 0 ? merchant.MaxOrdersPerTour : 2;
 
         // 1. Öncelikle mesaide (IsOnline) kuryeleri getir (işletmeye bağlı olanlar)
-        var candidateCouriers = await _courierRepository.GetAllAsync(c =>
-            c.IsOnline && (c.MerchantId == order.MerchantId || c.MerchantId == merchant.Id));
+        // Adaylar: restorana tahsisli kuryeler + (restoran bir firmaya bağlıysa) o firmanın ortak filo kuryeleri
+        // (MerchantId == null). Başka firmanın kuryeleri asla aday olmaz.
+        var companyId = merchant.CourierCompanyId;
+        var candidateCouriers = companyId.HasValue
+            ? await _courierRepository.GetAllAsync(c =>
+                c.IsOnline && c.CourierCompanyId == companyId.Value &&
+                (c.MerchantId == null || c.MerchantId == merchant.Id))
+            : await _courierRepository.GetAllAsync(c =>
+                c.IsOnline && (c.MerchantId == order.MerchantId || c.MerchantId == merchant.Id));
 
-        // Yalnızca kurye şirketi / admin ise ortak kurye havuzundan arama yapılabilir (Multi-tenant izolasyonu)
-        if (candidateCouriers.Count == 0 && (merchant.Role == "CourierFirm" || merchant.Role == "Admin"))
+        // Yalnızca platform admini firmasız bir restoran için tüm kuryelerden arama yapabilir
+        if (candidateCouriers.Count == 0 && merchant.Role == "Admin")
         {
             candidateCouriers = await _courierRepository.GetAllAsync(c => c.IsOnline);
         }
@@ -526,14 +628,18 @@ public class OrderService : IOrderService
             .GroupBy(o => o.CourierId!.Value)
             .ToDictionary(g => g.Key, g => g.Count());
 
-        var availableCandidates = new List<(Courier Courier, double DistanceKm, int ActiveOrderCount)>();
+        var availableCandidates = new List<(Courier Courier, double DistanceKm, int ActiveOrderCount, bool Bundle)>();
+        var activeByCourier = allActiveOrders.GroupBy(o => o.CourierId!.Value).ToDictionary(g => g.Key, g => g.ToList());
+        var nowUtc = DateTime.UtcNow;
 
         foreach (var c in candidateCouriers)
         {
             var activeCount = orderCountByCourier.TryGetValue(c.Id, out var count) ? count : 0;
             if (activeCount < maxOrdersPerTour)
             {
-                var hasGps = c.CurrentLatitude.HasValue && c.CurrentLongitude.HasValue;
+                // Konumu yok ya da bayat (>2 dk) kurye "GPS'siz" sayılır: yakın ve taze konumlu adaylar önceliklidir.
+                var hasGps = c.CurrentLatitude.HasValue && c.CurrentLongitude.HasValue &&
+                             (!c.LastLocationUpdate.HasValue || DateTime.UtcNow - c.LastLocationUpdate.Value <= GpsFreshness);
                 var dist = hasGps
                     ? CalculateDistanceKm(refLat, refLng, c.CurrentLatitude!.Value, c.CurrentLongitude!.Value)
                     : 999.0; // GPS sinyali olmayan kuryeye mesafe cezası ver (gerçek yakın kuryeler öncelikli olsun)
@@ -541,7 +647,12 @@ public class OrderService : IOrderService
                 // Mesafe sınırını kontrol et (GPS varsa)
                 if (!hasGps || dist <= maxDistanceKm)
                 {
-                    availableCandidates.Add((c, dist, activeCount));
+                    // Birleştirme (bundle): kuryenin henüz alıma gittiği siparişiyle aynı yöne/aynı mahalleye giden
+                    // (ve çapraz restoran mesafesi içindeki) yeni sipariş, o kuryeye öncelikli verilir.
+                    var bundle = activeCount > 0 &&
+                                 activeByCourier.TryGetValue(c.Id, out var mine) &&
+                                 mine.Any(a => CanBundle(a, order, merchant, nowUtc));
+                    availableCandidates.Add((c, dist, activeCount, bundle));
                 }
             }
         }
@@ -551,7 +662,8 @@ public class OrderService : IOrderService
 
         // En yakın ve en az yüklü kuryeyi seç
         var best = availableCandidates
-            .OrderBy(x => x.DistanceKm)
+            .OrderByDescending(x => x.Bundle)
+            .ThenBy(x => x.DistanceKm)
             .ThenBy(x => x.ActiveOrderCount)
             .First();
 
@@ -572,9 +684,11 @@ public class OrderService : IOrderService
         _courierRepository.Update(selectedCourier);
         await _orderRepository.SaveChangesAsync();
 
-        var distanceInfo = (selectedCourier.CurrentLatitude.HasValue && selectedCourier.CurrentLongitude.HasValue)
+        var distanceInfo = best.DistanceKm < 999.0
             ? $" ({best.DistanceKm:F1} km uzaklıkta, Tur: {newActiveCount}/{maxOrdersPerTour})"
             : $" (Tur: {newActiveCount}/{maxOrdersPerTour})";
+
+        if (best.Bundle) distanceInfo += " 📦 birleştirildi";
 
         await _notificationService.SendOrderStatusChangedAsync(
             order.MerchantId,
@@ -595,12 +709,67 @@ public class OrderService : IOrderService
         return true;
     }
 
-    private async Task FreeCourierAsync(Guid courierId)
+    /// <summary>
+    /// Yeni siparişin, kuryenin mevcut siparişiyle tek turda birleştirilip birleştirilemeyeceği:
+    ///  - mevcut sipariş henüz alıma gidiyor (Assigned) ve atanma üzerinden OrderBatchingTimeMinutes geçmemiş,
+    ///  - farklı restoranlarsa alım noktaları CrossRestaurantDistanceMeters içinde (aynı restoranda şart yok),
+    ///  - teslimatlar aynı mahallede ya da HexagonSizeMeters çapı içinde.
+    /// </summary>
+    private static bool CanBundle(Order existing, Order incoming, Merchant merchant, DateTime nowUtc)
+    {
+        if (merchant.OrderBatchingTimeMinutes <= 0) return false;
+        if (existing.Status != OrderStatus.Assigned) return false;
+
+        var since = existing.AssignedAt ?? existing.CreatedAt;
+        if ((nowUtc - since).TotalMinutes > merchant.OrderBatchingTimeMinutes) return false;
+
+        if (existing.MerchantId != incoming.MerchantId)
+        {
+            if (!TryDistanceMeters(existing.PickupLatitude, existing.PickupLongitude,
+                    incoming.PickupLatitude, incoming.PickupLongitude, out var pickupMeters)
+                || pickupMeters > merchant.CrossRestaurantDistanceMeters)
+                return false;
+        }
+
+        if (!string.IsNullOrWhiteSpace(existing.DeliveryNeighborhood) &&
+            string.Equals(existing.DeliveryNeighborhood.Trim(), incoming.DeliveryNeighborhood?.Trim(), StringComparison.OrdinalIgnoreCase))
+            return true;
+
+        var hexMeters = merchant.HexagonSizeMeters > 0 ? merchant.HexagonSizeMeters : 1120;
+        return TryDistanceMeters(existing.DeliveryLatitude, existing.DeliveryLongitude,
+                   incoming.DeliveryLatitude, incoming.DeliveryLongitude, out var deliveryMeters)
+               && deliveryMeters <= hexMeters;
+    }
+
+    private static bool TryDistanceMeters(decimal lat1, decimal lng1, decimal lat2, decimal lng2, out double meters)
+    {
+        meters = 0;
+        if ((lat1 == 0 && lng1 == 0) || (lat2 == 0 && lng2 == 0)) return false;
+        meters = CalculateDistanceKm((double)lat1, (double)lng1, (double)lat2, (double)lng2) * 1000.0;
+        return true;
+    }
+
+    private static bool IsCountedAsActive(OrderStatus status)
+        => status == OrderStatus.Assigned || status == OrderStatus.PickedUp;
+
+    /// <summary>
+    /// Kuryeyi bir siparişten ayırır. Kuryenin tur kapasitesi dolu değilse müsait yapar;
+    /// halen başka aktif teslimatları varsa kapasiteye göre meşgul bırakır.
+    /// </summary>
+    /// <param name="currentOrderCounted">Ayrılan sipariş şu an aktif sayıma dahil mi (Assigned/PickedUp)?</param>
+    private async Task FreeCourierAsync(Guid courierId, Guid? merchantId = null, bool currentOrderCounted = true)
     {
         var courier = await _courierRepository.GetByIdAsync(courierId);
         if (courier is not null)
         {
-            courier.IsAvailable = true;
+            var activeCount = await _orderRepository.CountActiveOrdersByCourierAsync(courierId);
+            var remaining = Math.Max(0, currentOrderCounted ? activeCount - 1 : activeCount);
+
+            var targetMerchantId = merchantId ?? courier.MerchantId;
+            var merchant = targetMerchantId.HasValue ? await _merchantRepository.GetByIdAsync(targetMerchantId.Value) : null;
+            var maxTour = (merchant is not null && merchant.MaxOrdersPerTour > 0) ? merchant.MaxOrdersPerTour : 2;
+
+            courier.IsAvailable = courier.IsOnline && remaining < maxTour;
             courier.UpdatedBy = "system";
             _courierRepository.Update(courier);
             await _courierRepository.SaveChangesAsync();
@@ -608,8 +777,8 @@ public class OrderService : IOrderService
             await _notificationService.SendCourierStatusChangedAsync(
                 courier.Id,
                 courier.IsOnline,
-                true,
-                $"🛵 {courier.FirstName} {courier.LastName} siparişi tamamladı ve müsait.",
+                courier.IsAvailable,
+                $"🛵 {courier.FirstName} {courier.LastName} siparişten ayrıldı.",
                 courier.MerchantId);
         }
     }

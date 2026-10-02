@@ -212,9 +212,10 @@ export const Finance: React.FC = () => {
 
   // ── Teslim Edilmiş Siparişler (Finansal Veri Tabanı) ───────────────────────
   const allDeliveredOrders = useMemo(() => {
-    return orders.filter(
-      (o) => o.status === 'Delivered' || o.status === 3 || String(o.status) === 'Delivered'
-    );
+    return orders.filter((o) => {
+      const s = String(o.status).toLowerCase();
+      return s === 'delivered' || s === '5';
+    });
   }, [orders]);
 
   // Tarih Filtresi Uygula

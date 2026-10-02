@@ -86,7 +86,7 @@ class OrderNotifier extends Notifier<OrderState> {
             message: message.isNotEmpty ? message : 'Havuza yeni bir sipariş paketi düştü.',
           );
         }
-      } else if (statusLower == 'assigned' || status == '1') {
+      } else if (statusLower == 'assigned' || status == '3') {
         await alertService.triggerNewOrderAlert(
           title: '📦 SİZE YENİ GÖREV ATANDI!',
           message: message.isNotEmpty ? message : 'Restorandan size yeni bir teslimat görevi atandı.',

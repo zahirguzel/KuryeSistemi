@@ -7,7 +7,7 @@ namespace KuryeSistemi.Application.Repositories.Interfaces;
 
 public interface IOrderRepository : IGenericRepository<Order>
 {
-    Task<IReadOnlyList<Order>> GetAllWithDetailsAsync(OrderStatus? status = null);
+    Task<IReadOnlyList<Order>> GetAllWithDetailsAsync(OrderStatus? status = null, bool todayAndActiveOnly = false);
     Task<IReadOnlyList<Order>> GetActiveOrdersByMerchantAsync(Guid merchantId);
     Task<IReadOnlyList<Order>> GetOrdersByMerchantAsync(Guid merchantId, OrderStatus? status);
     Task<IReadOnlyList<Order>> GetMerchantTodayOrdersAsync(Guid merchantId);

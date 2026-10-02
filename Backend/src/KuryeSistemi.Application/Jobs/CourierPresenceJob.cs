@@ -1,4 +1,5 @@
 using KuryeSistemi.Application.Interfaces;
+using KuryeSistemi.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -36,6 +37,21 @@ public sealed class CourierPresenceJob
             .ToListAsync();
 
         if (inactiveCouriers.Count == 0) return;
+
+        // Teslimatta olan (atanmış / yolda) kuryeyi sinyal kesilse bile offline yapma;
+        // sipariş akışı ortada kalır. Sipariş bitince bir sonraki turda değerlendirilir.
+        var inactiveIds = inactiveCouriers.Select(c => c.Id).ToList();
+        var busyIds = await _db.Orders
+            .Where(o => o.CourierId != null && inactiveIds.Contains(o.CourierId.Value)
+                        && (o.Status == OrderStatus.Assigned || o.Status == OrderStatus.PickedUp))
+            .Select(o => o.CourierId!.Value)
+            .Distinct()
+            .ToListAsync();
+        if (busyIds.Count > 0)
+        {
+            inactiveCouriers = inactiveCouriers.Where(c => !busyIds.Contains(c.Id)).ToList();
+            if (inactiveCouriers.Count == 0) return;
+        }
 
         foreach (var courier in inactiveCouriers)
         {

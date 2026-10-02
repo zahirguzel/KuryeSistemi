@@ -146,22 +146,51 @@ public class AuthService : IAuthService
         var courier = await _courierRepository.GetByEmailAsync(normalizedEmail);
         if (courier is not null)
         {
+            if (courier.IsDeleted)
+                return ServiceResult<AuthTokenDto>.Unauthorized("Kurye hesabı silinmiş veya bulunamadı.");
+
             if (string.IsNullOrEmpty(courier.PasswordHash))
                 return ServiceResult<AuthTokenDto>.Unauthorized("Kurye hesabı şifresi henüz tanımlanmamış.");
 
             if (!_passwordHasherService.VerifyPassword(request.Password, courier.PasswordHash))
                 return ServiceResult<AuthTokenDto>.Unauthorized(invalidMessage);
 
-            var token = _jwtService.GenerateToken(courier.MerchantId, courier.Email, courier.Id, role: "Courier");
+            // Kurye firmasının aktiflik kontrolü (Firma pasifse kurye giremez)
+            var courierCompany = await _db.CourierCompanies.AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == courier.CourierCompanyId && !c.IsDeleted, cancellationToken);
+
+            if (courierCompany is null || !courierCompany.IsActive)
+            {
+                return ServiceResult<AuthTokenDto>.Unauthorized("Bağlı olduğunuz kurye lojistik firmasının aboneliği aktif değil.");
+            }
+
+            // Eğer kurye belirli bir restorana özel tahsis edilmişse ve restoran pasifse, genel havuz kuryesine devret
+            var effectiveMerchantId = courier.MerchantId ?? Guid.Empty;
+            if (courier.MerchantId.HasValue && courier.MerchantId.Value != Guid.Empty)
+            {
+                var assignedMerchant = await _merchantRepository.GetByIdAsync(courier.MerchantId.Value);
+                if (assignedMerchant is null || !assignedMerchant.IsActive)
+                {
+                    effectiveMerchantId = Guid.Empty; // Havuz kuryesi olarak çalışmaya devam etsin
+                }
+            }
+
+            var token = _jwtService.GenerateToken(
+                effectiveMerchantId,
+                courier.Email,
+                courier.Id,
+                role: "Courier",
+                courierCompanyId: courier.CourierCompanyId);
 
             var dto = new AuthTokenDto(
                 token,
-                MerchantId:   courier.MerchantId,
-                MerchantName: $"{courier.FirstName} {courier.LastName}",
-                Email:        courier.Email,
-                ExpiresAt:    DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
-                CourierId:    courier.Id,
-                Roles:        new[] { "Courier" });
+                MerchantId:       effectiveMerchantId,
+                MerchantName:     $"{courier.FirstName} {courier.LastName}",
+                Email:            courier.Email,
+                ExpiresAt:        DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+                CourierId:        courier.Id,
+                Roles:            new[] { "Courier" },
+                CourierCompanyId: courier.CourierCompanyId);
 
             return ServiceResult<AuthTokenDto>.Success(dto, "Giriş başarılı.");
         }
