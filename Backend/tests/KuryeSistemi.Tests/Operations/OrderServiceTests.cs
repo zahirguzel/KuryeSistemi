@@ -201,6 +201,7 @@ public class OrderServiceTests
         result.IsSuccess.Should().BeTrue();
         order.FirmFee.Should().Be(35.00m, "Firma komisyonu mühürlenmelidir: 80 - 45 = 35 TL.");
         order.CourierEarning.Should().Be(45.00m);
+        _jobMock.Verify(j => j.EnqueueDeliveryCreditDeduction(orderId), Times.Once);
         courier.IsAvailable.Should().BeFalse("Kuryenin halen tur kapasitesi kadar aktif siparişi olduğundan IsAvailable false kalmalıdır.");
     }
 

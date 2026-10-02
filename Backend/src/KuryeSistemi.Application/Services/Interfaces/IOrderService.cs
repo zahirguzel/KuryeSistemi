@@ -9,7 +9,8 @@ namespace KuryeSistemi.Application.Services.Interfaces;
 
 public interface IOrderService
 {
-    Task<ServiceResult<IReadOnlyList<OrderDto>>> GetAllOrdersAsync(OrderStatus? status = null, bool todayAndActiveOnly = false, CancellationToken cancellationToken = default);
+    Task<ServiceResult<OrderPageDto>> GetOrdersPagedAsync(OrderListQuery query, CancellationToken cancellationToken = default);
+    Task<ServiceResult<IReadOnlyList<OrderDto>>> GetAllOrdersAsync(OrderStatus? status = null, bool todayAndActiveOnly = false, IReadOnlyCollection<Guid>? merchantIds = null, CancellationToken cancellationToken = default);
     Task<ServiceResult<IReadOnlyList<OrderDto>>> GetActiveOrdersAsync(Guid merchantId, CancellationToken cancellationToken = default);
     Task<ServiceResult<IReadOnlyList<OrderDto>>> GetOrdersByMerchantAsync(Guid merchantId, OrderStatus? status, CancellationToken cancellationToken = default);
     Task<ServiceResult<IReadOnlyList<OrderDto>>> GetMerchantTodayOrdersAsync(Guid merchantId, CancellationToken cancellationToken = default);

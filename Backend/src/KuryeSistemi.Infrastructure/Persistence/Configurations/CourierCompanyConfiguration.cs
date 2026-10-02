@@ -31,6 +31,9 @@ internal sealed class CourierCompanyConfiguration : IEntityTypeConfiguration<Cou
         builder.Property(c => c.TaxNumber)
                .HasMaxLength(20);
 
+        // Kontör bakiyesi eşzamanlı güncellemelerde kayıp yazma olmasın diye xmin ile korunur
+        builder.UseXminAsConcurrencyToken();
+
         builder.Property(c => c.CreditBalance)
                .IsRequired()
                .HasDefaultValue(0);

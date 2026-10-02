@@ -32,4 +32,9 @@ public sealed class HangfireBackgroundJobService : IBackgroundJobService
             "--> [HANGFIRE SCHEDULED] Sipariş {OrderId} için gecikmeli denetim görevi planlandı. JobId: {JobId}, Süre: {Delay}",
             orderId, jobId, delay);
     }
+
+    public void EnqueueDeliveryCreditDeduction(Guid orderId)
+    {
+        _backgroundJobClient.Enqueue<CreditDeductionJob>(job => job.ExecuteAsync(orderId));
+    }
 }

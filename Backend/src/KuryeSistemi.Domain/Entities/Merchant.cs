@@ -32,6 +32,9 @@ public sealed class Merchant : BaseEntity
     /// <summary>Giriş için şifre hash'i (BCrypt). Düz metin asla saklanmaz.</summary>
     public string PasswordHash { get; set; } = string.Empty;
 
+    /// <summary>Şifrenin son değiştirildiği an (UTC). Bundan önce üretilmiş token'lar geçersiz sayılır.</summary>
+    public DateTime? PasswordChangedAt { get; set; }
+
     /// <summary>
     /// Kullanıcı rolü: "Merchant" (Restoran İşletmecisi) veya "CourierFirm" (Kurye Firması Yöneticisi).
     /// Bu alan JWT token'a claim olarak eklenir ve frontend rol bazlı yönlendirme yapar.

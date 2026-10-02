@@ -20,6 +20,9 @@ public class AuthService : IAuthService
     private readonly IJwtService _jwtService;
     private readonly IPasswordHasherService _passwordHasherService;
     private readonly JwtSettings _jwtSettings;
+    private readonly ILoginAttemptTracker _loginAttempts;
+
+    private const string InvalidCredentialsMessage = "E-posta veya şifre hatalı.";
 
     public AuthService(
         IMerchantRepository merchantRepository,
@@ -27,7 +30,8 @@ public class AuthService : IAuthService
         IApplicationDbContext db,
         IJwtService jwtService,
         IPasswordHasherService passwordHasherService,
-        IOptions<JwtSettings> jwtSettings)
+        IOptions<JwtSettings> jwtSettings,
+        ILoginAttemptTracker loginAttempts)
     {
         _merchantRepository = merchantRepository;
         _courierRepository = courierRepository;
@@ -35,13 +39,45 @@ public class AuthService : IAuthService
         _jwtService = jwtService;
         _passwordHasherService = passwordHasherService;
         _jwtSettings = jwtSettings.Value;
+        _loginAttempts = loginAttempts;
     }
 
+    /// <summary>
+    /// Giriş. Hesap bazlı kilit (5 hatalı denemede 15 dk) IP rate limit'ini tamamlar: dağıtık bir saldırı
+    /// tek bir hesabı deneyemez. Yalnızca "e-posta/şifre hatalı" sonucu sayaca işlenir.
+    /// </summary>
     public async Task<ServiceResult<AuthTokenDto>> LoginAsync(
         LoginRequestDto request,
         CancellationToken cancellationToken = default)
     {
-        const string invalidMessage = "E-posta veya şifre hatalı.";
+        if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+            return ServiceResult<AuthTokenDto>.BadRequest("E-posta ve şifre zorunludur.");
+
+        var accountKey = request.Email.Trim().ToLowerInvariant();
+
+        var lockout = await _loginAttempts.GetLockoutRemainingAsync(accountKey, cancellationToken);
+        if (lockout.HasValue)
+        {
+            var minutes = Math.Max(1, (int)Math.Ceiling(lockout.Value.TotalMinutes));
+            return ServiceResult<AuthTokenDto>.Fail(
+                $"Çok fazla hatalı giriş denemesi. Lütfen {minutes} dakika sonra tekrar deneyin.", 429);
+        }
+
+        var result = await AuthenticateAsync(request, cancellationToken);
+
+        if (result.IsSuccess)
+            await _loginAttempts.ResetAsync(accountKey, cancellationToken);
+        else if (result.StatusCode == 401 && result.Message == InvalidCredentialsMessage)
+            await _loginAttempts.RegisterFailureAsync(accountKey, cancellationToken);
+
+        return result;
+    }
+
+    private async Task<ServiceResult<AuthTokenDto>> AuthenticateAsync(
+        LoginRequestDto request,
+        CancellationToken cancellationToken)
+    {
+        const string invalidMessage = InvalidCredentialsMessage;
 
         if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
         {
@@ -217,6 +253,7 @@ public class AuthService : IAuthService
                 return ServiceResult.BadRequest("Mevcut şifreniz hatalı.");
 
             admin.PasswordHash = _passwordHasherService.HashPassword(request.NewPassword);
+            admin.PasswordChangedAt = DateTime.UtcNow;
             admin.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(cancellationToken);
             return ServiceResult.Success("Şifreniz başarıyla güncellendi.");
@@ -230,6 +267,7 @@ public class AuthService : IAuthService
                 return ServiceResult.BadRequest("Mevcut şifreniz hatalı.");
 
             companyUser.PasswordHash = _passwordHasherService.HashPassword(request.NewPassword);
+            companyUser.PasswordChangedAt = DateTime.UtcNow;
             companyUser.UpdatedAt = DateTime.UtcNow;
             await _db.SaveChangesAsync(cancellationToken);
             return ServiceResult.Success("Şifreniz başarıyla güncellendi.");
@@ -244,6 +282,7 @@ public class AuthService : IAuthService
                 return ServiceResult.BadRequest("Mevcut şifreniz hatalı.");
 
             courier.PasswordHash = _passwordHasherService.HashPassword(request.NewPassword);
+            courier.PasswordChangedAt = DateTime.UtcNow;
             courier.UpdatedAt = DateTime.UtcNow;
             _courierRepository.Update(courier);
             await _courierRepository.SaveChangesAsync();
@@ -258,6 +297,7 @@ public class AuthService : IAuthService
                 return ServiceResult.BadRequest("Mevcut şifreniz hatalı.");
 
             merchant.PasswordHash = _passwordHasherService.HashPassword(request.NewPassword);
+            merchant.PasswordChangedAt = DateTime.UtcNow;
             merchant.UpdatedAt = DateTime.UtcNow;
             _merchantRepository.Update(merchant);
             await _merchantRepository.SaveChangesAsync();

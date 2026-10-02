@@ -37,6 +37,8 @@ public sealed class AppDbContext : DbContext, IApplicationDbContext
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
+    public void ClearTracking() => ChangeTracker.Clear();
+
     // -------------------------------------------------------------------------
     // Model Yapılandırması
     // -------------------------------------------------------------------------

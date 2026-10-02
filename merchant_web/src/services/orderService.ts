@@ -26,10 +26,58 @@ export interface CreateOrderRequest {
   totalOrderAmount: number;
 }
 
+/** Sunucu taraflı sayfalı sipariş yanıtı (GET /api/orders/paged). */
+export interface OrderPage {
+  items: Order[];
+  total: number;
+  page: number;
+  size: number;
+  totalPages: number;
+  /** Durum adı → adet (durum filtresi hariç diğer filtrelerle hesaplanır). */
+  statusCounts: Record<string, number>;
+  deliveredToday: number;
+}
+
+export interface OrderPageQuery {
+  merchantId?: string;
+  /** Durum adları (Pending, Assigned, ...). Boşsa tüm durumlar. */
+  statuses?: string[];
+  search?: string;
+  sortDesc?: boolean;
+  page?: number;
+  size?: number;
+}
+
 /**
  * Sipariş Servisi (.NET 8 Backend /api/orders)
  */
 export const orderService = {
+  /**
+   * Filtreleme, arama ve sayfalama sunucuda yapılır; tenant kapsamı da sunucuda uygulanır.
+   */
+  async getOrdersPaged(query: OrderPageQuery): Promise<ServiceResult<OrderPage>> {
+    try {
+      const response = await api.get<ServiceResult<OrderPage>>('/orders/paged', {
+        params: {
+          merchantId: query.merchantId || undefined,
+          status: query.statuses?.length ? query.statuses : undefined,
+          search: query.search?.trim() || undefined,
+          sortDesc: query.sortDesc ?? true,
+          page: query.page ?? 1,
+          size: query.size ?? 25,
+        },
+        // ASP.NET dizi parametrelerini tekrarlı anahtar (status=A&status=B) olarak bekler
+        paramsSerializer: { indexes: null },
+      });
+      return response.data;
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.data) {
+        return error.response.data as ServiceResult<OrderPage>;
+      }
+      return { isSuccess: false, message: 'Siparişler alınamadı.', statusCode: 500, errors: [] };
+    }
+  },
+
   /**
    * Tüm siparişleri veya filtrelenmiş siparişleri getirir.
    */

@@ -47,12 +47,28 @@ public class OrderService : IOrderService
         _auditService = auditService;
     }
 
+    public async Task<ServiceResult<OrderPageDto>> GetOrdersPagedAsync(
+        OrderListQuery query,
+        CancellationToken cancellationToken = default)
+    {
+        var (page, size) = PagedResult<OrderDto>.Normalize(query.Page, query.Size);
+        var result = await _orderRepository.GetPagedAsync(query with { Page = page, Size = size });
+
+        var items = result.Items.Select(MapToDto).ToList().AsReadOnly();
+        var counts = result.StatusCounts.ToDictionary(kv => kv.Key.ToString(), kv => kv.Value);
+        var totalPages = (int)Math.Ceiling(result.Total / (double)size);
+
+        return ServiceResult<OrderPageDto>.Success(
+            new OrderPageDto(items, result.Total, page, size, totalPages, counts, result.DeliveredToday));
+    }
+
     public async Task<ServiceResult<IReadOnlyList<OrderDto>>> GetAllOrdersAsync(
         OrderStatus? status = null,
         bool todayAndActiveOnly = false,
+        IReadOnlyCollection<Guid>? merchantIds = null,
         CancellationToken cancellationToken = default)
     {
-        var orders = await _orderRepository.GetAllWithDetailsAsync(status, todayAndActiveOnly);
+        var orders = await _orderRepository.GetAllWithDetailsAsync(status, todayAndActiveOnly, merchantIds);
         var dtos = orders.Select(MapToDto).ToList().AsReadOnly();
         return ServiceResult<IReadOnlyList<OrderDto>>.Success(dtos);
     }
@@ -509,6 +525,12 @@ public class OrderService : IOrderService
 
         _orderRepository.Update(order);
         await _orderRepository.SaveChangesAsync();
+
+        // Teslimde firma kontörü arka planda düşülür (sipariş akışını geciktirmez / yeniden denenebilir)
+        if (newStatus == OrderStatus.Delivered)
+        {
+            _jobService.EnqueueDeliveryCreditDeduction(order.Id);
+        }
 
         // SignalR ile durum değişikliğini yayınla
         await _notificationService.SendOrderStatusChangedAsync(

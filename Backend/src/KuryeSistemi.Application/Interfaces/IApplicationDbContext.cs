@@ -22,4 +22,7 @@ public interface IApplicationDbContext
     DbSet<AdminUser>         AdminUsers         { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>İzlenen tüm entity'leri bırakır (eşzamanlılık çakışmasında yeniden okuyup denemek için).</summary>
+    void ClearTracking();
 }

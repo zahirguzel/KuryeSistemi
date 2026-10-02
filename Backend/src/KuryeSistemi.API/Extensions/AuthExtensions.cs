@@ -35,6 +35,7 @@ public static class AuthExtensions
                 "Ortam değişkeni tanımlayın: JwtSettings__SecretKey");
         }
 
+        services.AddMemoryCache();
         services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -72,6 +73,18 @@ public static class AuthExtensions
                     }
 
                     return Task.CompletedTask;
+                },
+                // Pasife alınan / silinen hesapların token'ı süresi dolmadan da reddedilir
+                OnTokenValidated = async context =>
+                {
+                    var sp = context.HttpContext.RequestServices;
+                    var ok = await ActiveAccountValidator.IsActiveAsync(
+                        context.Principal!,
+                        sp.GetRequiredService<KuryeSistemi.Application.Interfaces.IApplicationDbContext>(),
+                        sp.GetRequiredService<Microsoft.Extensions.Caching.Memory.IMemoryCache>(),
+                        context.HttpContext.RequestAborted);
+
+                    if (!ok) context.Fail("Hesap pasif veya silinmiş.");
                 },
                 OnAuthenticationFailed = context =>
                 {

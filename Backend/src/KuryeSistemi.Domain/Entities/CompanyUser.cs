@@ -34,6 +34,9 @@ public sealed class CompanyUser : BaseEntity
     /// <summary>Şifre hash'i (BCrypt).</summary>
     public string PasswordHash { get; set; } = string.Empty;
 
+    /// <summary>Şifrenin son değiştirildiği an (UTC). Bundan önce üretilmiş token'lar geçersiz sayılır.</summary>
+    public DateTime? PasswordChangedAt { get; set; }
+
     /// <summary>Telefon numarası.</summary>
     public string PhoneNumber { get; set; } = string.Empty;
 

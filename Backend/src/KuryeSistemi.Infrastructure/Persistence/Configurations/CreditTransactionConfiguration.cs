@@ -54,6 +54,12 @@ internal sealed class CreditTransactionConfiguration : IEntityTypeConfiguration<
         builder.HasIndex(t => t.OrderId)
                .HasDatabaseName("IX_CreditTransactions_OrderId");
 
+        // Bir sipariş için en fazla bir teslimat kontörü düşümü (Type = DeliveryDeduction = 2): eşzamanlı çift düşümü engeller
+        builder.HasIndex(t => new { t.OrderId, t.Type })
+               .IsUnique()
+               .HasFilter("\"OrderId\" IS NOT NULL AND \"Type\" = 2")
+               .HasDatabaseName("UX_CreditTransactions_Order_Delivery");
+
         builder.HasIndex(t => t.CreatedAt)
                .HasDatabaseName("IX_CreditTransactions_CreatedAt");
     }

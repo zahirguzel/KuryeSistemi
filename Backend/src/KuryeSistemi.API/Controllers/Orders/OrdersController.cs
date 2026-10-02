@@ -16,12 +16,15 @@ public sealed class OrdersController : BaseController
     private readonly IOrderService _orderService;
     private readonly ICourierRepository _courierRepository;
     private readonly IOrderRepository _orderRepository;
+    private readonly ICreditService _creditService;
 
     public OrdersController(
         IOrderService orderService,
         ICourierRepository courierRepository,
-        IOrderRepository orderRepository)
+        IOrderRepository orderRepository,
+        ICreditService creditService)
     {
+        _creditService = creditService;
         _orderService = orderService;
         _courierRepository = courierRepository;
         _orderRepository = orderRepository;
@@ -49,16 +52,10 @@ public sealed class OrdersController : BaseController
                 return CreateActionResult(result);
             }
 
-            var allResult = await _orderService.GetAllOrdersAsync(status, today, cancellationToken);
-
-            // Tenant izolasyonu: firma kullanıcısı yalnızca kendi firmasının işletme siparişlerini görür
+            // Tenant izolasyonu: firma kullanıcısı yalnızca kendi firmasının işletme siparişlerini görür;
+            // kapsam sorguya iletilir, başka firmaların siparişleri veritabanından hiç çekilmez.
             var accessibleIds = await GetAccessibleMerchantIdsAsync(cancellationToken);
-            if (accessibleIds is not null && allResult.IsSuccess && allResult.Data is not null)
-            {
-                var scoped = allResult.Data.Where(o => accessibleIds.Contains(o.MerchantId)).ToList().AsReadOnly();
-                allResult = ServiceResult<IReadOnlyList<OrderDto>>.Success(scoped);
-            }
-
+            var allResult = await _orderService.GetAllOrdersAsync(status, today, accessibleIds, cancellationToken);
             return CreateActionResult(allResult);
         }
 
@@ -66,6 +63,50 @@ public sealed class OrdersController : BaseController
         var ownMerchantId = GetMerchantId();
         var ownResult = await _orderService.GetOrdersByMerchantAsync(ownMerchantId, status, cancellationToken);
         return CreateActionResult(ownResult);
+    }
+
+    /// <summary>
+    /// Sunucu taraflı filtreli/sayfalı sipariş listesi (firma paneli). Tenant kapsamı sunucuda uygulanır;
+    /// sayfa boyutu en fazla 200. Yanıt, durum sayaçlarını ve bugün teslim sayısını da içerir.
+    /// </summary>
+    [HttpGet("paged")]
+    [ProducesResponseType(typeof(OrderPageDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetPaged(
+        [FromQuery] Guid? merchantId,
+        [FromQuery] OrderStatus[]? status,
+        [FromQuery] string? search,
+        [FromQuery] DateTime? from,
+        [FromQuery] DateTime? to,
+        [FromQuery] bool sortDesc = true,
+        [FromQuery] int page = 1,
+        [FromQuery] int size = 50,
+        CancellationToken cancellationToken = default)
+    {
+        IReadOnlyCollection<Guid>? scope;
+        Guid? merchantFilter = null;
+
+        if (IsFirmOrAdmin())
+        {
+            if (merchantId.HasValue && merchantId.Value != Guid.Empty)
+            {
+                if (!await CanAccessMerchantAsync(merchantId.Value, cancellationToken))
+                    return Forbid();
+                merchantFilter = merchantId.Value;
+            }
+
+            scope = await GetAccessibleMerchantIdsAsync(cancellationToken);
+        }
+        else
+        {
+            // Standart işletme yalnızca kendi siparişlerini görür
+            scope = new[] { GetMerchantId() };
+        }
+
+        var query = new OrderListQuery(
+            scope, merchantFilter, status is { Length: > 0 } ? status : null, search,
+            from?.ToUniversalTime(), to?.ToUniversalTime(), sortDesc, page, size);
+
+        return CreateActionResult(await _orderService.GetOrdersPagedAsync(query, cancellationToken));
     }
 
     /// <summary>
@@ -123,6 +164,10 @@ public sealed class OrdersController : BaseController
 
         if (IsFirmOrAdmin() && !await CanAccessMerchantAsync(effectiveMerchantId, cancellationToken))
             return Forbid();
+
+        var creditCheck = await _creditService.EnsureCanCreateOrderAsync(effectiveMerchantId, cancellationToken);
+        if (!creditCheck.IsSuccess)
+            return CreateActionResult(creditCheck);
 
         var effectiveRequest = request with { MerchantId = effectiveMerchantId };
         var result = await _orderService.CreateOrderAsync(effectiveRequest, cancellationToken);

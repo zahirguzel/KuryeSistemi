@@ -43,6 +43,9 @@ public sealed class Courier : BaseEntity
     /// <summary>Kurye giriş şifresinin hash'i.</summary>
     public string PasswordHash { get; set; } = string.Empty;
 
+    /// <summary>Şifrenin son değiştirildiği an (UTC). Bundan önce üretilmiş token'lar geçersiz sayılır.</summary>
+    public DateTime? PasswordChangedAt { get; set; }
+
     // -------------------------------------------------------------------------
     // Araç Bilgileri
     // -------------------------------------------------------------------------

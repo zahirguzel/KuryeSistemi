@@ -46,6 +46,15 @@ SuperAdmin > CourierCompany (kurye firması) > Merchant (restoran) > Courier.
 ## Güvenlik kuralları
 - Üretimde varsayılan JWT anahtarı / DB şifresiyle uygulama başlamaz (`AuthExtensions`, `Program.cs`). Sırları ortam değişkeniyle ver: `JwtSettings__SecretKey`, `ConnectionStrings__DefaultConnection`, `AllowedHosts`.
 - CORS: `Cors:AllowedOrigins` boşsa üretimde yalnızca localhost:5173.
+- **Token iptali:** `ActiveAccountValidator` (JwtBearer `OnTokenValidated`) her istekte hesabın aktif/silinmemiş olduğunu ve token `iat`'ının `PasswordChangedAt`'ten yeni olduğunu doğrular (durum 30 sn önbellekli). Şifre değişince eski token'lar düşer.
+- **Hesap kilidi:** `ILoginAttemptTracker` (Redis/IDistributedCache) — aynı e-posta 5 hatalı denemede 15 dk kilit (429). IP rate limit'ine ek. Önbellek erişilemezse fail-open.
+- Giriş e-postası tüm hesap tablolarında tekil (`AccountEmailGuard`: admin, firma kullanıcısı, işletme, kurye).
+
+## Kontör (kredi) kuralları
+- `ICreditService` tek giriş noktası; `CourierCompany.CreditBalance` xmin ile iyimser kilitli, çakışmada yeniden dener. Her hareket `CreditTransaction` defterine yazılır.
+- Teslimde 1 kontör: `OrderService` Delivered'da `IBackgroundJobService.EnqueueDeliveryCreditDeduction` → `CreditDeductionJob` (idempotent; `(OrderId, Type=DeliveryDeduction)` kısmi benzersiz indeks). Firmaya bağlı olmayan (eski) restoran kontör düşmez; bakiye negatife inebilir.
+- `BlockOnZeroCredit` açık ve bakiye ≤ 0 ise sipariş oluşturma 402 döner (`OrdersController.Create`). Manuel düzeltme bakiyeyi negatife düşüremez.
+- Servis/DTO sınırları: `ICompanyAdminService` (SuperAdmin), `ICompanyService` (firma paneli), controller'lar yalnızca HTTP eşler + izin kontrolü yapar.
 
 ## Dosya yerleşimi
 - `docs/loji-reference/` Loji video/kareler/transkript/proje dokümantasyonu; `docs/prompts/` eski prompt'lar; `Backend/scripts/sql/` tek seferlik SQL'ler; `Backend/scripts/dev/` örnek istekler.
@@ -53,7 +62,7 @@ SuperAdmin > CourierCompany (kurye firması) > Merchant (restoran) > Courier.
 ## Açık / planlanan işler
 1. **Ek paket hakedişi:** restoran ücreti sabit; aynı turdaki 2. ve sonraki paketlerde kurye hakedişi ayrı (restoran başına `AdditionalPackageCourierCut`), firmaya daha çok kalır. Tur için `TourId`/`TourSequence`. Karar bekleyen: 1. paket iptal olursa 2. paket "ilk paket" gibi ücretlendirilir (önerilen).
 2. Eksik Loji sayfaları: 11+ rapor sayfası, alt ekipler, havuz/bölge ayarları, sipariş alt sekmeleri (ortak bileşen gösteriyor). Kullanıcı ekran görüntüsü gönderdikçe sırayla yapılacak.
-3. `FirmOrders` sayfalaması, finans özeti saat dilimi testleri, CompanyUser yetkilerinin okuma uçlarına genişletilmesi.
+3. `FirmFinance`/`Finance` hâlâ `GET /api/orders` ile tüm geçmişi çekiyor (sayfalı `GET /api/orders/paged` yalnızca `FirmOrders`'ta); finans özeti saat dilimi testleri, CompanyUser yetkilerinin okuma uçlarına genişletilmesi.
 4. `LoginRequestDtoValidator` giriş için min şifre uzunluğu kontrolü (6) içeriyor; kaldırılması düşünülüyor (eski hesaplar kilitlenmesin).
 
 ## Çalışma kuralları

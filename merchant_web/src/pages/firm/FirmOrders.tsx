@@ -3,7 +3,7 @@ import {
   Package, Search, RefreshCw, Filter,
   Clock, CheckCircle2, XCircle, Truck,
   ArrowUpDown, AlertTriangle, Banknote, CreditCard, Wifi,
-  UserCheck, X, Check
+  UserCheck, X, Check, ChevronLeft, ChevronRight
 } from 'lucide-react';
 import { orderService } from '../../services/orderService';
 import { courierService } from '../../services/courierService';
@@ -50,13 +50,29 @@ function timeAgo(dateStr: string) {
 
 type StatusFilter = 'all' | 'pending' | 'assigned' | 'pickedup' | 'delivered' | 'cancelled';
 
+const PAGE_SIZE = 25;
+
+/** Arayüz filtresi → sunucu durum adları (boş = tümü). */
+const STATUS_FILTER_MAP: Record<StatusFilter, string[] | undefined> = {
+  all: undefined,
+  pending: ['Pending'],
+  assigned: ['Assigned'],
+  pickedup: ['PickedUp'],
+  delivered: ['Delivered'],
+  cancelled: ['Cancelled'],
+};
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export const FirmOrders: React.FC = () => {
   const [orders, setOrders] = useState<Order[]>([]);
   const [couriers, setCouriers] = useState<CourierState[]>([]);
   const [merchants, setMerchants] = useState<MerchantDto[]>([]);
-  const [filtered, setFiltered] = useState<Order[]>([]);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [statusCounts, setStatusCounts] = useState<Record<string, number>>({});
+  const [deliveredToday, setDeliveredToday] = useState(0);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
@@ -102,72 +118,68 @@ export const FirmOrders: React.FC = () => {
     }
   }, []);
 
-  const loadData = useCallback(async () => {
+  // Sunucu taraflı filtre + sayfalama: arama yazılırken her tuşta istek atılmaması için gecikmeli (debounce)
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(search), 350);
+    return () => clearTimeout(t);
+  }, [search]);
+
+  // Filtre değişince ilk sayfaya dön
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch, statusFilter, merchantFilter, sortDesc]);
+
+  const loadOrders = useCallback(async () => {
     setLoading(true);
     try {
-      const [orderRes, courierRes, merchantRes] = await Promise.all([
-        orderService.getAllOrders(),
-        courierService.getAllCouriers(),
-        merchantService.getAllMerchants(),
-      ]);
-
-      if (orderRes.isSuccess && orderRes.data) setOrders(orderRes.data);
-      if (courierRes.isSuccess && courierRes.data) setCouriers(courierRes.data);
-      if (merchantRes.isSuccess && merchantRes.data) setMerchants(merchantRes.data);
+      const res = await orderService.getOrdersPaged({
+        merchantId: merchantFilter === 'all' ? undefined : merchantFilter,
+        statuses: STATUS_FILTER_MAP[statusFilter],
+        search: debouncedSearch,
+        sortDesc,
+        page,
+        size: PAGE_SIZE,
+      });
+      if (res.isSuccess && res.data) {
+        setOrders(res.data.items);
+        setTotal(res.data.total);
+        setTotalPages(res.data.totalPages);
+        setStatusCounts(res.data.statusCounts);
+        setDeliveredToday(res.data.deliveredToday);
+      }
     } finally {
       setLoading(false);
     }
+  }, [merchantFilter, statusFilter, debouncedSearch, sortDesc, page]);
+
+  // Kurye ve restoran listeleri yalnızca bir kez yüklenir
+  useEffect(() => {
+    (async () => {
+      const [courierRes, merchantRes] = await Promise.all([
+        courierService.getAllCouriers(),
+        merchantService.getAllMerchants(),
+      ]);
+      if (courierRes.isSuccess && courierRes.data) setCouriers(courierRes.data);
+      if (merchantRes.isSuccess && merchantRes.data) setMerchants(merchantRes.data);
+    })();
   }, []);
 
   useEffect(() => {
-    loadData();
+    loadOrders();
+  }, [loadOrders]);
+
+  // Canlı sipariş güncellemesinde mevcut sayfa yeniden yüklenir
+  useEffect(() => {
     startSignalR().catch(() => {});
     const unsubscribe = onOrderUpdate((payload) => {
       console.info('[FirmOrders] Canlı sipariş güncellemesi:', payload);
-      loadData();
+      loadOrders();
     });
     return () => {
       unsubscribe();
     };
-  }, [loadData]);
-
-  // Filtreleme & Sıralama
-  useEffect(() => {
-    let list = [...orders];
-
-    // Restoran Filtresi
-    if (merchantFilter !== 'all') {
-      list = list.filter(o => o.merchantId === merchantFilter);
-    }
-
-    // Arama
-    if (search.trim()) {
-      const q = search.toLowerCase();
-      list = list.filter(o =>
-        o.recipientName.toLowerCase().includes(q) ||
-        o.recipientPhone.includes(q) ||
-        (o.orderCode ?? '').toLowerCase().includes(q) ||
-        (o.courierName ?? '').toLowerCase().includes(q) ||
-        (o.merchantName ?? '').toLowerCase().includes(q) ||
-        (o.deliveryAddressLine ?? '').toLowerCase().includes(q)
-      );
-    }
-
-    // Durum Filtresi
-    if (statusFilter === 'pending') list = list.filter(o => ['Created', 'Pending'].includes(String(o.status)));
-    else if (statusFilter === 'assigned') list = list.filter(o => String(o.status) === 'Assigned');
-    else if (statusFilter === 'pickedup') list = list.filter(o => String(o.status) === 'PickedUp');
-    else if (statusFilter === 'delivered') list = list.filter(o => String(o.status) === 'Delivered');
-    else if (statusFilter === 'cancelled') list = list.filter(o => String(o.status) === 'Cancelled');
-
-    // Sıralama
-    list.sort((a, b) => {
-      const diff = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-      return sortDesc ? -diff : diff;
-    });
-
-    setFiltered(list);
-  }, [orders, search, statusFilter, merchantFilter, sortDesc]);
+  }, [loadOrders]);
 
   // Kurye Atama
   const handleAssignCourier = async (courierId: string) => {
@@ -184,7 +196,7 @@ export const FirmOrders: React.FC = () => {
         if (selectedOrder?.id === assignTargetOrder.id) {
           setSelectedOrder(null);
         }
-        await loadData();
+        await loadOrders();
       } else {
         setErrorMsg(res.message || 'Kurye ataması yapılamadı.');
       }
@@ -207,7 +219,7 @@ export const FirmOrders: React.FC = () => {
         if (selectedOrder?.id === orderId) {
           setSelectedOrder(prev => prev ? { ...prev, status: statusName as OrderStatus } : null);
         }
-        await loadData();
+        await loadOrders();
       } else {
         setErrorMsg(res.message || 'Durum güncellenemedi.');
       }
@@ -219,9 +231,9 @@ export const FirmOrders: React.FC = () => {
   };
 
   // İstatistikler
-  const today = new Date().toDateString();
-  const todayDelivered = orders.filter(o => o.status === 'Delivered' && new Date(o.deliveredAt ?? '').toDateString() === today);
-  const pendingCount = orders.filter(o => ['Created','Pending'].includes(String(o.status))).length;
+  const totalAll = Object.values(statusCounts).reduce((a, b) => a + b, 0);
+  const pendingCount = statusCounts['Pending'] ?? 0;
+  const onTheWayCount = (statusCounts['Assigned'] ?? 0) + (statusCounts['PickedUp'] ?? 0);
 
   return (
     <div className="space-y-6">
@@ -230,10 +242,10 @@ export const FirmOrders: React.FC = () => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-black text-slate-900 tracking-tight">Tüm Siparişler & Havuz</h1>
-          <p className="text-sm text-slate-500 mt-0.5">{orders.length} toplam sipariş · {pendingCount} kurye bekleyen</p>
+          <p className="text-sm text-slate-500 mt-0.5">{totalAll} toplam sipariş · {pendingCount} kurye bekleyen</p>
         </div>
         <button
-          onClick={loadData}
+          onClick={loadOrders}
           disabled={loading}
           className="inline-flex items-center space-x-2 px-4 py-2.5 bg-teal-500 hover:bg-teal-600 disabled:opacity-60 text-white font-bold text-sm rounded-xl shadow-sm shadow-teal-500/20 transition-all active:scale-95"
         >
@@ -245,10 +257,10 @@ export const FirmOrders: React.FC = () => {
       {/* ── KPI Kartları ────────────────────────────────────────── */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
-          { label: 'Toplam Sipariş', value: orders.length, color: 'text-slate-900', bg: 'bg-white' },
+          { label: 'Toplam Sipariş', value: totalAll, color: 'text-slate-900', bg: 'bg-white' },
           { label: 'Bekleyen (Havuza)', value: pendingCount, color: 'text-amber-600', bg: 'bg-amber-50' },
-          { label: 'Yoldaki Paketler', value: orders.filter(o => ['Assigned','PickedUp'].includes(String(o.status))).length, color: 'text-teal-600', bg: 'bg-teal-50' },
-          { label: 'Bugün Teslimat', value: todayDelivered.length, color: 'text-emerald-600', bg: 'bg-emerald-50' },
+          { label: 'Yoldaki Paketler', value: onTheWayCount, color: 'text-teal-600', bg: 'bg-teal-50' },
+          { label: 'Bugün Teslimat', value: deliveredToday, color: 'text-emerald-600', bg: 'bg-emerald-50' },
         ].map(kpi => (
           <div key={kpi.label} className={`${kpi.bg} rounded-2xl border border-slate-200/80 p-4 shadow-sm`}>
             <p className={`text-2xl font-black ${kpi.color}`}>{kpi.value}</p>
@@ -346,14 +358,14 @@ export const FirmOrders: React.FC = () => {
                 <div className="w-16 h-5 bg-slate-100 rounded-full" />
               </div>
             ))
-          ) : filtered.length === 0 ? (
+          ) : orders.length === 0 ? (
             <div className="py-16 text-center">
               <Package className="w-10 h-10 text-slate-200 mx-auto mb-3" />
               <p className="text-sm font-semibold text-slate-400">Sipariş bulunamadı</p>
               <p className="text-xs text-slate-300 mt-1">Arama kriterlerini değiştirin.</p>
             </div>
           ) : (
-            filtered.map(order => {
+            orders.map(order => {
               const s = getStatus(order.status);
               const p = getPayment(order.paymentMethod);
               const SIcon = s.icon;
@@ -441,15 +453,31 @@ export const FirmOrders: React.FC = () => {
           )}
         </div>
 
-        {/* Sayfa Özeti */}
-        {!loading && filtered.length > 0 && (
+        {/* Sayfalama */}
+        {!loading && total > 0 && (
           <div className="px-5 py-3 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
             <p className="text-xs text-slate-400 font-medium">
-              {filtered.length} sipariş listeleniyor {filtered.length !== orders.length && `(toplam ${orders.length} içinden)`}
+              {total} siparişten {(page - 1) * PAGE_SIZE + 1}–{Math.min(page * PAGE_SIZE, total)} arası gösteriliyor
             </p>
-            <p className="text-xs text-slate-500 font-semibold">
-              Kurye bekleyen: <span className="text-amber-600 font-bold">{pendingCount}</span> sipariş
-            </p>
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => setPage(p => Math.max(1, p - 1))}
+                disabled={page <= 1}
+                className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Önceki sayfa"
+              >
+                <ChevronLeft className="w-4 h-4" />
+              </button>
+              <span className="text-xs font-bold text-slate-600">{page} / {Math.max(totalPages, 1)}</span>
+              <button
+                onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                disabled={page >= totalPages}
+                className="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Sonraki sayfa"
+              >
+                <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         )}
       </div>

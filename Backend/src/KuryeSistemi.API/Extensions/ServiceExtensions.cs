@@ -30,6 +30,10 @@ public static class ServiceExtensions
         services.AddScoped<IMerchantService, MerchantService>();
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IAuditService, AuditService>();
+        services.AddScoped<ICreditService, CreditService>();
+        services.AddScoped<ICompanyService, CompanyService>();
+        services.AddScoped<ICompanyAdminService, CompanyAdminService>();
+        services.AddSingleton<ILoginAttemptTracker, DistributedLoginAttemptTracker>();
 
         // ── Infrastructure Services ──────────────────────────────────────────
         services.AddScoped<IJwtService, JwtService>();
@@ -37,6 +41,7 @@ public static class ServiceExtensions
         services.AddScoped<IHubNotificationService, SignalRHubNotificationService>();
         services.AddScoped<IBackgroundJobService, HangfireBackgroundJobService>();
         services.AddScoped<OrderTimeoutJob>();
+        services.AddScoped<CreditDeductionJob>();
         services.AddScoped<KuryeSistemi.Application.Jobs.SmartAutoRetryJob>();
 
         // ── Dış Servisler (SMS, E-Posta, Push Bildirim) ─────────────────────
