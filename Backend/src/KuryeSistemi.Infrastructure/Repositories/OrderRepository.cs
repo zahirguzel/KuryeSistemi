@@ -31,15 +31,15 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
 
         if (!string.IsNullOrWhiteSpace(q.Search))
         {
-            // Sunucu/istemci kültüründen bağımsız (tr-TR "I/ı" tuzağı) küçük harfe çevirme
+            // Terim kültürden bağımsız küçültülür; sütunlarda ToLower() kullanılır (Npgsql ToLowerInvariant'i SQL'e çeviremez)
             var term = q.Search.Trim().ToLowerInvariant();
             baseQuery = baseQuery.Where(o =>
-                o.RecipientName.ToLowerInvariant().Contains(term) ||
+                o.RecipientName.ToLower().Contains(term) ||
                 o.RecipientPhone.Contains(term) ||
-                (o.OrderCode != null && o.OrderCode.ToLowerInvariant().Contains(term)) ||
-                o.DeliveryAddressLine.ToLowerInvariant().Contains(term) ||
-                o.Merchant.Name.ToLowerInvariant().Contains(term) ||
-                (o.Courier != null && (o.Courier.FirstName + " " + o.Courier.LastName).ToLowerInvariant().Contains(term)));
+                (o.OrderCode != null && o.OrderCode.ToLower().Contains(term)) ||
+                o.DeliveryAddressLine.ToLower().Contains(term) ||
+                o.Merchant.Name.ToLower().Contains(term) ||
+                (o.Courier != null && (o.Courier.FirstName + " " + o.Courier.LastName).ToLower().Contains(term)));
         }
 
         // Sayaçlar durum filtresinden bağımsızdır (sekme rozetleri için)
