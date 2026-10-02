@@ -232,7 +232,9 @@ export const FirmCouriers: React.FC = () => {
         setShowAddModal(false);
         await loadCouriers();
       } else {
-        setErrorMsg(res.message || 'Kurye eklenirken hata oluştu.');
+        let err = res.message || 'Kurye eklenirken hata oluştu.';
+        if (Array.isArray(res.errors) && res.errors.length > 0) err += ` (${res.errors.join(', ')})`;
+        setErrorMsg(err);
       }
     } catch {
       setErrorMsg('Sunucu hatası oluştu.');
@@ -267,7 +269,9 @@ export const FirmCouriers: React.FC = () => {
         setEditCourier(null);
         await loadCouriers();
       } else {
-        setErrorMsg(res.message || 'Kurye güncellenirken hata oluştu.');
+        let err = res.message || 'Kurye güncellenirken hata oluştu.';
+        if (Array.isArray(res.errors) && res.errors.length > 0) err += ` (${res.errors.join(', ')})`;
+        setErrorMsg(err);
       }
     } catch {
       setErrorMsg('Sunucu hatası oluştu.');

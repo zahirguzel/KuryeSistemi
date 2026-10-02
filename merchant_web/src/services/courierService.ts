@@ -4,6 +4,7 @@
 // Başlangıç verisi olarak courierStore'u doldurur.
 
 import { api } from './api';
+import { isAxiosError } from 'axios';
 import type { ServiceResult } from '../types/auth';
 import type { CourierState } from '../types/courier';
 
@@ -125,7 +126,10 @@ export const courierService = {
         statusCode: result.statusCode,
         errors: result.errors ?? [],
       };
-    } catch {
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.data) {
+        return error.response.data as ServiceResult<CourierState[]>;
+      }
       return {
         isSuccess: false,
         message: 'Sunucuya bağlanırken hata oluştu.',
@@ -170,7 +174,16 @@ export const courierService = {
         statusCode: result.statusCode,
         errors: result.errors ?? [],
       };
-    } catch {
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.data) {
+        const errData = error.response.data as ServiceResult<BackendCourierDto>;
+        return {
+          isSuccess: false,
+          message: errData.message || (errData.errors?.length ? errData.errors[0] : 'Kurye oluşturulamadı.'),
+          statusCode: error.response.status,
+          errors: errData.errors || [],
+        };
+      }
       return {
         isSuccess: false,
         message: 'Sunucuya bağlanırken hata oluştu.',
@@ -220,7 +233,16 @@ export const courierService = {
         statusCode: result.statusCode,
         errors: result.errors ?? [],
       };
-    } catch {
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.data) {
+        const errData = error.response.data as ServiceResult<BackendCourierDto>;
+        return {
+          isSuccess: false,
+          message: errData.message || (errData.errors?.length ? errData.errors[0] : 'Kurye güncellenemedi.'),
+          statusCode: error.response.status,
+          errors: errData.errors || [],
+        };
+      }
       return {
         isSuccess: false,
         message: 'Sunucuya bağlanırken hata oluştu.',
@@ -238,7 +260,10 @@ export const courierService = {
     try {
       const response = await api.delete<ServiceResult<boolean>>(`/couriers/${id}`);
       return response.data;
-    } catch {
+    } catch (error: unknown) {
+      if (isAxiosError(error) && error.response?.data) {
+        return error.response.data as ServiceResult<boolean>;
+      }
       return {
         isSuccess: false,
         message: 'Sunucuya bağlanırken hata oluştu.',

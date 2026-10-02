@@ -33,7 +33,7 @@ public class ValidatorTests
     [Theory]
     [InlineData("", "Password123*")]
     [InlineData("not-an-email", "Password123*")]
-    [InlineData("valid@email.com", "123")] // Short password
+    [InlineData("valid@email.com", "")] // Boş şifre başarısız olmalı
     public void LoginValidator_WithInvalidCredentials_ShouldFail(string email, string password)
     {
         var validator = new LoginRequestDtoValidator();
@@ -43,6 +43,18 @@ public class ValidatorTests
 
         result.IsValid.Should().BeFalse();
         result.Errors.Should().NotBeEmpty();
+    }
+
+    [Fact]
+    public void LoginValidator_WithShortPassword_ShouldPass_ToAvoidPolicyLeakage()
+    {
+        // Giriş ekranında asgari uzunluk kuralı uygulanmaz (eski hesaplar & politika sızdırmama)
+        var validator = new LoginRequestDtoValidator();
+        var model = new LoginRequestDto("test@example.com", "123");
+
+        var result = validator.Validate(model);
+
+        result.IsValid.Should().BeTrue();
     }
 
     // =========================================================================
