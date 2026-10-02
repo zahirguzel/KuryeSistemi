@@ -5,6 +5,7 @@ using KuryeSistemi.API.Filters;
 using KuryeSistemi.API.Hubs;
 using KuryeSistemi.API.Middlewares;
 using KuryeSistemi.Application;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -52,15 +53,32 @@ try
     // Business & External Services (Auth, Order, Courier, Merchant, SMS, Email, Push)
     builder.Services.AddApplicationServices(builder.Environment, builder.Configuration);
 
-    // MediatR + FluentValidation
+    // FluentValidation Kaydı
     KuryeSistemi.Application.ApplicationServiceRegistration.AddApplicationServices(builder.Services);
 
-    // Controllers
-    builder.Services.AddControllers()
+    // Controllers + Global Validation Filter (ServiceResult 400 formatı)
+    builder.Services.AddControllers(options =>
+        {
+            options.Filters.Add<KuryeSistemi.API.Filters.ValidationFilter>();
+        })
         .AddJsonOptions(opts =>
         {
             opts.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
             opts.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+        })
+        .ConfigureApiBehaviorOptions(options =>
+        {
+            options.InvalidModelStateResponseFactory = context =>
+            {
+                var errors = context.ModelState.Values
+                    .SelectMany(v => v.Errors)
+                    .Select(e => !string.IsNullOrEmpty(e.ErrorMessage) ? e.ErrorMessage : e.Exception?.Message ?? "Geçersiz istek parametresi.")
+                    .Distinct()
+                    .ToList();
+
+                var result = KuryeSistemi.Application.Common.Models.ServiceResult<object>.Fail(errors, StatusCodes.Status400BadRequest);
+                return new BadRequestObjectResult(result);
+            };
         });
 
     // JWT Kimlik Doğrulama & Yetkilendirme

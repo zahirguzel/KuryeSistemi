@@ -1,16 +1,14 @@
 using FluentValidation;
-using KuryeSistemi.Application.Features.Merchants.Commands.CreateMerchant;
+using KuryeSistemi.Application.DTOs.Merchants;
 
-namespace KuryeSistemi.Application.Features.Merchants.Validators;
+namespace KuryeSistemi.Application.Validators.Merchants;
 
 /// <summary>
-/// CreateMerchantCommand için FluentValidation kuralları.
-/// Handler'a ulaşmadan önce ValidationBehavior tarafından otomatik çalıştırılır.
+/// CreateMerchantRequestDto için FluentValidation kuralları.
 /// </summary>
-public sealed class CreateMerchantCommandValidator
-    : AbstractValidator<CreateMerchantCommand>
+public sealed class CreateMerchantRequestDtoValidator : AbstractValidator<CreateMerchantRequestDto>
 {
-    public CreateMerchantCommandValidator()
+    public CreateMerchantRequestDtoValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty().WithMessage("İşletme adı boş olamaz.")
@@ -27,13 +25,17 @@ public sealed class CreateMerchantCommandValidator
             .MaximumLength(100).WithMessage("Şifre en fazla 100 karakter olabilir.");
 
         RuleFor(x => x.PhoneNumber)
-            .NotEmpty().WithMessage("Telefon numarası boş olamaz.")
             .MaximumLength(20).WithMessage("Telefon numarası en fazla 20 karakter olabilir.")
-            .Matches(@"^\+?[1-9]\d{6,14}$")
-                .WithMessage("Geçerli bir telefon numarası giriniz. (Örn: +905551234567)");
+            .Matches(@"^\+?[0-9\s\-()]{7,20}$")
+            .WithMessage("Geçerli bir telefon numarası giriniz.")
+            .When(x => !string.IsNullOrWhiteSpace(x.PhoneNumber));
 
         RuleFor(x => x.Address)
-            .NotEmpty().WithMessage("Adres boş olamaz.")
-            .MaximumLength(500).WithMessage("Adres en fazla 500 karakter olabilir.");
+            .MaximumLength(500).WithMessage("Adres en fazla 500 karakter olabilir.")
+            .When(x => !string.IsNullOrWhiteSpace(x.Address));
+
+        RuleFor(x => x.CourierCompanyId)
+            .Must(id => !id.HasValue || id.Value != Guid.Empty)
+            .WithMessage("Geçersiz CourierCompanyId.");
     }
 }

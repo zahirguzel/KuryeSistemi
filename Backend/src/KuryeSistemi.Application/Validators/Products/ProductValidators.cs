@@ -54,3 +54,15 @@ public sealed class UpdateProductRequestValidator : AbstractValidator<UpdateProd
             .When(x => !string.IsNullOrEmpty(x.Description));
     }
 }
+
+public sealed class BulkCreateProductsRequestValidator : AbstractValidator<BulkCreateProductsRequest>
+{
+    public BulkCreateProductsRequestValidator()
+    {
+        RuleFor(x => x.Products)
+            .NotEmpty().WithMessage("Ürün listesi boş olamaz.");
+
+        RuleForEach(x => x.Products)
+            .SetValidator(new CreateProductRequestValidator());
+    }
+}

@@ -1,19 +1,22 @@
 using FluentValidation;
-using KuryeSistemi.Application.Features.Couriers.Commands.CreateCourier;
+using KuryeSistemi.Application.DTOs.Couriers;
 
-namespace KuryeSistemi.Application.Features.Couriers.Validators;
+namespace KuryeSistemi.Application.Validators.Couriers;
 
 /// <summary>
-/// CreateCourierCommand için FluentValidation kuralları.
+/// CreateCourierRequestDto için FluentValidation kuralları.
 /// </summary>
-public sealed class CreateCourierCommandValidator
-    : AbstractValidator<CreateCourierCommand>
+public sealed class CreateCourierRequestDtoValidator : AbstractValidator<CreateCourierRequestDto>
 {
-    public CreateCourierCommandValidator()
+    public CreateCourierRequestDtoValidator()
     {
         RuleFor(x => x.MerchantId)
             .Must(id => !id.HasValue || id.Value != Guid.Empty)
             .WithMessage("Geçersiz MerchantId.");
+
+        RuleFor(x => x.CourierCompanyId)
+            .Must(id => !id.HasValue || id.Value != Guid.Empty)
+            .WithMessage("Geçersiz CourierCompanyId.");
 
         RuleFor(x => x.FirstName)
             .NotEmpty().WithMessage("Ad boş olamaz.")
@@ -25,12 +28,13 @@ public sealed class CreateCourierCommandValidator
 
         RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage("Telefon numarası boş olamaz.")
-            .Matches(@"^\+?[1-9]\d{6,14}$")
-                .WithMessage("Geçerli bir telefon numarası giriniz. (Örn: +905551112233)");
+            .Matches(@"^\+?[0-9\s\-()]{7,20}$")
+            .WithMessage("Geçerli bir telefon numarası giriniz.");
 
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("E-posta adresi boş olamaz.")
-            .EmailAddress().WithMessage("Geçerli bir e-posta adresi giriniz.");
+            .EmailAddress().WithMessage("Geçerli bir e-posta adresi giriniz.")
+            .MaximumLength(150).WithMessage("E-posta en fazla 150 karakter olabilir.");
 
         RuleFor(x => x.LicensePlate)
             .NotEmpty().WithMessage("Araç plakası boş olamaz.")
