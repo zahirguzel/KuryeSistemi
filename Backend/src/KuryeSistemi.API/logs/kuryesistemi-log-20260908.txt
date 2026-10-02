@@ -1,0 +1,553 @@
+2026-09-08 11:27:20.334 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-08 11:27:21.874 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-08 11:27:21.969 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-08 11:27:22.305 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-08 11:27:22.307 +03:00 [INF] Now listening on: http://localhost:5222
+2026-09-08 11:27:22.367 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-08 11:27:22.368 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-08 11:27:22.370 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-08 11:27:22.371 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-08 11:27:22.372 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-08 11:27:22.373 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-08 11:27:22.406 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-08 11:27:22.408 +03:00 [INF] Hosting environment: Development
+2026-09-08 11:27:22.410 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-08 11:27:22.613 +03:00 [INF] Server zahir:23200:8800e7e2 successfully announced in 204,3856 ms
+2026-09-08 11:27:22.620 +03:00 [INF] Server zahir:23200:8800e7e2 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-08 11:27:22.639 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-08 11:27:22.813 +03:00 [INF] Server zahir:23200:8800e7e2 all the dispatchers started
+2026-09-08 11:27:23.814 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 71.6726 ms
+2026-09-08 11:27:24.184 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 57.5147 ms
+2026-09-08 11:27:48.816 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 20.5727 ms
+2026-09-08 11:29:03.114 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"testkargo.com","Password":"string","$type":"LoginMerchantCommand"}
+2026-09-08 11:29:03.322 +03:00 [ERR] --> [REQUEST FAILED] LoginMerchantCommand (199 ms) sırasında hata fırlatıldı!
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:29:03.463 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:29:03.494 +03:00 [ERR] --> [GLOBAL EXCEPTION] İstek işlenirken istisna oluştu! Endpoint: POST /api/Auth/login | Hata: Bir veya daha fazla doğrulama hatası oluştu.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:29:03.532 +03:00 [INF] HTTP POST /api/Auth/login responded 400 in 641.5242 ms
+2026-09-08 11:29:58.267 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"testkargo.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 11:29:58.338 +03:00 [ERR] --> [REQUEST FAILED] LoginMerchantCommand (67 ms) sırasında hata fırlatıldı!
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:29:58.426 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:29:58.436 +03:00 [ERR] --> [GLOBAL EXCEPTION] İstek işlenirken istisna oluştu! Endpoint: POST /api/Auth/login | Hata: Bir veya daha fazla doğrulama hatası oluştu.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:29:58.448 +03:00 [INF] HTTP POST /api/Auth/login responded 400 in 199.0945 ms
+2026-09-08 11:30:02.759 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"testkargo.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 11:30:02.832 +03:00 [ERR] --> [REQUEST FAILED] LoginMerchantCommand (67 ms) sırasında hata fırlatıldı!
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:30:02.910 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:30:02.919 +03:00 [ERR] --> [GLOBAL EXCEPTION] İstek işlenirken istisna oluştu! Endpoint: POST /api/Auth/login | Hata: Bir veya daha fazla doğrulama hatası oluştu.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:30:02.930 +03:00 [INF] HTTP POST /api/Auth/login responded 400 in 175.9876 ms
+2026-09-08 11:30:24.822 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"test@kargo.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 11:30:26.290 +03:00 [WRN] --> [PERFORMANCE WARNING] Uzun süren istek tespit edildi! LoginMerchantCommand (1463 ms) | Parametreler: {"Email":"test@kargo.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 11:30:26.314 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1493.4566 ms
+2026-09-08 11:32:45.987 +03:00 [INF] HTTP POST /api/Orders responded 401 in 15.8360 ms
+2026-09-08 11:33:24.757 +03:00 [INF] HTTP POST /api/Orders responded 401 in 2.6501 ms
+2026-09-08 11:35:22.191 +03:00 [INF] HTTP POST /api/Orders responded 401 in 2.2007 ms
+2026-09-08 11:35:39.618 +03:00 [INF] HTTP POST /api/Orders responded 401 in 0.9192 ms
+2026-09-08 11:39:30.645 +03:00 [INF] HTTP POST /api/Orders responded 401 in 0.4700 ms
+2026-09-08 11:41:35.908 +03:00 [INF] HTTP POST /api/Orders responded 401 in 0.5566 ms
+2026-09-08 11:43:30.330 +03:00 [INF] --> [REQUEST STARTED] CreateOrderCommand | Parametreler: {"MerchantId":"3650ec7f-06e5-2c65-1af0-0552c7bfc0d0","PickupAddressLine":"string","PickupDistrict":"string","PickupCity":"string","PickupLatitude":8800.425835780785,"PickupLongitude":4944.577040851345,"DeliveryAddressLine":"string","DeliveryDistrict":"string","DeliveryCity":"string","DeliveryLatitude":9383.093131931471,"DeliveryLongitude":1272.8282932923673,"RecipientName":"string","RecipientPhone":"string","Notes":"string","CacheKey":"orders:active:merchant:3650ec7f-06e5-2c65-1af0-0552c7bfc0d0","$type":"CreateOrderCommand"}
+2026-09-08 11:43:30.467 +03:00 [ERR] --> [REQUEST FAILED] CreateOrderCommand (118 ms) sırasında hata fırlatıldı!
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:43:30.547 +03:00 [ERR] An unhandled exception has occurred while executing the request.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Orders.OrdersController.Create(CreateOrderRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Orders\OrdersController.cs:line 124
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:43:30.569 +03:00 [ERR] --> [GLOBAL EXCEPTION] İstek işlenirken istisna oluştu! Endpoint: POST /api/Orders | Hata: Bir veya daha fazla doğrulama hatası oluştu.
+KuryeSistemi.Application.Common.Exceptions.ValidationException: Bir veya daha fazla doğrulama hatası oluştu.
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Orders.OrdersController.Create(CreateOrderRequest request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Orders\OrdersController.cs:line 124
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at Microsoft.AspNetCore.Diagnostics.ExceptionHandlerMiddlewareImpl.<Invoke>g__Awaited|10_0(ExceptionHandlerMiddlewareImpl middleware, HttpContext context, Task task)
+2026-09-08 11:43:30.587 +03:00 [INF] HTTP POST /api/Orders responded 400 in 360.4893 ms
+2026-09-08 11:44:31.936 +03:00 [INF] --> [REQUEST STARTED] CreateOrderCommand | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","PickupAddressLine":"Çay Mahallesi No:12","PickupDistrict":"İskenderun","PickupCity":"Hatay","PickupLatitude":36.5871,"PickupLongitude":36.1734,"DeliveryAddressLine":"Numune Mah. 182. Sk.","DeliveryDistrict":"İskenderun","DeliveryCity":"Hatay","DeliveryLatitude":36.5822,"DeliveryLongitude":36.1689,"RecipientName":"Ahmet Müşteri","RecipientPhone":"+905559998877","Notes":"Kapıya bırakın.","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","$type":"CreateOrderCommand"}
+2026-09-08 11:44:32.576 +03:00 [INF] --> [HANGFIRE SCHEDULED] Sipariş "d994e4a8-3808-4e52-840a-af3e9a7eeb03" için gecikmeli denetim görevi planlandı. JobId: 1, Süre: "00:15:00"
+2026-09-08 11:44:33.037 +03:00 [INF] --> [REDIS CACHE INVALIDATED] Önbellek silindi: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 11:44:33.038 +03:00 [WRN] --> [PERFORMANCE WARNING] Uzun süren istek tespit edildi! CreateOrderCommand (1089 ms) | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","PickupAddressLine":"Çay Mahallesi No:12","PickupDistrict":"İskenderun","PickupCity":"Hatay","PickupLatitude":36.5871,"PickupLongitude":36.1734,"DeliveryAddressLine":"Numune Mah. 182. Sk.","DeliveryDistrict":"İskenderun","DeliveryCity":"Hatay","DeliveryLatitude":36.5822,"DeliveryLongitude":36.1689,"RecipientName":"Ahmet Müşteri","RecipientPhone":"+905559998877","Notes":"Kapıya bırakın.","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","$type":"CreateOrderCommand"}
+2026-09-08 11:44:33.106 +03:00 [INF] HTTP POST /api/Orders responded 201 in 1174.4443 ms
+2026-09-08 11:45:50.000 +03:00 [INF] --> [REQUEST STARTED] GetCouriersByMerchantQuery | Parametreler: {"MerchantId":"8cdb86b3-7145-4d25-7d37-2b7401a256e9","IsAvailable":false,"$type":"GetCouriersByMerchantQuery"}
+2026-09-08 11:45:50.066 +03:00 [INF] --> [REQUEST COMPLETED] GetCouriersByMerchantQuery (61 ms)
+2026-09-08 11:45:50.073 +03:00 [INF] HTTP GET /api/Couriers responded 200 in 99.9866 ms
+2026-09-08 11:48:21.160 +03:00 [INF] --> [REQUEST STARTED] GetCouriersByMerchantQuery | Parametreler: {"MerchantId":"8cdb86b3-7145-4d25-7d37-2b7401a256e9","IsAvailable":false,"$type":"GetCouriersByMerchantQuery"}
+2026-09-08 11:48:21.180 +03:00 [INF] --> [REQUEST COMPLETED] GetCouriersByMerchantQuery (16 ms)
+2026-09-08 11:48:21.183 +03:00 [INF] HTTP GET /api/Couriers responded 200 in 27.4423 ms
+2026-09-08 11:49:11.744 +03:00 [INF] --> [REQUEST STARTED] GetCouriersByMerchantQuery | Parametreler: {"MerchantId":"8cdb86b3-7145-4d25-7d37-2b7401a256e9","IsAvailable":true,"$type":"GetCouriersByMerchantQuery"}
+2026-09-08 11:49:11.758 +03:00 [INF] --> [REQUEST COMPLETED] GetCouriersByMerchantQuery (7 ms)
+2026-09-08 11:49:11.770 +03:00 [INF] HTTP GET /api/Couriers responded 200 in 27.2211 ms
+2026-09-08 11:50:24.851 +03:00 [INF] --> [REQUEST STARTED] GetCouriersByMerchantQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","IsAvailable":null,"$type":"GetCouriersByMerchantQuery"}
+2026-09-08 11:50:24.864 +03:00 [INF] --> [REQUEST COMPLETED] GetCouriersByMerchantQuery (8 ms)
+2026-09-08 11:50:24.866 +03:00 [INF] HTTP GET /api/Couriers responded 200 in 16.1970 ms
+2026-09-08 11:51:30.793 +03:00 [INF] --> [REQUEST STARTED] CreateCourierCommand | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","FirstName":"Ahmet","LastName":"Yılmaz","PhoneNumber":"+905551112233","Email":"ahmet@kurye.com","VehicleType":"Motorcycle","LicensePlate":"34 AHM 001","VehicleBrand":"Honda","VehicleModel":"CB500","$type":"CreateCourierCommand"}
+2026-09-08 11:51:31.159 +03:00 [ERR] --> [REQUEST FAILED] CreateCourierCommand (346 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: '+905551112233' telefon numarası zaten kayıtlı.
+   at KuryeSistemi.Application.Features.Couriers.Commands.CreateCourier.CreateCourierCommandHandler.Handle(CreateCourierCommand command, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Couriers\Commands\CreateCourier\CreateCourierCommandHandler.cs:line 49
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 51
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:51:31.276 +03:00 [INF] HTTP POST /api/Couriers responded 409 in 543.6543 ms
+2026-09-08 11:52:19.223 +03:00 [INF] --> [REQUEST STARTED] CreateCourierCommand | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","FirstName":"Ahmet","LastName":"Yılmaz","PhoneNumber":"+905551112244","Email":"ahmet2@kurye.com","VehicleType":"Motorcycle","LicensePlate":"34 AHM 002","VehicleBrand":"Honda","VehicleModel":"CB500","$type":"CreateCourierCommand"}
+2026-09-08 11:52:19.325 +03:00 [INF] --> [REQUEST COMPLETED] CreateCourierCommand (88 ms)
+2026-09-08 11:52:19.331 +03:00 [INF] HTTP POST /api/Couriers responded 201 in 117.0600 ms
+2026-09-08 11:52:38.039 +03:00 [INF] --> [REQUEST STARTED] GetCouriersByMerchantQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","IsAvailable":null,"$type":"GetCouriersByMerchantQuery"}
+2026-09-08 11:52:38.054 +03:00 [INF] --> [REQUEST COMPLETED] GetCouriersByMerchantQuery (9 ms)
+2026-09-08 11:52:38.057 +03:00 [INF] HTTP GET /api/Couriers responded 200 in 18.5123 ms
+2026-09-08 11:56:16.338 +03:00 [INF] --> [REQUEST STARTED] AssignOrderCommand | Parametreler: {"OrderId":"8cdb86b3-7145-4d25-7d37-2b7401a256e9","CourierId":"90386627-9816-4d9d-8def-eaee73e39b15","$type":"AssignOrderCommand"}
+2026-09-08 11:56:16.597 +03:00 [ERR] --> [REQUEST FAILED] AssignOrderCommand (255 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Sipariş '8cdb86b3-7145-4d25-7d37-2b7401a256e9' bulunamadı.
+   at KuryeSistemi.Application.Features.Orders.Commands.AssignOrder.AssignOrderCommandHandler.Handle(AssignOrderCommand command, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\AssignOrder\AssignOrderCommandHandler.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:56:16.694 +03:00 [INF] HTTP PUT /api/Orders/8cdb86b3-7145-4d25-7d37-2b7401a256e9/assign responded 404 in 377.2964 ms
+2026-09-08 11:56:58.670 +03:00 [INF] --> [REQUEST STARTED] AssignOrderCommand | Parametreler: {"OrderId":"8cdb86b3-7145-4d25-7d37-2b7401a256e9","CourierId":"90386627-9816-4d9d-8def-eaee73e39b15","$type":"AssignOrderCommand"}
+2026-09-08 11:56:58.875 +03:00 [ERR] --> [REQUEST FAILED] AssignOrderCommand (199 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Sipariş '8cdb86b3-7145-4d25-7d37-2b7401a256e9' bulunamadı.
+   at KuryeSistemi.Application.Features.Orders.Commands.AssignOrder.AssignOrderCommandHandler.Handle(AssignOrderCommand command, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\AssignOrder\AssignOrderCommandHandler.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 11:56:58.984 +03:00 [INF] HTTP PUT /api/Orders/8cdb86b3-7145-4d25-7d37-2b7401a256e9/assign responded 404 in 315.1398 ms
+2026-09-08 11:58:05.752 +03:00 [INF] --> [REQUEST STARTED] AssignOrderCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","CourierId":"90386627-9816-4d9d-8def-eaee73e39b15","$type":"AssignOrderCommand"}
+2026-09-08 11:58:05.854 +03:00 [INF] --> [REQUEST COMPLETED] AssignOrderCommand (98 ms)
+2026-09-08 11:58:05.857 +03:00 [INF] HTTP PUT /api/Orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/assign responded 200 in 106.7205 ms
+2026-09-08 11:59:39.863 +03:00 [INF] --> [HANGFIRE JOB] Sipariş zaman aşımı denetleniyor: "d994e4a8-3808-4e52-840a-af3e9a7eeb03"
+2026-09-08 11:59:39.878 +03:00 [INF] --> [HANGFIRE JOB OK] Sipariş "d994e4a8-3808-4e52-840a-af3e9a7eeb03" zaten işlem görmüş (Durum: "Assigned"). İptale gerek yok.
+2026-09-08 12:34:41.985 +03:00 [ERR] Execution Worker is in the Failed state now due to an exception, execution will be retried no more than in 00:00:09
+Npgsql.NpgsqlException (0x80004005): The operation has timed out
+ ---> System.TimeoutException: The operation has timed out.
+   at Npgsql.ThrowHelper.ThrowNpgsqlExceptionWithInnerTimeoutException(String message)
+   at Npgsql.Util.NpgsqlTimeout.Check()
+   at Npgsql.Util.NpgsqlTimeout.CheckAndGetTimeLeft()
+   at Npgsql.Internal.NpgsqlConnector.Authenticate(String username, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.<>c__DisplayClass13_0.<Dequeue_Transaction>b__0()
+   at Hangfire.PostgreSql.Utils.Utils.TryExecute[T](Func`1 func, T& result, Func`2 swallowException, Nullable`1 tryCount)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue_Transaction(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlJobQueue.Dequeue(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.PostgreSql.PostgreSqlConnection.FetchNextJob(String[] queues, CancellationToken cancellationToken)
+   at Hangfire.Server.Worker.Execute(BackgroundProcessContext context) in C:\projects\hangfire-525\src\Hangfire.Core\Server\Worker.cs:line 102
+   at Hangfire.Server.BackgroundProcessDispatcherBuilder.ExecuteProcess(Guid executionId, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Server\BackgroundProcessDispatcherBuilder.cs:line 82
+   at Hangfire.Processing.BackgroundExecution.Run(Action`2 callback, Object state) in C:\projects\hangfire-525\src\Hangfire.Core\Processing\BackgroundExecution.cs:line 118
+2026-09-08 12:39:23.626 +03:00 [INF] HTTP POST /api/auth/login responded 307 in 43.7185 ms
+2026-09-08 12:39:30.228 +03:00 [INF] HTTP POST /api/auth/login responded 400 in 220.9368 ms
+2026-09-08 12:40:27.869 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-08 12:40:28.411 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-08 12:40:28.482 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-08 12:40:28.687 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-08 12:40:28.692 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-08 12:40:28.692 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-08 12:40:28.692 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-08 12:40:28.692 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-08 12:40:28.692 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-08 12:40:28.692 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-08 12:40:28.706 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-08 12:40:28.707 +03:00 [INF] Hosting environment: Development
+2026-09-08 12:40:28.707 +03:00 [INF] Content root path: c:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-08 12:40:28.863 +03:00 [INF] Server zahir:4132:9af96f1f successfully announced in 147,4539 ms
+2026-09-08 12:40:28.867 +03:00 [INF] Server zahir:4132:9af96f1f is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-08 12:40:28.924 +03:00 [INF] Server zahir:4132:9af96f1f all the dispatchers started
+2026-09-08 12:40:41.175 +03:00 [INF] HTTP POST /api/auth/login responded 400 in 140.1930 ms
+2026-09-08 12:41:05.792 +03:00 [INF] HTTP POST /api/auth/login responded 415 in 10.4845 ms
+2026-09-08 12:41:17.365 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 118.2476 ms
+2026-09-08 12:42:52.107 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 2.2130 ms
+2026-09-08 12:42:52.163 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 12:42:53.214 +03:00 [ERR] --> [REQUEST FAILED] LoginMerchantCommand (1048 ms) sırasında hata fırlatıldı!
+System.UnauthorizedAccessException: E-posta veya şifre hatalı.
+   at KuryeSistemi.Application.Features.Auth.Commands.LoginMerchant.LoginMerchantCommandHandler.Handle(LoginMerchantCommand command, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Auth\Commands\LoginMerchant\LoginMerchantCommandHandler.cs:line 52
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 51
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+2026-09-08 12:42:53.244 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 1132.1168 ms
+2026-09-08 12:43:18.106 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.2643 ms
+2026-09-08 12:43:18.112 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 12:43:18.189 +03:00 [ERR] --> [REQUEST FAILED] LoginMerchantCommand (76 ms) sırasında hata fırlatıldı!
+System.UnauthorizedAccessException: E-posta veya şifre hatalı.
+   at KuryeSistemi.Application.Features.Auth.Commands.LoginMerchant.LoginMerchantCommandHandler.Handle(LoginMerchantCommand command, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Auth\Commands\LoginMerchant\LoginMerchantCommandHandler.cs:line 52
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 51
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequest request, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 44
+2026-09-08 12:43:18.190 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 82.2125 ms
+2026-09-08 12:45:26.635 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-08 12:45:27.231 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-08 12:45:27.342 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-08 12:45:27.436 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-08 12:45:27.440 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-08 12:45:27.440 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-08 12:45:27.441 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-08 12:45:27.441 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-08 12:45:27.441 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-08 12:45:27.441 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-08 12:45:27.454 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-08 12:45:27.454 +03:00 [INF] Hosting environment: Development
+2026-09-08 12:45:27.454 +03:00 [INF] Content root path: c:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-08 12:45:27.572 +03:00 [INF] Server zahir:15460:e3cd4b76 successfully announced in 113,3354 ms
+2026-09-08 12:45:27.575 +03:00 [INF] Server zahir:15460:e3cd4b76 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-08 12:45:27.588 +03:00 [INF] Server zahir:15460:e3cd4b76 all the dispatchers started
+2026-09-08 12:45:27.668 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-08 12:45:43.118 +03:00 [INF] HTTP POST /api/auth/login responded 415 in 93.6118 ms
+2026-09-08 12:46:01.463 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 12:46:03.706 +03:00 [WRN] --> [PERFORMANCE WARNING] Uzun süren istek tespit edildi! LoginMerchantCommand (2240 ms) | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 12:46:03.727 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 2305.3813 ms
+2026-09-08 12:46:14.695 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:46:14.874 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:46:15.086 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:46:15.087 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (391 ms)
+2026-09-08 12:46:15.092 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 468.4433 ms
+2026-09-08 12:47:18.690 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 2.5600 ms
+2026-09-08 12:47:18.699 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 12:47:18.750 +03:00 [INF] --> [REQUEST COMPLETED] LoginMerchantCommand (50 ms)
+2026-09-08 12:47:18.754 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 60.4844 ms
+2026-09-08 12:47:19.797 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.3028 ms
+2026-09-08 12:47:19.810 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:47:19.841 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:47:19.842 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (31 ms)
+2026-09-08 12:47:19.843 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 41.3582 ms
+2026-09-08 12:48:28.329 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2408 ms
+2026-09-08 12:48:28.352 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 20.6342 ms
+2026-09-08 12:48:42.754 +03:00 [INF] HTTP OPTIONS /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 204 in 0.1177 ms
+2026-09-08 12:48:42.779 +03:00 [INF] --> [REQUEST STARTED] UpdateOrderStatusCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","NewStatus":"PickedUp","$type":"UpdateOrderStatusCommand"}
+2026-09-08 12:48:43.055 +03:00 [INF] --> [REQUEST COMPLETED] UpdateOrderStatusCommand (275 ms)
+2026-09-08 12:48:43.056 +03:00 [INF] HTTP PUT /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 200 in 298.2942 ms
+2026-09-08 12:48:43.264 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1263 ms
+2026-09-08 12:48:43.268 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:48:43.273 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:48:43.274 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (4 ms)
+2026-09-08 12:48:43.274 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 7.8708 ms
+2026-09-08 12:48:49.026 +03:00 [INF] HTTP OPTIONS /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 204 in 0.2773 ms
+2026-09-08 12:48:49.032 +03:00 [INF] --> [REQUEST STARTED] UpdateOrderStatusCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","NewStatus":"PickedUp","$type":"UpdateOrderStatusCommand"}
+2026-09-08 12:48:49.047 +03:00 [ERR] --> [REQUEST FAILED] UpdateOrderStatusCommand (14 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Geçersiz durum geçişi: 'PickedUp' → 'PickedUp'. İzin verilen geçişler: [Delivered]
+   at KuryeSistemi.Application.Features.Orders.Commands.UpdateOrderStatus.UpdateOrderStatusCommandHandler.Handle(UpdateOrderStatusCommand command, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\UpdateOrderStatus\UpdateOrderStatusCommandHandler.cs:line 64
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 12:48:49.092 +03:00 [INF] HTTP PUT /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 409 in 63.4651 ms
+2026-09-08 12:49:45.733 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1235 ms
+2026-09-08 12:49:45.736 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:49:45.739 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:49:45.739 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (2 ms)
+2026-09-08 12:49:45.740 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 4.3689 ms
+2026-09-08 12:49:57.375 +03:00 [INF] HTTP OPTIONS /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 204 in 0.2885 ms
+2026-09-08 12:49:57.380 +03:00 [INF] --> [REQUEST STARTED] UpdateOrderStatusCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","NewStatus":"PickedUp","$type":"UpdateOrderStatusCommand"}
+2026-09-08 12:49:57.391 +03:00 [ERR] --> [REQUEST FAILED] UpdateOrderStatusCommand (10 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Geçersiz durum geçişi: 'PickedUp' → 'PickedUp'. İzin verilen geçişler: [Delivered]
+   at KuryeSistemi.Application.Features.Orders.Commands.UpdateOrderStatus.UpdateOrderStatusCommandHandler.Handle(UpdateOrderStatusCommand command, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\UpdateOrderStatus\UpdateOrderStatusCommandHandler.cs:line 64
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 12:49:57.392 +03:00 [INF] HTTP PUT /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 409 in 14.3870 ms
+2026-09-08 12:50:03.310 +03:00 [INF] HTTP OPTIONS /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 204 in 0.0885 ms
+2026-09-08 12:50:03.313 +03:00 [INF] --> [REQUEST STARTED] UpdateOrderStatusCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","NewStatus":"PickedUp","$type":"UpdateOrderStatusCommand"}
+2026-09-08 12:50:03.318 +03:00 [ERR] --> [REQUEST FAILED] UpdateOrderStatusCommand (5 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Geçersiz durum geçişi: 'PickedUp' → 'PickedUp'. İzin verilen geçişler: [Delivered]
+   at KuryeSistemi.Application.Features.Orders.Commands.UpdateOrderStatus.UpdateOrderStatusCommandHandler.Handle(UpdateOrderStatusCommand command, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\UpdateOrderStatus\UpdateOrderStatusCommandHandler.cs:line 64
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in c:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 12:50:03.320 +03:00 [INF] HTTP PUT /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 409 in 7.5533 ms
+2026-09-08 12:50:27.671 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-08 12:52:51.804 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1861 ms
+2026-09-08 12:52:51.807 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:52:51.809 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:52:51.819 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:52:51.819 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (11 ms)
+2026-09-08 12:52:51.820 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 14.0960 ms
+2026-09-08 12:53:02.481 +03:00 [INF] HTTP OPTIONS /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 204 in 0.0839 ms
+2026-09-08 12:53:02.484 +03:00 [INF] --> [REQUEST STARTED] UpdateOrderStatusCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","NewStatus":"Delivered","$type":"UpdateOrderStatusCommand"}
+2026-09-08 12:53:02.589 +03:00 [INF] --> [REQUEST COMPLETED] UpdateOrderStatusCommand (104 ms)
+2026-09-08 12:53:02.590 +03:00 [INF] HTTP PUT /api/orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/status responded 200 in 106.5311 ms
+2026-09-08 12:53:02.729 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1108 ms
+2026-09-08 12:53:02.732 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:53:02.736 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:53:02.736 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (3 ms)
+2026-09-08 12:53:02.736 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 5.6925 ms
+2026-09-08 12:58:47.897 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1147 ms
+2026-09-08 12:58:47.901 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:58:47.904 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:58:47.916 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:58:47.916 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (14 ms)
+2026-09-08 12:58:47.917 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 18.1807 ms
+2026-09-08 12:58:50.844 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 12:58:50.856 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 12:58:50.856 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (12 ms)
+2026-09-08 12:58:50.857 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 14.3033 ms
+2026-09-08 13:01:34.973 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1152 ms
+2026-09-08 13:01:34.976 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 13:01:34.977 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:01:34.983 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:01:34.984 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (7 ms)
+2026-09-08 13:01:34.984 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 9.0771 ms
+2026-09-08 13:06:41.068 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.3317 ms
+2026-09-08 13:06:41.070 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 13:06:41.072 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:06:41.081 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:06:41.081 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (10 ms)
+2026-09-08 13:06:41.082 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 12.4547 ms
+2026-09-08 13:06:43.028 +03:00 [INF] HTTP GET /hubs/location responded 101 in 1094320.3389 ms
+2026-09-08 13:06:47.376 +03:00 [INF] HTTP OPTIONS /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 204 in 0.1831 ms
+2026-09-08 13:06:47.379 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 13:06:47.383 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:06:47.384 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (4 ms)
+2026-09-08 13:06:47.384 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 6.0551 ms
+2026-09-08 13:06:51.421 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 13:06:51.424 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 13:06:51.425 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (3 ms)
+2026-09-08 13:06:51.425 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 5.8682 ms
+2026-09-08 13:06:52.741 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0898 ms
+2026-09-08 13:06:52.749 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 6.0608 ms
+2026-09-08 13:07:04.598 +03:00 [INF] HTTP GET /hubs/location responded 101 in 11368.6963 ms
+2026-09-08 15:07:33.820 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-08 15:07:34.830 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-08 15:07:34.888 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-08 15:07:35.034 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-08 15:07:35.038 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-08 15:07:35.038 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-08 15:07:35.039 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-08 15:07:35.039 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-08 15:07:35.039 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-08 15:07:35.039 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-08 15:07:35.051 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-08 15:07:35.052 +03:00 [INF] Hosting environment: Development
+2026-09-08 15:07:35.052 +03:00 [INF] Content root path: c:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-08 15:07:35.253 +03:00 [INF] Server zahir:32168:37203abb successfully announced in 194,777 ms
+2026-09-08 15:07:35.255 +03:00 [INF] Server zahir:32168:37203abb is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-08 15:07:35.269 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-08 15:07:35.270 +03:00 [INF] Server zahir:32168:37203abb all the dispatchers started
+2026-09-08 15:12:46.159 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-08 15:12:47.416 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-08 15:12:47.495 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-08 15:12:47.795 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-08 15:12:47.797 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-08 15:12:47.893 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-08 15:12:47.894 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-08 15:12:47.895 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-08 15:12:47.896 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-08 15:12:47.898 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-08 15:12:47.899 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-08 15:12:47.923 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-08 15:12:47.925 +03:00 [INF] Hosting environment: Development
+2026-09-08 15:12:47.932 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-08 15:12:48.085 +03:00 [INF] Server zahir:2972:16fbaa83 successfully announced in 151,0472 ms
+2026-09-08 15:12:48.092 +03:00 [INF] Server zahir:2972:16fbaa83 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-08 15:12:48.263 +03:00 [INF] Server zahir:2972:16fbaa83 all the dispatchers started
+2026-09-08 15:12:49.411 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 94.7535 ms
+2026-09-08 15:12:49.757 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 44.1833 ms
+2026-09-08 15:17:48.114 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-08 15:54:53.973 +03:00 [INF] --> [REQUEST STARTED] LoginMerchantCommand | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 15:54:56.209 +03:00 [WRN] --> [PERFORMANCE WARNING] Uzun süren istek tespit edildi! LoginMerchantCommand (2216 ms) | Parametreler: {"Email":"ahmet2@kurye.com","Password":"sifre123","$type":"LoginMerchantCommand"}
+2026-09-08 15:54:56.246 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 2806.9101 ms
+2026-09-08 15:54:58.032 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 15:54:58.034 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 117.0453 ms
+2026-09-08 15:54:58.477 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 15:54:58.650 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 15:54:58.652 +03:00 [WRN] --> [PERFORMANCE WARNING] Uzun süren istek tespit edildi! GetActiveOrdersQuery (615 ms) | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 15:54:58.660 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 679.1695 ms
+2026-09-08 15:55:33.254 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 15:55:33.271 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 15:55:33.273 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (12 ms)
+2026-09-08 15:55:33.275 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 23.0824 ms
+2026-09-08 15:55:42.686 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 15:55:42.699 +03:00 [INF] --> [REDIS CACHE HIT] Anahtar: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 15:55:42.701 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (5 ms)
+2026-09-08 15:55:42.702 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 22.4969 ms
+2026-09-08 16:01:01.349 +03:00 [INF] --> [REQUEST STARTED] GetActiveOrdersQuery | Parametreler: {"MerchantId":"e16dc80c-8950-4707-ab66-0cfe159eaf28","CacheKey":"orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28","SlidingExpiration":"00:02:00","$type":"GetActiveOrdersQuery"}
+2026-09-08 16:01:01.358 +03:00 [INF] --> [REDIS CACHE MISS] Veritabanından çekiliyor: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 16:01:01.386 +03:00 [INF] --> [REDIS CACHE SET] Veri önbelleğe yazıldı: orders:active:merchant:e16dc80c-8950-4707-ab66-0cfe159eaf28
+2026-09-08 16:01:01.387 +03:00 [INF] --> [REQUEST COMPLETED] GetActiveOrdersQuery (33 ms)
+2026-09-08 16:01:01.389 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 41.5475 ms
+2026-09-08 16:04:17.807 +03:00 [INF] --> [REQUEST STARTED] AssignOrderCommand | Parametreler: {"OrderId":"d994e4a8-3808-4e52-840a-af3e9a7eeb03","CourierId":"90386627-9816-4d9d-8def-eaee73e39b15","$type":"AssignOrderCommand"}
+2026-09-08 16:04:18.667 +03:00 [ERR] --> [REQUEST FAILED] AssignOrderCommand (852 ms) sırasında hata fırlatıldı!
+System.InvalidOperationException: Sipariş 'd994e4a8-3808-4e52-840a-af3e9a7eeb03' Pending durumunda değil. Mevcut durum: Delivered. Sadece Pending siparişlere kurye atanabilir.
+   at KuryeSistemi.Application.Features.Orders.Commands.AssignOrder.AssignOrderCommandHandler.Handle(AssignOrderCommand command, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Features\Orders\Commands\AssignOrder\AssignOrderCommandHandler.cs:line 42
+   at KuryeSistemi.Application.Common.Behaviours.CacheInvalidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CacheInvalidationBehavior.cs:line 36
+   at KuryeSistemi.Application.Common.Behaviours.CachingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\CachingBehavior.cs:line 37
+   at KuryeSistemi.Application.Common.Behaviours.ValidationBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\ValidationBehavior.cs:line 35
+   at KuryeSistemi.Application.Common.Behaviours.LoggingBehavior`2.Handle(TRequest request, RequestHandlerDelegate`1 next, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Common\Behaviours\LoggingBehavior.cs:line 39
+2026-09-08 16:04:18.899 +03:00 [INF] HTTP PUT /api/Orders/d994e4a8-3808-4e52-840a-af3e9a7eeb03/assign responded 409 in 1116.0066 ms

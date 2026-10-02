@@ -1,0 +1,54 @@
+2026-09-16 09:45:57.830 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:46:02.719 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5432
+ ---> System.Net.Sockets.SocketException (10061): Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı.
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage..ctor(IConnectionFactory connectionFactory, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure)
+   at KuryeSistemi.API.Extensions.DatabaseExtensions.<>c__DisplayClass0_0.<AddDatabase>b__3(IGlobalConfiguration config) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Extensions\DatabaseExtensions.cs:line 42
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass0_0.<AddHangfire>b__0(IServiceProvider provider, IGlobalConfiguration config) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 40
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass1_0.<AddHangfire>b__14(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 103
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Hangfire.HangfireServiceCollectionExtensions.ThrowIfNotConfigured(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 307
+   at Hangfire.HangfireApplicationBuilderExtensions.UseHangfireDashboard(IApplicationBuilder app, String pathMatch, DashboardOptions options, JobStorage storage) in C:\projects\hangfire-525\src\Hangfire.AspNetCore\HangfireApplicationBuilderExtensions.cs:line 44
+   at Program.<Main>$(String[] args) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 84
+2026-09-16 09:46:05.409 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-16 09:47:07.759 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:47:08.769 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-16 09:47:08.870 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-16 09:47:09.099 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-16 09:47:09.105 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-16 09:47:09.105 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-16 09:47:09.106 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-16 09:47:09.106 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-16 09:47:09.106 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-16 09:47:09.106 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-16 09:47:09.124 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-16 09:47:09.124 +03:00 [INF] Hosting environment: Development
+2026-09-16 09:47:09.124 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-16 09:47:09.271 +03:00 [INF] Server zahir:29692:dcd87e93 successfully announced in 139,623 ms
+2026-09-16 09:47:09.275 +03:00 [INF] Server zahir:29692:dcd87e93 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-16 09:47:09.288 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-16 09:47:09.289 +03:00 [INF] Server zahir:29692:dcd87e93 all the dispatchers started

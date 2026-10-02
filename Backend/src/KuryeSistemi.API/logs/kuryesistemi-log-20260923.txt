@@ -1,0 +1,58 @@
+2026-09-23 13:26:00.044 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-23 13:26:00.188 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 63
+2026-09-23 13:26:00.207 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-23 13:26:34.090 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-23 13:26:34.185 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 63
+2026-09-23 13:26:34.202 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-23 13:39:06.976 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-23 13:39:07.061 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 63
+2026-09-23 13:39:07.067 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-23 13:39:32.732 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-23 13:39:33.099 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-23 13:39:33.173 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-23 13:39:33.836 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-23 13:39:33.836 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-23 13:39:34.341 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-23 13:39:34.344 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: 127.0.0.1, DB: KuryeDb, Schema: hangfire'
+2026-09-23 13:39:34.345 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-23 13:39:34.345 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-23 13:39:34.345 +03:00 [INF]     Invisibility timeout: 00:05:00.
+2026-09-23 13:39:34.345 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-23 13:39:34.345 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-23 13:39:34.354 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-23 13:39:34.355 +03:00 [INF] Hosting environment: Development
+2026-09-23 13:39:34.355 +03:00 [INF] Content root path: c:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-23 13:39:34.372 +03:00 [INF] Server zahir:11960:b056028b successfully announced in 15,0699 ms
+2026-09-23 13:39:34.375 +03:00 [INF] Server zahir:11960:b056028b is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-23 13:39:34.383 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-23 13:39:34.384 +03:00 [INF] Server zahir:11960:b056028b all the dispatchers started
+2026-09-23 13:39:34.431 +03:00 [INF] Removed 2 outdated record(s) from 'aggregatedcounter' table.
+2026-09-23 13:39:35.475 +03:00 [INF] Removed 109 outdated record(s) from 'job' table.

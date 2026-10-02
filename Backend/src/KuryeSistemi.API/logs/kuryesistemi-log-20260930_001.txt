@@ -1,0 +1,431 @@
+2026-09-30 11:46:56.730 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-30 11:46:57.755 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-30 11:46:57.860 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-30 11:46:58.797 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 11:46:58.800 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 11:46:59.480 +03:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+ ---> System.Net.Sockets.SocketException (10048): Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+2026-09-30 13:23:16.497 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-30 13:23:18.428 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-30 13:23:18.525 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-30 13:23:20.336 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 13:23:20.340 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 13:23:22.265 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-30 13:23:22.269 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-30 13:23:22.738 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: 127.0.0.1, DB: KuryeDb, Schema: hangfire'
+2026-09-30 13:23:22.757 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-30 13:23:22.775 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-30 13:23:22.782 +03:00 [INF]     Invisibility timeout: 00:05:00.
+2026-09-30 13:23:22.784 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-30 13:23:22.786 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-30 13:23:22.885 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-30 13:23:22.890 +03:00 [INF] Hosting environment: Development
+2026-09-30 13:23:22.893 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-30 13:23:22.952 +03:00 [INF] Server zahir:25284:cf4252d5 successfully announced in 60,4442 ms
+2026-09-30 13:23:22.992 +03:00 [INF] Server zahir:25284:cf4252d5 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-30 13:23:23.037 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-30 13:23:23.360 +03:00 [INF] Server zahir:25284:cf4252d5 all the dispatchers started
+2026-09-30 13:23:25.839 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1215.8810 ms
+2026-09-30 13:23:26.093 +03:00 [INF] HTTP GET /swagger responded 301 in 6.5133 ms
+2026-09-30 13:23:26.391 +03:00 [INF] HTTP GET /api/merchants responded 200 in 1782.9425 ms
+2026-09-30 13:23:26.431 +03:00 [INF] HTTP GET /api/merchants responded 200 in 45.0564 ms
+2026-09-30 13:23:26.468 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 281.4079 ms
+2026-09-30 13:23:26.756 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 188.1015 ms
+2026-09-30 13:23:26.756 +03:00 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 212.5212 ms
+2026-09-30 13:23:26.890 +03:00 [INF] HTTP GET /api/couriers responded 200 in 2281.9544 ms
+2026-09-30 13:23:26.891 +03:00 [INF] HTTP GET /api/orders responded 200 in 2282.9518 ms
+2026-09-30 13:23:26.906 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 347.2805 ms
+2026-09-30 13:23:26.958 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.8100 ms
+2026-09-30 13:23:26.968 +03:00 [INF] HTTP GET /api/orders responded 200 in 46.0408 ms
+2026-09-30 13:23:27.456 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 65.3189 ms
+2026-09-30 13:23:27.590 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 199.8024 ms
+2026-09-30 13:23:27.729 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 294.4870 ms
+2026-09-30 13:23:53.940 +03:00 [INF] HTTP GET /api/merchants responded 200 in 28.6332 ms
+2026-09-30 13:23:53.940 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.3210 ms
+2026-09-30 13:23:53.941 +03:00 [INF] HTTP GET /api/orders responded 200 in 29.5582 ms
+2026-09-30 13:24:24.332 +03:00 [INF] HTTP GET /api/orders responded 200 in 36.6532 ms
+2026-09-30 13:24:24.337 +03:00 [INF] HTTP GET /api/couriers responded 200 in 41.4795 ms
+2026-09-30 13:24:24.338 +03:00 [INF] HTTP GET /api/merchants responded 200 in 41.3076 ms
+2026-09-30 13:24:54.319 +03:00 [INF] HTTP GET /api/couriers responded 200 in 26.5429 ms
+2026-09-30 13:24:54.335 +03:00 [INF] HTTP GET /api/merchants responded 200 in 17.0386 ms
+2026-09-30 13:24:54.357 +03:00 [INF] HTTP GET /api/orders responded 200 in 56.6305 ms
+2026-09-30 13:25:24.331 +03:00 [INF] HTTP GET /api/couriers responded 200 in 34.4790 ms
+2026-09-30 13:25:24.331 +03:00 [INF] HTTP GET /api/orders responded 200 in 35.3500 ms
+2026-09-30 13:25:24.331 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.1602 ms
+2026-09-30 13:25:54.317 +03:00 [INF] HTTP GET /api/orders responded 200 in 21.3723 ms
+2026-09-30 13:25:54.318 +03:00 [INF] HTTP GET /api/couriers responded 200 in 23.1882 ms
+2026-09-30 13:25:54.324 +03:00 [INF] HTTP GET /api/merchants responded 200 in 14.3573 ms
+2026-09-30 13:26:24.316 +03:00 [INF] HTTP GET /api/orders responded 200 in 21.3506 ms
+2026-09-30 13:26:24.319 +03:00 [INF] HTTP GET /api/couriers responded 200 in 24.9390 ms
+2026-09-30 13:26:24.324 +03:00 [INF] HTTP GET /api/merchants responded 200 in 28.3487 ms
+2026-09-30 13:27:32.338 +03:00 [INF] HTTP GET /api/couriers responded 200 in 37.3960 ms
+2026-09-30 13:27:32.340 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.8977 ms
+2026-09-30 13:27:32.349 +03:00 [INF] HTTP GET /api/orders responded 200 in 43.1678 ms
+2026-09-30 13:28:32.322 +03:00 [INF] HTTP GET /api/couriers responded 200 in 26.6446 ms
+2026-09-30 13:28:32.332 +03:00 [INF] HTTP GET /api/orders responded 200 in 37.6548 ms
+2026-09-30 13:28:32.337 +03:00 [INF] HTTP GET /api/merchants responded 200 in 37.5974 ms
+2026-09-30 13:29:32.321 +03:00 [INF] HTTP GET /api/couriers responded 200 in 28.9236 ms
+2026-09-30 13:29:32.342 +03:00 [INF] HTTP GET /api/merchants responded 200 in 40.2454 ms
+2026-09-30 13:29:32.342 +03:00 [INF] HTTP GET /api/orders responded 200 in 42.7160 ms
+2026-09-30 13:30:32.314 +03:00 [INF] HTTP GET /api/couriers responded 200 in 21.2454 ms
+2026-09-30 13:30:32.330 +03:00 [INF] HTTP GET /api/orders responded 200 in 33.6621 ms
+2026-09-30 13:30:32.331 +03:00 [INF] HTTP GET /api/merchants responded 200 in 31.1592 ms
+2026-09-30 13:31:32.334 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.6337 ms
+2026-09-30 13:31:32.363 +03:00 [INF] HTTP GET /api/merchants responded 200 in 59.6738 ms
+2026-09-30 13:31:32.366 +03:00 [INF] HTTP GET /api/orders responded 200 in 62.6790 ms
+2026-09-30 13:32:32.317 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.5027 ms
+2026-09-30 13:32:32.322 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.4068 ms
+2026-09-30 13:32:32.328 +03:00 [INF] HTTP GET /api/couriers responded 200 in 35.6260 ms
+2026-09-30 13:33:32.337 +03:00 [INF] HTTP GET /api/couriers responded 200 in 44.4376 ms
+2026-09-30 13:33:32.338 +03:00 [INF] HTTP GET /api/orders responded 200 in 44.3503 ms
+2026-09-30 13:33:32.342 +03:00 [INF] HTTP GET /api/merchants responded 200 in 47.2297 ms
+2026-09-30 13:34:32.338 +03:00 [INF] HTTP GET /api/couriers responded 200 in 43.7451 ms
+2026-09-30 13:34:32.354 +03:00 [INF] HTTP GET /api/orders responded 200 in 40.1431 ms
+2026-09-30 13:34:32.354 +03:00 [INF] HTTP GET /api/merchants responded 200 in 35.8864 ms
+2026-09-30 13:35:32.303 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.0748 ms
+2026-09-30 13:35:32.314 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.3785 ms
+2026-09-30 13:35:32.303 +03:00 [INF] HTTP GET /api/orders responded 200 in 11.4988 ms
+2026-09-30 13:35:59.188 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0717 ms
+2026-09-30 13:35:59.238 +03:00 [INF] HTTP GET /api/products responded 200 in 44.8468 ms
+2026-09-30 13:35:59.289 +03:00 [INF] HTTP GET /api/products responded 200 in 7.4506 ms
+2026-09-30 13:37:05.046 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.1874 ms
+2026-09-30 13:37:05.091 +03:00 [INF] HTTP GET /hubs/location responded 101 in 819197.9289 ms
+2026-09-30 13:37:05.100 +03:00 [INF] HTTP GET /hubs/location responded 101 in 17.4022 ms
+2026-09-30 13:37:06.355 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.4366 ms
+2026-09-30 13:37:06.389 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.9648 ms
+2026-09-30 13:37:06.403 +03:00 [INF] HTTP GET /api/orders responded 200 in 17.1323 ms
+2026-09-30 13:37:06.403 +03:00 [INF] HTTP GET /api/merchants responded 200 in 14.1232 ms
+2026-09-30 13:37:06.410 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.2440 ms
+2026-09-30 13:37:06.452 +03:00 [INF] HTTP GET /api/orders responded 200 in 30.7881 ms
+2026-09-30 13:37:06.455 +03:00 [INF] HTTP GET /api/merchants responded 200 in 30.9957 ms
+2026-09-30 13:38:05.027 +03:00 [INF] HTTP GET /hubs/location responded 101 in 58599.2326 ms
+2026-09-30 13:38:05.056 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.2435 ms
+2026-09-30 13:38:05.117 +03:00 [INF] HTTP GET /hubs/location responded 101 in 29.1345 ms
+2026-09-30 13:38:06.326 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.6229 ms
+2026-09-30 13:38:06.350 +03:00 [INF] HTTP GET /api/couriers responded 200 in 18.6215 ms
+2026-09-30 13:38:06.372 +03:00 [INF] HTTP GET /api/orders responded 200 in 39.5931 ms
+2026-09-30 13:38:06.392 +03:00 [INF] HTTP GET /api/merchants responded 200 in 56.1371 ms
+2026-09-30 13:38:06.392 +03:00 [INF] HTTP GET /api/couriers responded 200 in 40.9919 ms
+2026-09-30 13:38:06.395 +03:00 [INF] HTTP GET /api/orders responded 200 in 23.3316 ms
+2026-09-30 13:38:06.403 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.7154 ms
+2026-09-30 13:39:05.032 +03:00 [INF] HTTP GET /hubs/location responded 101 in 58683.7542 ms
+2026-09-30 13:39:05.080 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.6888 ms
+2026-09-30 13:39:05.202 +03:00 [INF] HTTP GET /hubs/location responded 101 in 86.6987 ms
+2026-09-30 13:39:06.364 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.1755 ms
+2026-09-30 13:39:06.408 +03:00 [INF] HTTP GET /api/couriers responded 200 in 29.2211 ms
+2026-09-30 13:39:06.425 +03:00 [INF] HTTP GET /api/orders responded 200 in 43.6329 ms
+2026-09-30 13:39:06.443 +03:00 [INF] HTTP GET /api/merchants responded 200 in 59.8394 ms
+2026-09-30 13:39:06.492 +03:00 [INF] HTTP GET /api/couriers responded 200 in 60.2540 ms
+2026-09-30 13:39:06.508 +03:00 [INF] HTTP GET /api/merchants responded 200 in 16.4016 ms
+2026-09-30 13:39:06.513 +03:00 [INF] HTTP GET /api/orders responded 200 in 21.6707 ms
+2026-09-30 13:39:29.259 +03:00 [INF] HTTP GET /hubs/location responded 101 in 22763.0210 ms
+2026-09-30 13:39:29.266 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.4667 ms
+2026-09-30 13:39:29.303 +03:00 [INF] HTTP GET /hubs/location responded 101 in 13.1369 ms
+2026-09-30 13:39:30.326 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.3238 ms
+2026-09-30 13:39:30.347 +03:00 [INF] HTTP GET /api/couriers responded 200 in 15.2324 ms
+2026-09-30 13:39:30.384 +03:00 [INF] HTTP GET /api/merchants responded 200 in 45.0385 ms
+2026-09-30 13:39:30.385 +03:00 [INF] HTTP GET /api/orders responded 200 in 47.0468 ms
+2026-09-30 13:39:30.399 +03:00 [INF] HTTP GET /api/couriers responded 200 in 45.5987 ms
+2026-09-30 13:39:30.405 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.2144 ms
+2026-09-30 13:39:30.406 +03:00 [INF] HTTP GET /api/orders responded 200 in 18.2561 ms
+2026-09-30 13:40:01.326 +03:00 [INF] HTTP GET /api/couriers responded 200 in 35.5190 ms
+2026-09-30 13:40:01.337 +03:00 [INF] HTTP GET /api/merchants responded 200 in 36.9584 ms
+2026-09-30 13:40:01.339 +03:00 [INF] HTTP GET /api/orders responded 200 in 39.2390 ms
+2026-09-30 13:40:31.301 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.6731 ms
+2026-09-30 13:40:31.311 +03:00 [INF] HTTP GET /api/orders responded 200 in 19.8558 ms
+2026-09-30 13:40:31.313 +03:00 [INF] HTTP GET /api/merchants responded 200 in 21.8001 ms
+2026-09-30 13:41:01.316 +03:00 [INF] HTTP GET /api/merchants responded 200 in 14.6367 ms
+2026-09-30 13:41:01.323 +03:00 [INF] HTTP GET /api/couriers responded 200 in 30.2848 ms
+2026-09-30 13:41:01.343 +03:00 [INF] HTTP GET /api/orders responded 200 in 45.6949 ms
+2026-09-30 13:41:31.303 +03:00 [INF] HTTP GET /api/couriers responded 200 in 13.6120 ms
+2026-09-30 13:41:31.306 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.1840 ms
+2026-09-30 13:41:31.310 +03:00 [INF] HTTP GET /api/merchants responded 200 in 16.2031 ms
+2026-09-30 13:41:59.285 +03:00 [INF] HTTP GET /hubs/location responded 101 in 148932.6955 ms
+2026-09-30 13:41:59.301 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0435 ms
+2026-09-30 13:41:59.355 +03:00 [INF] HTTP GET /hubs/location responded 101 in 27.5069 ms
+2026-09-30 13:42:00.339 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.5214 ms
+2026-09-30 13:42:00.355 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.9807 ms
+2026-09-30 13:42:00.368 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.7499 ms
+2026-09-30 13:42:00.397 +03:00 [INF] HTTP GET /api/merchants responded 200 in 41.1686 ms
+2026-09-30 13:42:00.423 +03:00 [INF] HTTP GET /api/couriers responded 200 in 47.8922 ms
+2026-09-30 13:42:00.427 +03:00 [INF] HTTP GET /api/merchants responded 200 in 31.7857 ms
+2026-09-30 13:42:00.425 +03:00 [INF] HTTP GET /api/orders responded 200 in 44.8778 ms
+2026-09-30 13:42:05.030 +03:00 [INF] HTTP GET /hubs/location responded 101 in 4662.5609 ms
+2026-09-30 13:42:05.044 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0813 ms
+2026-09-30 13:42:05.092 +03:00 [INF] HTTP GET /hubs/location responded 101 in 18.5160 ms
+2026-09-30 13:42:06.358 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0224 ms
+2026-09-30 13:42:06.376 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.9727 ms
+2026-09-30 13:42:06.399 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.2092 ms
+2026-09-30 13:42:06.426 +03:00 [INF] HTTP GET /api/orders responded 200 in 52.9953 ms
+2026-09-30 13:42:06.442 +03:00 [INF] HTTP GET /api/couriers responded 200 in 39.0388 ms
+2026-09-30 13:42:06.449 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.3779 ms
+2026-09-30 13:42:06.460 +03:00 [INF] HTTP GET /api/orders responded 200 in 21.6808 ms
+2026-09-30 13:43:05.048 +03:00 [INF] HTTP GET /hubs/location responded 101 in 58644.2270 ms
+2026-09-30 13:43:05.048 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.3494 ms
+2026-09-30 13:43:05.075 +03:00 [INF] HTTP GET /hubs/location responded 101 in 10.2945 ms
+2026-09-30 13:43:06.339 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.5207 ms
+2026-09-30 13:43:06.361 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.9475 ms
+2026-09-30 13:43:06.407 +03:00 [INF] HTTP GET /api/couriers responded 200 in 30.7079 ms
+2026-09-30 13:43:06.410 +03:00 [INF] HTTP GET /api/merchants responded 200 in 49.1113 ms
+2026-09-30 13:43:06.409 +03:00 [INF] HTTP GET /api/orders responded 200 in 48.7834 ms
+2026-09-30 13:43:06.428 +03:00 [INF] HTTP GET /api/merchants responded 200 in 13.2859 ms
+2026-09-30 13:43:06.428 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.9990 ms
+2026-09-30 13:43:19.298 +03:00 [INF] HTTP GET /hubs/location responded 101 in 12916.3341 ms
+2026-09-30 13:43:19.305 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.4031 ms
+2026-09-30 13:43:19.379 +03:00 [INF] HTTP GET /hubs/location responded 101 in 52.5730 ms
+2026-09-30 13:43:20.360 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.6715 ms
+2026-09-30 13:43:20.388 +03:00 [INF] HTTP GET /api/merchants responded 200 in 13.9708 ms
+2026-09-30 13:43:20.390 +03:00 [INF] HTTP GET /api/couriers responded 200 in 16.9019 ms
+2026-09-30 13:43:20.389 +03:00 [INF] HTTP GET /api/orders responded 200 in 15.3266 ms
+2026-09-30 13:43:20.455 +03:00 [INF] HTTP GET /api/couriers responded 200 in 50.2420 ms
+2026-09-30 13:43:20.456 +03:00 [INF] HTTP GET /api/merchants responded 200 in 48.5650 ms
+2026-09-30 13:43:20.464 +03:00 [INF] HTTP GET /api/orders responded 200 in 32.3779 ms
+2026-09-30 13:43:51.328 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.1901 ms
+2026-09-30 13:43:51.333 +03:00 [INF] HTTP GET /api/couriers responded 200 in 37.2289 ms
+2026-09-30 13:43:51.345 +03:00 [INF] HTTP GET /api/orders responded 200 in 46.8813 ms
+2026-09-30 13:44:21.303 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.0474 ms
+2026-09-30 13:44:21.314 +03:00 [INF] HTTP GET /api/merchants responded 200 in 21.5953 ms
+2026-09-30 13:44:21.317 +03:00 [INF] HTTP GET /api/orders responded 200 in 25.7931 ms
+2026-09-30 13:44:51.317 +03:00 [INF] HTTP GET /api/couriers responded 200 in 25.6653 ms
+2026-09-30 13:44:51.329 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.4428 ms
+2026-09-30 13:44:51.327 +03:00 [INF] HTTP GET /api/orders responded 200 in 35.7593 ms
+2026-09-30 13:45:21.320 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.4696 ms
+2026-09-30 13:45:21.321 +03:00 [INF] HTTP GET /api/couriers responded 200 in 28.8638 ms
+2026-09-30 13:45:21.320 +03:00 [INF] HTTP GET /api/merchants responded 200 in 27.0157 ms
+2026-09-30 13:45:51.319 +03:00 [INF] HTTP GET /api/merchants responded 200 in 27.7221 ms
+2026-09-30 13:45:51.319 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.7441 ms
+2026-09-30 13:45:51.322 +03:00 [INF] HTTP GET /api/couriers responded 200 in 32.0252 ms
+2026-09-30 13:46:21.319 +03:00 [INF] HTTP GET /api/couriers responded 200 in 28.6221 ms
+2026-09-30 13:46:21.321 +03:00 [INF] HTTP GET /api/orders responded 200 in 30.0019 ms
+2026-09-30 13:46:21.324 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.5570 ms
+2026-09-30 13:46:51.315 +03:00 [INF] HTTP GET /api/orders responded 200 in 24.3985 ms
+2026-09-30 13:46:51.316 +03:00 [INF] HTTP GET /api/merchants responded 200 in 24.0055 ms
+2026-09-30 13:46:51.316 +03:00 [INF] HTTP GET /api/couriers responded 200 in 24.8190 ms
+2026-09-30 13:47:21.315 +03:00 [INF] HTTP GET /api/orders responded 200 in 23.7154 ms
+2026-09-30 13:47:21.315 +03:00 [INF] HTTP GET /api/couriers responded 200 in 23.9927 ms
+2026-09-30 13:47:21.325 +03:00 [INF] HTTP GET /api/merchants responded 200 in 16.8464 ms
+2026-09-30 13:47:51.324 +03:00 [INF] HTTP GET /api/orders responded 200 in 32.2477 ms
+2026-09-30 13:47:51.325 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.5127 ms
+2026-09-30 13:47:51.334 +03:00 [INF] HTTP GET /api/merchants responded 200 in 42.6514 ms
+2026-09-30 13:48:21.304 +03:00 [INF] HTTP GET /api/couriers responded 200 in 13.4137 ms
+2026-09-30 13:48:21.324 +03:00 [INF] HTTP GET /api/orders responded 200 in 29.3301 ms
+2026-09-30 13:48:21.325 +03:00 [INF] HTTP GET /api/merchants responded 200 in 25.8853 ms
+2026-09-30 13:48:51.330 +03:00 [INF] HTTP GET /api/couriers responded 200 in 38.1981 ms
+2026-09-30 13:48:51.347 +03:00 [INF] HTTP GET /api/orders responded 200 in 48.8361 ms
+2026-09-30 13:48:51.350 +03:00 [INF] HTTP GET /api/merchants responded 200 in 20.9328 ms
+2026-09-30 13:49:21.307 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.8406 ms
+2026-09-30 13:49:21.321 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.0836 ms
+2026-09-30 13:49:21.324 +03:00 [INF] HTTP GET /api/orders responded 200 in 28.7193 ms
+2026-09-30 13:49:51.312 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.6271 ms
+2026-09-30 13:49:51.326 +03:00 [INF] HTTP GET /api/merchants responded 200 in 28.9351 ms
+2026-09-30 13:49:51.333 +03:00 [INF] HTTP GET /api/orders responded 200 in 37.0058 ms
+2026-09-30 13:50:32.329 +03:00 [INF] HTTP GET /api/couriers responded 200 in 38.7389 ms
+2026-09-30 13:50:32.334 +03:00 [INF] HTTP GET /api/orders responded 200 in 38.2838 ms
+2026-09-30 13:50:32.343 +03:00 [INF] HTTP GET /api/merchants responded 200 in 30.3413 ms
+2026-09-30 13:51:00.048 +03:00 [INF] HTTP GET /api/couriers responded 200 in 41.1325 ms
+2026-09-30 13:51:00.055 +03:00 [INF] HTTP GET /api/orders responded 200 in 37.6491 ms
+2026-09-30 13:51:00.056 +03:00 [INF] HTTP GET /api/merchants responded 200 in 27.7250 ms
+2026-09-30 13:51:20.365 +03:00 [INF] HTTP GET /api/orders responded 200 in 24.3773 ms
+2026-09-30 13:51:20.365 +03:00 [INF] HTTP GET /api/couriers responded 200 in 25.5168 ms
+2026-09-30 13:51:20.370 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.4687 ms
+2026-09-30 13:51:50.356 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.7903 ms
+2026-09-30 13:51:50.358 +03:00 [INF] HTTP GET /api/merchants responded 200 in 18.2100 ms
+2026-09-30 13:51:50.363 +03:00 [INF] HTTP GET /api/orders responded 200 in 23.1730 ms
+2026-09-30 13:52:20.375 +03:00 [INF] HTTP GET /api/orders responded 200 in 33.4371 ms
+2026-09-30 13:52:20.375 +03:00 [INF] HTTP GET /api/couriers responded 200 in 34.8795 ms
+2026-09-30 13:52:20.381 +03:00 [INF] HTTP GET /api/merchants responded 200 in 39.7918 ms
+2026-09-30 13:52:50.371 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.7844 ms
+2026-09-30 13:52:50.374 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.4400 ms
+2026-09-30 13:52:50.374 +03:00 [INF] HTTP GET /api/orders responded 200 in 32.9738 ms
+2026-09-30 13:53:20.360 +03:00 [INF] HTTP GET /api/couriers responded 200 in 19.0915 ms
+2026-09-30 13:53:20.371 +03:00 [INF] HTTP GET /api/orders responded 200 in 30.0246 ms
+2026-09-30 13:53:20.372 +03:00 [INF] HTTP GET /api/merchants responded 200 in 30.5545 ms
+2026-09-30 13:53:50.359 +03:00 [INF] HTTP GET /api/orders responded 200 in 19.0523 ms
+2026-09-30 13:53:50.359 +03:00 [INF] HTTP GET /api/merchants responded 200 in 19.3546 ms
+2026-09-30 13:53:50.359 +03:00 [INF] HTTP GET /api/couriers responded 200 in 20.0639 ms
+2026-09-30 13:54:20.347 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.6088 ms
+2026-09-30 13:54:20.360 +03:00 [INF] HTTP GET /api/merchants responded 200 in 20.1928 ms
+2026-09-30 13:54:20.349 +03:00 [INF] HTTP GET /api/orders responded 200 in 9.8191 ms
+2026-09-30 13:54:50.389 +03:00 [INF] HTTP GET /api/couriers responded 200 in 48.4341 ms
+2026-09-30 13:54:50.390 +03:00 [INF] HTTP GET /api/orders responded 200 in 49.5893 ms
+2026-09-30 13:54:50.392 +03:00 [INF] HTTP GET /api/merchants responded 200 in 51.0430 ms
+2026-09-30 13:55:20.363 +03:00 [INF] HTTP GET /api/couriers responded 200 in 22.7098 ms
+2026-09-30 13:55:20.364 +03:00 [INF] HTTP GET /api/orders responded 200 in 23.4729 ms
+2026-09-30 13:55:20.364 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.9817 ms
+2026-09-30 13:55:50.357 +03:00 [INF] HTTP GET /api/couriers responded 200 in 18.1883 ms
+2026-09-30 13:55:50.359 +03:00 [INF] HTTP GET /api/orders responded 200 in 18.9341 ms
+2026-09-30 13:55:50.359 +03:00 [INF] HTTP GET /api/merchants responded 200 in 18.5788 ms
+2026-09-30 13:56:21.312 +03:00 [INF] HTTP GET /api/couriers responded 200 in 20.9864 ms
+2026-09-30 13:56:21.316 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.7916 ms
+2026-09-30 13:56:21.315 +03:00 [INF] HTTP GET /api/orders responded 200 in 24.1307 ms
+2026-09-30 13:56:51.331 +03:00 [INF] HTTP GET /api/couriers responded 200 in 34.3396 ms
+2026-09-30 13:56:51.338 +03:00 [INF] HTTP GET /api/orders responded 200 in 40.7095 ms
+2026-09-30 13:56:51.349 +03:00 [INF] HTTP GET /api/merchants responded 200 in 28.7667 ms
+2026-09-30 13:57:21.313 +03:00 [INF] HTTP GET /api/couriers responded 200 in 22.1244 ms
+2026-09-30 13:57:21.323 +03:00 [INF] HTTP GET /api/merchants responded 200 in 30.4065 ms
+2026-09-30 13:57:21.319 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.5025 ms
+2026-09-30 13:57:51.319 +03:00 [INF] HTTP GET /api/orders responded 200 in 26.5365 ms
+2026-09-30 13:57:51.319 +03:00 [INF] HTTP GET /api/couriers responded 200 in 26.1728 ms
+2026-09-30 13:57:51.332 +03:00 [INF] HTTP GET /api/merchants responded 200 in 34.4949 ms
+2026-09-30 13:58:21.312 +03:00 [INF] HTTP GET /api/couriers responded 200 in 19.9535 ms
+2026-09-30 13:58:21.315 +03:00 [INF] HTTP GET /api/orders responded 200 in 18.9320 ms
+2026-09-30 13:58:21.321 +03:00 [INF] HTTP GET /api/merchants responded 200 in 17.3466 ms
+2026-09-30 13:58:51.304 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.7858 ms
+2026-09-30 13:58:51.314 +03:00 [INF] HTTP GET /api/orders responded 200 in 21.5030 ms
+2026-09-30 13:58:51.319 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.5202 ms
+2026-09-30 13:59:21.298 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.2924 ms
+2026-09-30 13:59:21.311 +03:00 [INF] HTTP GET /api/couriers responded 200 in 21.2759 ms
+2026-09-30 13:59:21.321 +03:00 [INF] HTTP GET /api/orders responded 200 in 31.4104 ms
+2026-09-30 13:59:50.377 +03:00 [INF] HTTP GET /api/orders responded 200 in 37.0562 ms
+2026-09-30 13:59:50.377 +03:00 [INF] HTTP GET /api/merchants responded 200 in 36.6475 ms
+2026-09-30 13:59:50.378 +03:00 [INF] HTTP GET /api/couriers responded 200 in 39.6149 ms
+2026-09-30 14:00:20.377 +03:00 [INF] HTTP GET /api/merchants responded 200 in 35.5277 ms
+2026-09-30 14:00:20.377 +03:00 [INF] HTTP GET /api/couriers responded 200 in 36.3897 ms
+2026-09-30 14:00:20.381 +03:00 [INF] HTTP GET /api/orders responded 200 in 29.6925 ms
+2026-09-30 14:00:50.369 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.9332 ms
+2026-09-30 14:00:50.381 +03:00 [INF] HTTP GET /api/couriers responded 200 in 41.0508 ms
+2026-09-30 14:00:50.370 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.1272 ms
+2026-09-30 14:01:20.357 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.1475 ms
+2026-09-30 14:01:20.370 +03:00 [INF] HTTP GET /api/merchants responded 200 in 24.8425 ms
+2026-09-30 14:01:20.370 +03:00 [INF] HTTP GET /api/orders responded 200 in 27.4202 ms
+2026-09-30 14:01:50.581 +03:00 [INF] HTTP GET /api/couriers responded 200 in 220.2768 ms
+2026-09-30 14:01:50.587 +03:00 [INF] HTTP GET /api/orders responded 200 in 192.0965 ms
+2026-09-30 14:01:50.598 +03:00 [INF] HTTP GET /api/merchants responded 200 in 31.3423 ms
+2026-09-30 14:02:20.355 +03:00 [INF] HTTP GET /api/orders responded 200 in 13.8795 ms
+2026-09-30 14:02:20.360 +03:00 [INF] HTTP GET /api/couriers responded 200 in 18.5411 ms
+2026-09-30 14:02:20.360 +03:00 [INF] HTTP GET /api/merchants responded 200 in 17.6398 ms
+2026-09-30 14:02:50.372 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.8368 ms
+2026-09-30 14:02:50.414 +03:00 [INF] HTTP GET /api/orders responded 200 in 59.3641 ms
+2026-09-30 14:02:50.429 +03:00 [INF] HTTP GET /api/merchants responded 200 in 47.1107 ms
+2026-09-30 14:03:20.373 +03:00 [INF] HTTP GET /api/couriers responded 200 in 23.6733 ms
+2026-09-30 14:03:20.380 +03:00 [INF] HTTP GET /api/merchants responded 200 in 22.6816 ms
+2026-09-30 14:03:20.389 +03:00 [INF] HTTP GET /api/orders responded 200 in 32.7396 ms
+2026-09-30 14:03:50.363 +03:00 [INF] HTTP GET /api/orders responded 200 in 20.4297 ms
+2026-09-30 14:03:50.363 +03:00 [INF] HTTP GET /api/couriers responded 200 in 21.0150 ms
+2026-09-30 14:03:50.383 +03:00 [INF] HTTP GET /api/merchants responded 200 in 39.0474 ms
+2026-09-30 14:04:21.300 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.5635 ms
+2026-09-30 14:04:21.318 +03:00 [INF] HTTP GET /api/orders responded 200 in 19.6844 ms
+2026-09-30 14:04:21.326 +03:00 [INF] HTTP GET /api/merchants responded 200 in 19.1963 ms
+2026-09-30 14:04:51.311 +03:00 [INF] HTTP GET /api/couriers responded 200 in 21.4536 ms
+2026-09-30 14:04:51.312 +03:00 [INF] HTTP GET /api/merchants responded 200 in 21.9075 ms
+2026-09-30 14:04:51.335 +03:00 [INF] HTTP GET /api/orders responded 200 in 45.0845 ms
+2026-09-30 14:05:21.301 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.1794 ms
+2026-09-30 14:05:21.306 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.2221 ms
+2026-09-30 14:05:21.316 +03:00 [INF] HTTP GET /api/merchants responded 200 in 23.7103 ms
+2026-09-30 14:05:51.320 +03:00 [INF] HTTP GET /api/merchants responded 200 in 25.7142 ms
+2026-09-30 14:05:51.321 +03:00 [INF] HTTP GET /api/orders responded 200 in 26.4380 ms
+2026-09-30 14:05:51.323 +03:00 [INF] HTTP GET /api/couriers responded 200 in 28.9853 ms
+2026-09-30 14:06:21.310 +03:00 [INF] HTTP GET /api/orders responded 200 in 19.3937 ms
+2026-09-30 14:06:21.323 +03:00 [INF] HTTP GET /api/couriers responded 200 in 32.5203 ms
+2026-09-30 14:06:21.325 +03:00 [INF] HTTP GET /api/merchants responded 200 in 33.1145 ms
+2026-09-30 14:06:51.328 +03:00 [INF] HTTP GET /api/merchants responded 200 in 36.0045 ms
+2026-09-30 14:06:51.329 +03:00 [INF] HTTP GET /api/orders responded 200 in 37.5319 ms
+2026-09-30 14:06:51.329 +03:00 [INF] HTTP GET /api/couriers responded 200 in 38.4275 ms
+2026-09-30 14:07:21.337 +03:00 [INF] HTTP GET /api/couriers responded 200 in 40.9029 ms
+2026-09-30 14:07:21.338 +03:00 [INF] HTTP GET /api/orders responded 200 in 39.8600 ms
+2026-09-30 14:07:21.338 +03:00 [INF] HTTP GET /api/merchants responded 200 in 37.8163 ms
+2026-09-30 14:07:51.319 +03:00 [INF] HTTP GET /api/merchants responded 200 in 26.4209 ms
+2026-09-30 14:07:51.322 +03:00 [INF] HTTP GET /api/couriers responded 200 in 29.3654 ms
+2026-09-30 14:07:51.321 +03:00 [INF] HTTP GET /api/orders responded 200 in 29.3255 ms
+2026-09-30 14:08:21.324 +03:00 [INF] HTTP GET /api/orders responded 200 in 33.5625 ms
+2026-09-30 14:08:21.325 +03:00 [INF] HTTP GET /api/couriers responded 200 in 34.9484 ms
+2026-09-30 14:08:21.338 +03:00 [INF] HTTP GET /api/merchants responded 200 in 45.5228 ms
+2026-09-30 14:08:51.311 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.8647 ms
+2026-09-30 14:08:51.320 +03:00 [INF] HTTP GET /api/orders responded 200 in 22.1121 ms
+2026-09-30 14:08:51.330 +03:00 [INF] HTTP GET /api/merchants responded 200 in 21.9452 ms
+2026-09-30 14:09:32.325 +03:00 [INF] HTTP GET /api/couriers responded 200 in 33.3151 ms
+2026-09-30 14:09:32.332 +03:00 [INF] HTTP GET /api/orders responded 200 in 32.7706 ms
+2026-09-30 14:09:32.351 +03:00 [INF] HTTP GET /api/merchants responded 200 in 27.3737 ms
+2026-09-30 14:33:11.893 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-30 14:33:12.587 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-30 14:33:12.689 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-30 14:33:13.610 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 14:33:13.611 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-30 14:33:14.963 +03:00 [INF] --> [STARTUP] Dünden/geçmişten kalan 3 adet hareketsiz kurye otomatik çevrimdışı yapıldı.
+2026-09-30 14:33:15.140 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-30 14:33:15.149 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: 127.0.0.1, DB: KuryeDb, Schema: hangfire'
+2026-09-30 14:33:15.149 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-30 14:33:15.149 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-30 14:33:15.149 +03:00 [INF]     Invisibility timeout: 00:05:00.
+2026-09-30 14:33:15.150 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-30 14:33:15.150 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-30 14:33:15.165 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-30 14:33:15.166 +03:00 [INF] Hosting environment: Development
+2026-09-30 14:33:15.166 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-30 14:33:15.188 +03:00 [INF] Server zahir:30672:c3cd48ac successfully announced in 16,8087 ms
+2026-09-30 14:33:15.191 +03:00 [INF] Server zahir:30672:c3cd48ac is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-30 14:33:15.201 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-30 14:33:15.205 +03:00 [INF] Server zahir:30672:c3cd48ac all the dispatchers started
+2026-09-30 14:33:28.467 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 125.2658 ms
+2026-09-30 14:33:32.562 +03:00 [INF] HTTP GET /api/couriers responded 200 in 264.9044 ms
+2026-09-30 14:33:32.567 +03:00 [INF] HTTP GET /api/merchants responded 200 in 265.4305 ms
+2026-09-30 14:33:32.620 +03:00 [INF] HTTP GET /api/orders responded 200 in 319.0930 ms
+2026-09-30 14:33:39.291 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.4362 ms
+2026-09-30 14:34:32.336 +03:00 [INF] HTTP GET /api/merchants responded 200 in 37.9439 ms
+2026-09-30 14:34:32.336 +03:00 [INF] HTTP GET /api/couriers responded 200 in 37.9771 ms
+2026-09-30 14:34:32.339 +03:00 [INF] HTTP GET /api/orders responded 200 in 41.0082 ms
+2026-09-30 14:35:32.297 +03:00 [INF] HTTP GET /api/merchants responded 200 in 5.5010 ms
+2026-09-30 14:35:32.297 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.5758 ms
+2026-09-30 14:35:32.300 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.7750 ms
+2026-09-30 14:36:20.248 +03:00 [INF] HTTP GET /api/couriers responded 200 in 13.8356 ms
+2026-09-30 14:36:20.265 +03:00 [INF] HTTP GET /api/orders responded 200 in 22.6587 ms
+2026-09-30 14:36:20.270 +03:00 [INF] HTTP GET /api/merchants responded 200 in 13.4971 ms
+2026-09-30 14:36:33.361 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.8688 ms
+2026-09-30 14:36:33.363 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.1744 ms
+2026-09-30 14:36:33.368 +03:00 [INF] HTTP GET /api/orders responded 200 in 12.4759 ms
+2026-09-30 14:36:42.432 +03:00 [INF] --> [SIGNALR BROADCAST] Sipariş durumu güncellendi: "a5555555-5555-5555-5555-555555555555" -> Preparing (Merchant: "804c1bbd-70cf-47ae-8056-19c58d1deada")
+2026-09-30 14:36:42.525 +03:00 [INF] HTTP PUT /api/orders/a5555555-5555-5555-5555-555555555555/status responded 200 in 325.1247 ms
+2026-09-30 14:36:42.576 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.1528 ms
+2026-09-30 14:36:42.583 +03:00 [INF] HTTP GET /api/merchants responded 200 in 7.9814 ms
+2026-09-30 14:36:42.586 +03:00 [INF] HTTP GET /api/orders responded 200 in 11.3234 ms
+2026-09-30 14:36:52.860 +03:00 [INF] HTTP GET /api/couriers responded 200 in 19.7491 ms
+2026-09-30 14:36:52.939 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.1261 ms
+2026-09-30 14:36:52.970 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.1973 ms
+2026-09-30 14:36:53.021 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.8332 ms
+2026-09-30 14:36:53.135 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0037 ms
+2026-09-30 14:37:03.354 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.8621 ms
+2026-09-30 14:37:03.363 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.2195 ms
+2026-09-30 14:37:03.363 +03:00 [INF] HTTP GET /api/orders responded 200 in 9.3592 ms
+2026-09-30 14:37:33.372 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.1490 ms
+2026-09-30 14:37:33.372 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.9981 ms
+2026-09-30 14:37:33.379 +03:00 [INF] HTTP GET /api/orders responded 200 in 17.0620 ms
+2026-09-30 14:38:03.357 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.9114 ms
+2026-09-30 14:38:03.358 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.3610 ms
+2026-09-30 14:38:03.358 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.6237 ms
+2026-09-30 14:38:18.370 +03:00 [INF] HTTP GET /hubs/location responded 101 in 85116.9339 ms
+2026-09-30 14:38:18.370 +03:00 [INF] HTTP GET /hubs/location responded 101 in 289840.2562 ms
+2026-09-30 14:38:18.370 +03:00 [INF] HTTP GET /hubs/location responded 101 in 279067.3557 ms

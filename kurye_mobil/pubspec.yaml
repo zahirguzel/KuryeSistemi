@@ -1,0 +1,33 @@
+name: kurye_mobil
+description: KuryeSistemi Saha Operasyon Mobil Uygulaması
+publish_to: 'none'
+version: 2.4.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1
+  cupertino_icons: ^1.0.8
+  flutter_riverpod: ^3.4.3
+  dio: ^5.11.1
+  flutter_secure_storage: ^11.0.0
+  signalr_netcore: ^1.4.4
+  geolocator: ^14.0.3
+  permission_handler: ^13.0.2
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - .env
+

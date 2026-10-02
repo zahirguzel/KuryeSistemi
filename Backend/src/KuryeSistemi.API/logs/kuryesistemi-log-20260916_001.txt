@@ -1,0 +1,205 @@
+2026-09-16 09:48:11.293 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:48:12.731 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-16 09:48:12.917 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-16 09:48:13.652 +03:00 [ERR] Hosting failed to start
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+ ---> System.Net.Sockets.SocketException (10048): Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+2026-09-16 09:48:13.807 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+System.IO.IOException: Failed to bind to address http://127.0.0.1:5000: address already in use.
+ ---> Microsoft.AspNetCore.Connections.AddressInUseException: Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+ ---> System.Net.Sockets.SocketException (10048): Normal olarak her yuva adresi (iletişim kuralı/ağ adresi/bağlantı noktası) için yalnızca bir kullanıma izin veriliyor.
+   at System.Net.Sockets.Socket.UpdateStatusAfterSocketErrorAndThrowException(SocketError error, Boolean disconnectOnFailure, String callerName)
+   at System.Net.Sockets.Socket.DoBind(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   at System.Net.Sockets.Socket.Bind(EndPoint localEP)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportOptions.CreateDefaultBoundListenSocket(EndPoint endpoint)
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketConnectionListener.Bind()
+   at Microsoft.AspNetCore.Server.Kestrel.Transport.Sockets.SocketTransportFactory.BindAsync(EndPoint endpoint, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure.TransportManager.BindAsync(EndPoint endPoint, ConnectionDelegate connectionDelegate, EndpointConfig endpointConfig, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.<>c__DisplayClass28_0`1.<<StartAsync>g__OnBind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   --- End of inner exception stack trace ---
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindEndpointAsync(ListenOptions endpoint, AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.LocalhostListenOptions.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.AddressesStrategy.BindAsync(AddressBindContext context, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.AddressBinder.BindAsync(ListenOptions[] listenOptions, AddressBindContext context, Func`2 useHttps, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.BindAsync(CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.KestrelServerImpl.StartAsync[TContext](IHttpApplication`1 application, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Hosting.GenericWebHostService.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.Internal.Host.<StartAsync>b__15_1(IHostedService service, CancellationToken token)
+   at Microsoft.Extensions.Hosting.Internal.Host.ForeachService[T](IEnumerable`1 services, CancellationToken token, Boolean concurrent, Boolean abortOnFirstException, List`1 exceptions, Func`3 operation)
+   at Microsoft.Extensions.Hosting.Internal.Host.StartAsync(CancellationToken cancellationToken)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.RunAsync(IHost host, CancellationToken token)
+   at Microsoft.Extensions.Hosting.HostingAbstractionsHostExtensions.Run(IHost host)
+   at Program.<Main>$(String[] args) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 86
+2026-09-16 09:49:53.925 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:49:54.691 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-16 09:49:54.762 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-16 09:49:54.971 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-16 09:49:54.972 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-16 09:49:55.038 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-16 09:49:55.040 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-16 09:49:55.042 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-16 09:49:55.043 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-16 09:49:55.044 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-16 09:49:55.044 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-16 09:49:55.074 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-16 09:49:55.075 +03:00 [INF] Hosting environment: Development
+2026-09-16 09:49:55.076 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-16 09:49:55.196 +03:00 [INF] Server zahir:2812:1c634d8a successfully announced in 121,7693 ms
+2026-09-16 09:49:55.224 +03:00 [INF] Server zahir:2812:1c634d8a is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-16 09:49:55.397 +03:00 [INF] Server zahir:2812:1c634d8a all the dispatchers started
+2026-09-16 09:49:56.443 +03:00 [INF] HTTP GET /swagger responded 301 in 5.3805 ms
+2026-09-16 09:49:56.540 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 75.0591 ms
+2026-09-16 09:49:56.766 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 113.6987 ms
+2026-09-16 09:49:56.766 +03:00 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 132.0751 ms
+2026-09-16 09:49:56.834 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 190.7412 ms
+2026-09-16 09:49:57.122 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 31.7220 ms
+2026-09-16 09:49:57.190 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 99.7189 ms
+2026-09-16 09:49:57.281 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 245.6629 ms
+2026-09-16 09:53:30.629 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:53:31.379 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-16 09:53:31.457 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-16 09:53:31.728 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-16 09:53:31.729 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-16 09:53:31.835 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-16 09:53:31.838 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-16 09:53:31.840 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-16 09:53:31.842 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-16 09:53:31.844 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-16 09:53:31.849 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-16 09:53:31.919 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-16 09:53:31.921 +03:00 [INF] Hosting environment: Development
+2026-09-16 09:53:31.922 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-16 09:53:32.196 +03:00 [INF] Server zahir:28992:ca43cee8 successfully announced in 274,8344 ms
+2026-09-16 09:53:32.223 +03:00 [INF] Server zahir:28992:ca43cee8 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-16 09:53:32.504 +03:00 [INF] Server zahir:28992:ca43cee8 all the dispatchers started
+2026-09-16 09:53:32.833 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 58.8560 ms
+2026-09-16 09:53:33.265 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 110.3643 ms
+2026-09-16 09:57:02.326 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-16 09:57:02.895 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-16 09:57:02.988 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-16 09:57:03.082 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-16 09:57:03.087 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-16 09:57:03.087 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-16 09:57:03.087 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-16 09:57:03.087 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-16 09:57:03.087 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-16 09:57:03.088 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-16 09:57:03.100 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-16 09:57:03.100 +03:00 [INF] Hosting environment: Development
+2026-09-16 09:57:03.100 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-16 09:57:03.196 +03:00 [INF] Server zahir:26500:ea724b6d successfully announced in 92,3163 ms
+2026-09-16 09:57:03.200 +03:00 [INF] Server zahir:26500:ea724b6d is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-16 09:57:03.209 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-16 09:57:03.215 +03:00 [INF] Server zahir:26500:ea724b6d all the dispatchers started
+2026-09-16 09:57:16.618 +03:00 [INF] HTTP GET / responded 404 in 82.2626 ms
+2026-09-16 09:57:23.253 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 10.4013 ms
+2026-09-16 09:57:23.375 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.5998 ms
+2026-09-16 09:57:23.377 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2468 ms
+2026-09-16 09:57:23.377 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0814 ms
+2026-09-16 09:57:23.382 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2357 ms
+2026-09-16 09:57:23.404 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 139.1553 ms
+2026-09-16 09:57:24.418 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-16 09:57:24.419 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-16 09:57:24.822 +03:00 [INF] HTTP GET /api/orders responded 200 in 1436.0803 ms
+2026-09-16 09:57:24.829 +03:00 [INF] HTTP GET /api/couriers responded 200 in 1443.6504 ms
+2026-09-16 09:57:24.878 +03:00 [INF] HTTP GET /api/couriers responded 200 in 47.7498 ms
+2026-09-16 09:57:24.880 +03:00 [INF] HTTP GET /api/orders responded 200 in 57.6478 ms
+2026-09-16 09:58:23.940 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.3581 ms
+2026-09-16 09:58:23.940 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1875 ms
+2026-09-16 09:58:23.962 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.8418 ms
+2026-09-16 09:58:23.966 +03:00 [INF] HTTP GET /api/orders responded 200 in 13.9504 ms
+2026-09-16 09:59:23.939 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1139 ms
+2026-09-16 09:59:23.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1222 ms
+2026-09-16 09:59:23.955 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.3651 ms
+2026-09-16 09:59:23.955 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.3817 ms
+2026-09-16 10:00:23.946 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2072 ms
+2026-09-16 10:00:23.950 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.3442 ms
+2026-09-16 10:00:23.964 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.4187 ms
+2026-09-16 10:00:23.967 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.4582 ms
+2026-09-16 10:01:23.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1759 ms
+2026-09-16 10:01:23.939 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1626 ms
+2026-09-16 10:01:23.953 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.4970 ms
+2026-09-16 10:01:23.955 +03:00 [INF] HTTP GET /api/orders responded 200 in 5.8235 ms
+2026-09-16 10:02:03.213 +03:00 [INF] 2 servers were removed due to timeout
+2026-09-16 10:02:23.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1292 ms
+2026-09-16 10:02:23.939 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0310 ms
+2026-09-16 10:02:23.950 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.9180 ms
+2026-09-16 10:02:23.953 +03:00 [INF] HTTP GET /api/orders responded 200 in 9.0187 ms
+2026-09-16 10:03:23.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0967 ms
+2026-09-16 10:03:23.939 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0917 ms
+2026-09-16 10:03:23.951 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.6760 ms
+2026-09-16 10:03:23.954 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.1567 ms
+2026-09-16 10:04:56.957 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0911 ms
+2026-09-16 10:04:56.964 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1646 ms
+2026-09-16 10:04:56.981 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.1773 ms
+2026-09-16 10:04:56.990 +03:00 [INF] HTTP GET /api/orders responded 200 in 12.8005 ms
+2026-09-16 10:05:57.938 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0821 ms
+2026-09-16 10:05:57.938 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0657 ms
+2026-09-16 10:05:57.949 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.9451 ms
+2026-09-16 10:05:57.952 +03:00 [INF] HTTP GET /api/orders responded 200 in 9.4655 ms
+2026-09-16 10:06:58.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1913 ms
+2026-09-16 10:06:58.940 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0622 ms
+2026-09-16 10:06:58.950 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.0619 ms
+2026-09-16 10:06:58.954 +03:00 [INF] HTTP GET /api/orders responded 200 in 10.8028 ms
+2026-09-16 10:07:59.938 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0615 ms
+2026-09-16 10:07:59.938 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0231 ms
+2026-09-16 10:07:59.945 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.9292 ms
+2026-09-16 10:07:59.948 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.8147 ms
+2026-09-16 10:09:00.938 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0489 ms
+2026-09-16 10:09:00.938 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0162 ms
+2026-09-16 10:09:00.945 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.8880 ms
+2026-09-16 10:09:00.948 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.3374 ms
+2026-09-16 10:09:23.939 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0713 ms
+2026-09-16 10:09:23.939 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0752 ms
+2026-09-16 10:09:23.948 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.7277 ms
+2026-09-16 10:09:23.949 +03:00 [INF] HTTP GET /api/orders responded 200 in 4.8122 ms
+2026-09-16 10:10:53.943 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1302 ms
+2026-09-16 10:10:53.943 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1037 ms
+2026-09-16 10:10:53.959 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.0860 ms
+2026-09-16 10:10:53.969 +03:00 [INF] HTTP GET /api/orders responded 200 in 12.0046 ms
+2026-09-16 10:11:43.622 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1355 ms
+2026-09-16 10:11:43.624 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2526 ms
+2026-09-16 10:11:43.653 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.0432 ms
+2026-09-16 10:11:43.659 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.0993 ms

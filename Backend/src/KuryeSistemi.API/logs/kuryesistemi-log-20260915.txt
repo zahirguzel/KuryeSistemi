@@ -1,0 +1,1014 @@
+2026-09-15 10:52:15.250 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 10:52:20.892 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5432
+ ---> System.Net.Sockets.SocketException (10061): Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı.
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage..ctor(IConnectionFactory connectionFactory, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure)
+   at KuryeSistemi.API.Extensions.DatabaseExtensions.<>c__DisplayClass0_0.<AddDatabase>b__3(IGlobalConfiguration config) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Extensions\DatabaseExtensions.cs:line 42
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass0_0.<AddHangfire>b__0(IServiceProvider provider, IGlobalConfiguration config) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 40
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass1_0.<AddHangfire>b__14(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 103
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Hangfire.HangfireServiceCollectionExtensions.ThrowIfNotConfigured(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 307
+   at Hangfire.HangfireApplicationBuilderExtensions.UseHangfireDashboard(IApplicationBuilder app, String pathMatch, DashboardOptions options, JobStorage storage) in C:\projects\hangfire-525\src\Hangfire.AspNetCore\HangfireApplicationBuilderExtensions.cs:line 44
+   at Program.<Main>$(String[] args) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 84
+2026-09-15 10:52:22.406 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-15 10:53:12.547 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 10:53:12.954 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 10:53:13.023 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 10:53:13.133 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 10:53:13.138 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 10:53:13.139 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 10:53:13.139 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 10:53:13.139 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 10:53:13.139 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 10:53:13.139 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 10:53:13.149 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 10:53:13.150 +03:00 [INF] Hosting environment: Development
+2026-09-15 10:53:13.150 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 10:53:13.376 +03:00 [INF] Server zahir:2160:9013d1ac successfully announced in 222,8939 ms
+2026-09-15 10:53:13.378 +03:00 [INF] Server zahir:2160:9013d1ac is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 10:53:13.395 +03:00 [INF] 3 servers were removed due to timeout
+2026-09-15 10:53:13.395 +03:00 [INF] Server zahir:2160:9013d1ac all the dispatchers started
+2026-09-15 11:01:58.667 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 16.2404 ms
+2026-09-15 11:01:59.544 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:01:59.549 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:02:00.168 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1483.4232 ms
+2026-09-15 11:02:00.349 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 1.6833 ms
+2026-09-15 11:02:00.350 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2158 ms
+2026-09-15 11:02:00.644 +03:00 [INF] HTTP GET /api/couriers responded 200 in 271.4724 ms
+2026-09-15 11:02:00.936 +03:00 [INF] HTTP GET /api/couriers responded 200 in 291.1196 ms
+2026-09-15 11:02:01.183 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.7978 ms
+2026-09-15 11:02:01.294 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 58.9387 ms
+2026-09-15 11:02:02.709 +03:00 [INF] HTTP GET /hubs/location responded 101 in 1372.6014 ms
+2026-09-15 11:02:02.719 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 204 in 0.8170 ms
+2026-09-15 11:02:02.723 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 204 in 0.2574 ms
+2026-09-15 11:02:02.824 +03:00 [INF] HTTP GET /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 200 in 93.9050 ms
+2026-09-15 11:02:02.838 +03:00 [INF] HTTP GET /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 200 in 12.8587 ms
+2026-09-15 11:02:20.068 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1564 ms
+2026-09-15 11:02:20.070 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.3226 ms
+2026-09-15 11:02:20.097 +03:00 [INF] HTTP GET /api/couriers responded 200 in 21.3834 ms
+2026-09-15 11:02:20.110 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.3650 ms
+2026-09-15 11:02:20.124 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.2534 ms
+2026-09-15 11:02:20.128 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.2174 ms
+2026-09-15 11:02:20.290 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 160.2269 ms
+2026-09-15 11:02:20.298 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1465 ms
+2026-09-15 11:02:20.304 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 13.0147 ms
+2026-09-15 11:02:20.367 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 61.7399 ms
+2026-09-15 11:02:20.376 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 8.5495 ms
+2026-09-15 11:02:28.061 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2486 ms
+2026-09-15 11:02:28.061 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.1568 ms
+2026-09-15 11:02:28.062 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.1496 ms
+2026-09-15 11:02:28.075 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 3.2207 ms
+2026-09-15 11:02:28.089 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 19.7299 ms
+2026-09-15 11:02:28.107 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 15.7592 ms
+2026-09-15 11:02:30.585 +03:00 [INF] HTTP GET /hubs/location responded 101 in 2500.9392 ms
+2026-09-15 11:02:30.617 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.3202 ms
+2026-09-15 11:02:30.620 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1408 ms
+2026-09-15 11:02:30.657 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.8965 ms
+2026-09-15 11:02:30.666 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.4982 ms
+2026-09-15 11:02:30.686 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1709 ms
+2026-09-15 11:02:30.690 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.6524 ms
+2026-09-15 11:02:42.392 +03:00 [INF] HTTP GET /hubs/location responded 101 in 11671.1734 ms
+2026-09-15 11:02:42.401 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.4071 ms
+2026-09-15 11:02:42.401 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.1731 ms
+2026-09-15 11:02:42.402 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.1896 ms
+2026-09-15 11:02:42.408 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.3944 ms
+2026-09-15 11:02:42.420 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 11.6855 ms
+2026-09-15 11:02:42.437 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 14.5435 ms
+2026-09-15 11:03:32.723 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2126 ms
+2026-09-15 11:03:32.781 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.2015 ms
+2026-09-15 11:03:32.796 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.2771 ms
+2026-09-15 11:03:32.812 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 2.3313 ms
+2026-09-15 11:03:32.845 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 12.0874 ms
+2026-09-15 11:03:32.857 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 9.3311 ms
+2026-09-15 11:03:33.741 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2806 ms
+2026-09-15 11:03:33.750 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1450 ms
+2026-09-15 11:03:33.780 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.2548 ms
+2026-09-15 11:03:33.804 +03:00 [INF] HTTP GET /api/couriers responded 200 in 19.3000 ms
+2026-09-15 11:03:33.825 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 22.9611 ms
+2026-09-15 11:03:33.838 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1795 ms
+2026-09-15 11:03:33.851 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 23.3674 ms
+2026-09-15 11:03:33.861 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 14.1883 ms
+2026-09-15 11:03:33.885 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 14.8828 ms
+2026-09-15 11:03:45.894 +03:00 [INF] HTTP GET /hubs/location responded 101 in 13028.7517 ms
+2026-09-15 11:03:45.920 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1218 ms
+2026-09-15 11:03:45.923 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1067 ms
+2026-09-15 11:03:45.970 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.0107 ms
+2026-09-15 11:03:45.987 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.8205 ms
+2026-09-15 11:03:46.011 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1361 ms
+2026-09-15 11:03:46.015 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0192 ms
+2026-09-15 11:04:11.431 +03:00 [INF] HTTP GET /hubs/location responded 101 in 25404.8244 ms
+2026-09-15 11:04:29.121 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.0542 ms
+2026-09-15 11:04:29.132 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 7.9689 ms
+2026-09-15 11:04:29.198 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1517 ms
+2026-09-15 11:04:29.199 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1362 ms
+2026-09-15 11:04:29.200 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0921 ms
+2026-09-15 11:04:29.203 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1652 ms
+2026-09-15 11:04:29.212 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.6088 ms
+2026-09-15 11:04:29.215 +03:00 [INF] HTTP GET /api/couriers responded 400 in 1.4733 ms
+2026-09-15 11:04:29.222 +03:00 [INF] HTTP GET /api/orders responded 400 in 12.1744 ms
+2026-09-15 11:04:29.228 +03:00 [INF] HTTP GET /api/orders responded 400 in 1.7884 ms
+2026-09-15 11:04:46.066 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1150 ms
+2026-09-15 11:04:46.066 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0777 ms
+2026-09-15 11:04:46.077 +03:00 [INF] HTTP GET /api/couriers responded 400 in 3.2339 ms
+2026-09-15 11:04:46.081 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.4262 ms
+2026-09-15 11:04:47.563 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0457 ms
+2026-09-15 11:04:47.564 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1199 ms
+2026-09-15 11:04:47.608 +03:00 [INF] HTTP GET /api/merchants responded 200 in 38.6991 ms
+2026-09-15 11:04:47.616 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.3997 ms
+2026-09-15 11:04:48.752 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0876 ms
+2026-09-15 11:04:48.752 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0250 ms
+2026-09-15 11:04:48.760 +03:00 [INF] HTTP GET /api/orders responded 400 in 2.2011 ms
+2026-09-15 11:04:48.765 +03:00 [INF] HTTP GET /api/orders responded 400 in 2.4739 ms
+2026-09-15 11:04:49.999 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.4831 ms
+2026-09-15 11:04:50.010 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.8121 ms
+2026-09-15 11:05:03.179 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0498 ms
+2026-09-15 11:05:03.180 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0407 ms
+2026-09-15 11:05:03.185 +03:00 [INF] HTTP GET /api/orders responded 400 in 1.5471 ms
+2026-09-15 11:05:03.188 +03:00 [INF] HTTP GET /api/orders responded 400 in 1.6473 ms
+2026-09-15 11:05:05.879 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0954 ms
+2026-09-15 11:05:05.881 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0968 ms
+2026-09-15 11:05:05.912 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.6400 ms
+2026-09-15 11:05:05.916 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.5932 ms
+2026-09-15 11:05:05.938 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1082 ms
+2026-09-15 11:05:05.945 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.0780 ms
+2026-09-15 11:05:06.732 +03:00 [INF] HTTP GET /hubs/location responded 101 in 757.3026 ms
+2026-09-15 11:05:06.736 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1321 ms
+2026-09-15 11:05:06.738 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1604 ms
+2026-09-15 11:05:06.754 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 8.8199 ms
+2026-09-15 11:05:06.765 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 9.0409 ms
+2026-09-15 11:05:08.095 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.5797 ms
+2026-09-15 11:05:08.098 +03:00 [INF] HTTP GET /api/couriers responded 400 in 2.1805 ms
+2026-09-15 11:05:08.156 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1517 ms
+2026-09-15 11:05:08.176 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.5921 ms
+2026-09-15 11:05:12.300 +03:00 [INF] HTTP GET /hubs/location responded 101 in 4106.6370 ms
+2026-09-15 11:05:12.307 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1522 ms
+2026-09-15 11:05:12.309 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.0925 ms
+2026-09-15 11:05:12.323 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 8.3977 ms
+2026-09-15 11:05:12.333 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 8.1549 ms
+2026-09-15 11:05:14.284 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.0605 ms
+2026-09-15 11:05:14.290 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.2214 ms
+2026-09-15 11:05:14.305 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 8.2260 ms
+2026-09-15 11:05:14.318 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 10.8335 ms
+2026-09-15 11:05:25.230 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0822 ms
+2026-09-15 11:05:25.231 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0815 ms
+2026-09-15 11:05:25.254 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.4210 ms
+2026-09-15 11:05:25.262 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.9600 ms
+2026-09-15 11:05:25.301 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1334 ms
+2026-09-15 11:05:25.305 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.4833 ms
+2026-09-15 11:05:27.237 +03:00 [INF] HTTP GET /hubs/location responded 101 in 1921.3779 ms
+2026-09-15 11:13:50.593 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:13:51.160 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:13:51.246 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:13:51.333 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:13:51.338 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:13:51.338 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:13:51.339 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:13:51.339 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:13:51.339 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:13:51.340 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:13:51.352 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:13:51.352 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:13:51.352 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:13:51.438 +03:00 [INF] Server zahir:22736:4db3bba7 successfully announced in 83,1643 ms
+2026-09-15 11:13:51.441 +03:00 [INF] Server zahir:22736:4db3bba7 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:13:51.451 +03:00 [INF] Server zahir:22736:4db3bba7 all the dispatchers started
+2026-09-15 11:14:14.096 +03:00 [INF] HTTP GET /api/couriers responded 401 in 36.4330 ms
+2026-09-15 11:14:18.314 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 3.2869 ms
+2026-09-15 11:14:18.334 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 12.8956 ms
+2026-09-15 11:14:22.182 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:14:22.182 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:14:22.679 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1001.9919 ms
+2026-09-15 11:14:36.518 +03:00 [INF] HTTP POST /api/auth/login responded 400 in 61.9657 ms
+2026-09-15 11:14:39.015 +03:00 [INF] HTTP GET /api/couriers responded 401 in 2.3515 ms
+2026-09-15 11:14:45.522 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 27.5374 ms
+2026-09-15 11:14:45.654 +03:00 [INF] HTTP GET /api/couriers responded 200 in 98.1118 ms
+2026-09-15 11:14:49.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3335 ms
+2026-09-15 11:14:49.322 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.6137 ms
+2026-09-15 11:15:32.923 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:15:33.387 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:15:33.497 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:15:33.611 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:15:33.618 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:15:33.618 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:15:33.618 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:15:33.618 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:15:33.618 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:15:33.619 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:15:33.636 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:15:33.637 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:15:33.637 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:15:33.748 +03:00 [INF] Server zahir:18064:c084b888 successfully announced in 105,7488 ms
+2026-09-15 11:15:33.753 +03:00 [INF] Server zahir:18064:c084b888 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:15:33.770 +03:00 [INF] Server zahir:18064:c084b888 all the dispatchers started
+2026-09-15 11:15:39.023 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:15:39.024 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:15:39.559 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1081.1095 ms
+2026-09-15 11:15:39.752 +03:00 [INF] HTTP GET /api/orders responded 200 in 171.1474 ms
+2026-09-15 11:15:39.831 +03:00 [INF] HTTP GET /api/couriers responded 200 in 77.0298 ms
+2026-09-15 11:15:51.313 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 2.0784 ms
+2026-09-15 11:15:51.331 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 9.2889 ms
+2026-09-15 11:16:22.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2239 ms
+2026-09-15 11:16:22.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 1.0289 ms
+2026-09-15 11:16:53.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1621 ms
+2026-09-15 11:16:53.307 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3553 ms
+2026-09-15 11:17:24.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1513 ms
+2026-09-15 11:17:24.305 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3600 ms
+2026-09-15 11:17:55.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 1.4688 ms
+2026-09-15 11:17:55.313 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.5961 ms
+2026-09-15 11:18:26.309 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2527 ms
+2026-09-15 11:18:26.325 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.9213 ms
+2026-09-15 11:18:57.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3558 ms
+2026-09-15 11:18:57.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.5003 ms
+2026-09-15 11:19:28.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1640 ms
+2026-09-15 11:19:28.321 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3130 ms
+2026-09-15 11:19:59.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1166 ms
+2026-09-15 11:19:59.311 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4201 ms
+2026-09-15 11:20:30.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1624 ms
+2026-09-15 11:20:30.320 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4080 ms
+2026-09-15 11:20:33.764 +03:00 [INF] 2 servers were removed due to timeout
+2026-09-15 11:21:01.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2494 ms
+2026-09-15 11:21:01.312 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4143 ms
+2026-09-15 11:22:14.881 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:22:15.507 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:22:15.583 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:22:15.660 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:22:15.665 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:22:15.665 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:22:15.666 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:22:15.666 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:22:15.666 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:22:15.666 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:22:15.680 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:22:15.680 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:22:15.680 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:22:15.767 +03:00 [INF] Server zahir:11072:627ce3d8 successfully announced in 84,4211 ms
+2026-09-15 11:22:15.769 +03:00 [INF] Server zahir:11072:627ce3d8 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:22:15.778 +03:00 [INF] Server zahir:11072:627ce3d8 all the dispatchers started
+2026-09-15 11:22:21.745 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:22:21.747 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:22:22.253 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1083.0107 ms
+2026-09-15 11:22:22.454 +03:00 [INF] HTTP GET /api/couriers responded 200 in 179.3011 ms
+2026-09-15 11:22:22.606 +03:00 [INF] HTTP GET /api/orders responded 200 in 150.1640 ms
+2026-09-15 11:22:22.664 +03:00 [INF] HTTP GET /api/merchants responded 200 in 54.3345 ms
+2026-09-15 11:22:22.750 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 84.0136 ms
+2026-09-15 11:22:34.319 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 3.1270 ms
+2026-09-15 11:22:34.338 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 7.5285 ms
+2026-09-15 11:23:05.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2388 ms
+2026-09-15 11:23:05.312 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 1.1470 ms
+2026-09-15 11:23:36.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2207 ms
+2026-09-15 11:23:36.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3408 ms
+2026-09-15 11:24:07.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3096 ms
+2026-09-15 11:24:07.307 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2742 ms
+2026-09-15 11:24:38.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1281 ms
+2026-09-15 11:24:38.307 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3625 ms
+2026-09-15 11:25:09.309 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2064 ms
+2026-09-15 11:25:09.324 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.7756 ms
+2026-09-15 11:25:40.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3070 ms
+2026-09-15 11:25:40.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2852 ms
+2026-09-15 11:26:11.309 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1767 ms
+2026-09-15 11:26:11.324 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3015 ms
+2026-09-15 11:26:42.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1537 ms
+2026-09-15 11:26:42.311 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4081 ms
+2026-09-15 11:27:13.307 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1517 ms
+2026-09-15 11:27:13.319 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3134 ms
+2026-09-15 11:27:15.777 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 11:28:09.680 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:28:10.447 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:28:10.533 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:28:10.636 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:28:10.644 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:28:10.644 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:28:10.645 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:28:10.645 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:28:10.645 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:28:10.645 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:28:10.659 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:28:10.659 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:28:10.660 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:28:10.777 +03:00 [INF] Server zahir:21004:1e2f182e successfully announced in 113,5756 ms
+2026-09-15 11:28:10.781 +03:00 [INF] Server zahir:21004:1e2f182e is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:28:10.794 +03:00 [INF] Server zahir:21004:1e2f182e all the dispatchers started
+2026-09-15 11:28:15.348 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 9.3572 ms
+2026-09-15 11:28:15.388 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 27.9299 ms
+2026-09-15 11:28:46.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.7084 ms
+2026-09-15 11:28:46.311 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 3.4253 ms
+2026-09-15 11:29:17.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1495 ms
+2026-09-15 11:29:17.309 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 2.3276 ms
+2026-09-15 11:29:48.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0958 ms
+2026-09-15 11:29:48.305 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2335 ms
+2026-09-15 11:30:19.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1545 ms
+2026-09-15 11:30:19.305 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2504 ms
+2026-09-15 11:30:50.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2220 ms
+2026-09-15 11:30:50.327 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3840 ms
+2026-09-15 11:31:21.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2486 ms
+2026-09-15 11:31:21.306 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4471 ms
+2026-09-15 11:31:52.307 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.4089 ms
+2026-09-15 11:31:52.316 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.6078 ms
+2026-09-15 11:32:23.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0807 ms
+2026-09-15 11:32:23.307 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3091 ms
+2026-09-15 11:32:54.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0917 ms
+2026-09-15 11:32:54.307 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2473 ms
+2026-09-15 11:33:10.790 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 11:33:25.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1085 ms
+2026-09-15 11:33:25.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3512 ms
+2026-09-15 11:33:56.309 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3667 ms
+2026-09-15 11:33:56.323 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4864 ms
+2026-09-15 11:34:05.428 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:34:05.429 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:34:05.965 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1200.5053 ms
+2026-09-15 11:34:06.270 +03:00 [INF] HTTP POST /api/merchants responded 201 in 281.5872 ms
+2026-09-15 11:34:06.325 +03:00 [INF] HTTP GET /api/merchants responded 200 in 53.0681 ms
+2026-09-15 11:34:27.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0955 ms
+2026-09-15 11:34:27.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4322 ms
+2026-09-15 11:34:47.719 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 13.3779 ms
+2026-09-15 11:34:47.746 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.6348 ms
+2026-09-15 11:34:47.815 +03:00 [INF] HTTP DELETE /api/merchants/3e4ea33a-41ae-496f-8800-a31437dfcdd4 responded 200 in 40.7143 ms
+2026-09-15 11:34:58.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1664 ms
+2026-09-15 11:34:58.319 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2787 ms
+2026-09-15 11:35:29.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1133 ms
+2026-09-15 11:35:29.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2827 ms
+2026-09-15 11:36:00.306 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2045 ms
+2026-09-15 11:36:00.319 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4171 ms
+2026-09-15 11:36:31.303 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2001 ms
+2026-09-15 11:36:31.310 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2744 ms
+2026-09-15 11:37:02.307 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1392 ms
+2026-09-15 11:37:02.320 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3017 ms
+2026-09-15 11:37:33.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1519 ms
+2026-09-15 11:37:33.309 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2701 ms
+2026-09-15 11:38:04.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1319 ms
+2026-09-15 11:38:04.304 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2367 ms
+2026-09-15 11:38:35.107 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.4104 ms
+2026-09-15 11:38:35.121 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.5546 ms
+2026-09-15 11:39:13.835 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:39:14.371 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:39:14.464 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:39:14.570 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:39:14.579 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:39:14.579 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:39:14.580 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:39:14.580 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:39:14.580 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:39:14.581 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:39:14.602 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:39:14.603 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:39:14.603 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:39:14.756 +03:00 [INF] Server zahir:10212:646ab310 successfully announced in 148,9617 ms
+2026-09-15 11:39:14.759 +03:00 [INF] Server zahir:10212:646ab310 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:39:14.772 +03:00 [INF] Server zahir:10212:646ab310 all the dispatchers started
+2026-09-15 11:39:36.365 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 12.8446 ms
+2026-09-15 11:39:36.400 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 24.3469 ms
+2026-09-15 11:40:07.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.7670 ms
+2026-09-15 11:40:07.312 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 4.9105 ms
+2026-09-15 11:40:38.314 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.4298 ms
+2026-09-15 11:40:38.340 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 4.4316 ms
+2026-09-15 11:41:09.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2362 ms
+2026-09-15 11:41:09.311 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.5458 ms
+2026-09-15 11:41:40.317 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3148 ms
+2026-09-15 11:41:40.331 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.8473 ms
+2026-09-15 11:42:11.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1228 ms
+2026-09-15 11:42:11.308 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4901 ms
+2026-09-15 11:42:29.321 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:42:29.322 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:42:29.877 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1092.4623 ms
+2026-09-15 11:42:30.096 +03:00 [INF] HTTP GET /api/orders responded 200 in 197.0218 ms
+2026-09-15 11:42:30.173 +03:00 [INF] HTTP GET /api/couriers responded 200 in 74.1047 ms
+2026-09-15 11:42:42.309 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.6901 ms
+2026-09-15 11:42:42.322 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.7324 ms
+2026-09-15 11:43:13.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1138 ms
+2026-09-15 11:43:13.309 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3714 ms
+2026-09-15 11:43:44.308 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2737 ms
+2026-09-15 11:43:44.322 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.3819 ms
+2026-09-15 11:44:14.771 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 11:44:15.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3108 ms
+2026-09-15 11:44:15.308 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4274 ms
+2026-09-15 11:44:46.302 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1399 ms
+2026-09-15 11:44:46.306 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.4220 ms
+2026-09-15 11:45:17.304 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1538 ms
+2026-09-15 11:45:17.308 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 401 in 0.2997 ms
+2026-09-15 11:54:34.105 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 11:54:34.638 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 11:54:34.731 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 11:54:34.827 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 11:54:34.833 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 11:54:34.833 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 11:54:34.833 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 11:54:34.833 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 11:54:34.834 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 11:54:34.834 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 11:54:34.847 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 11:54:34.848 +03:00 [INF] Hosting environment: Development
+2026-09-15 11:54:34.848 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 11:54:34.958 +03:00 [INF] Server zahir:14400:ac3b4e00 successfully announced in 106,1483 ms
+2026-09-15 11:54:34.961 +03:00 [INF] Server zahir:14400:ac3b4e00 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 11:54:34.974 +03:00 [INF] Server zahir:14400:ac3b4e00 all the dispatchers started
+2026-09-15 11:56:11.221 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:56:11.223 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 11:56:11.707 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 1174.0134 ms
+2026-09-15 11:56:49.315 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 47.9901 ms
+2026-09-15 11:56:49.346 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 24.8164 ms
+2026-09-15 11:56:58.235 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 85.4671 ms
+2026-09-15 11:57:42.473 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 26.1878 ms
+2026-09-15 11:57:42.649 +03:00 [INF] HTTP POST /api/auth/change-password responded 200 in 169.1013 ms
+2026-09-15 11:58:45.347 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 1.6218 ms
+2026-09-15 11:58:45.370 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 12.1058 ms
+2026-09-15 11:58:45.628 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.5315 ms
+2026-09-15 11:58:45.648 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2721 ms
+2026-09-15 11:58:45.651 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1905 ms
+2026-09-15 11:58:45.737 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 25.2465 ms
+2026-09-15 11:58:45.885 +03:00 [INF] HTTP GET /api/couriers responded 200 in 171.2984 ms
+2026-09-15 11:58:45.913 +03:00 [INF] HTTP GET /api/couriers responded 200 in 24.8434 ms
+2026-09-15 11:58:46.036 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3264 ms
+2026-09-15 11:58:46.049 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 3.7341 ms
+2026-09-15 11:59:34.970 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 12:00:15.098 +03:00 [INF] HTTP GET /hubs/location responded 101 in 88975.8231 ms
+2026-09-15 12:00:16.958 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.3751 ms
+2026-09-15 12:00:16.968 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 7.0893 ms
+2026-09-15 12:00:17.085 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1389 ms
+2026-09-15 12:00:17.085 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0692 ms
+2026-09-15 12:00:17.086 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1870 ms
+2026-09-15 12:00:17.089 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1665 ms
+2026-09-15 12:00:17.092 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1345 ms
+2026-09-15 12:00:17.098 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.1805 ms
+2026-09-15 12:00:17.204 +03:00 [INF] HTTP GET /api/couriers responded 200 in 106.3992 ms
+2026-09-15 12:00:17.219 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.8921 ms
+2026-09-15 12:00:17.298 +03:00 [INF] HTTP GET /api/orders responded 200 in 200.3193 ms
+2026-09-15 12:00:17.313 +03:00 [INF] HTTP GET /api/orders responded 200 in 13.5319 ms
+2026-09-15 12:00:30.262 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.4675 ms
+2026-09-15 12:00:30.263 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2292 ms
+2026-09-15 12:00:30.264 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2569 ms
+2026-09-15 12:00:30.268 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.5441 ms
+2026-09-15 12:00:30.286 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.2664 ms
+2026-09-15 12:00:30.298 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.3638 ms
+2026-09-15 12:00:30.360 +03:00 [INF] HTTP GET /api/merchants responded 200 in 82.9211 ms
+2026-09-15 12:00:30.372 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.8939 ms
+2026-09-15 12:00:30.443 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.0716 ms
+2026-09-15 12:00:30.445 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.6079 ms
+2026-09-15 12:00:34.672 +03:00 [INF] HTTP OPTIONS /api/reconciliation/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 204 in 0.1258 ms
+2026-09-15 12:00:34.875 +03:00 [INF] HTTP POST /api/reconciliation/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 200 in 198.9941 ms
+2026-09-15 12:00:34.887 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.5239 ms
+2026-09-15 12:00:34.888 +03:00 [INF] HTTP GET /api/merchants responded 200 in 5.6547 ms
+2026-09-15 12:01:01.631 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1826 ms
+2026-09-15 12:01:01.654 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.3544 ms
+2026-09-15 12:01:01.693 +03:00 [INF] HTTP GET /api/merchants responded 200 in 14.2238 ms
+2026-09-15 12:01:01.724 +03:00 [INF] HTTP GET /api/merchants responded 200 in 14.4651 ms
+2026-09-15 12:01:15.346 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1731 ms
+2026-09-15 12:01:15.347 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2318 ms
+2026-09-15 12:01:15.348 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1584 ms
+2026-09-15 12:01:15.356 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.4227 ms
+2026-09-15 12:01:15.357 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1952 ms
+2026-09-15 12:01:15.358 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.3829 ms
+2026-09-15 12:01:15.375 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.7306 ms
+2026-09-15 12:01:15.379 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.3224 ms
+2026-09-15 12:01:15.380 +03:00 [INF] HTTP GET /api/orders responded 200 in 18.6551 ms
+2026-09-15 12:01:15.388 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.8375 ms
+2026-09-15 12:01:15.399 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.1736 ms
+2026-09-15 12:01:15.399 +03:00 [INF] HTTP GET /api/merchants responded 200 in 16.3215 ms
+2026-09-15 12:01:23.063 +03:00 [INF] HTTP OPTIONS /api/orders/10c15eac-3d7b-4b97-8b51-abc6589d0798/status responded 204 in 0.1611 ms
+2026-09-15 12:01:23.143 +03:00 [INF] HTTP PUT /api/orders/10c15eac-3d7b-4b97-8b51-abc6589d0798/status responded 409 in 71.5487 ms
+2026-09-15 12:01:26.038 +03:00 [INF] HTTP GET /hubs/location responded 101 in 68911.5333 ms
+2026-09-15 12:01:26.068 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0971 ms
+2026-09-15 12:01:26.070 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1332 ms
+2026-09-15 12:01:26.110 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.6737 ms
+2026-09-15 12:01:26.124 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.5380 ms
+2026-09-15 12:01:26.155 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.0796 ms
+2026-09-15 12:01:26.159 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.2435 ms
+2026-09-15 12:01:28.959 +03:00 [INF] HTTP GET /hubs/location responded 101 in 2767.4282 ms
+2026-09-15 12:01:28.974 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.5044 ms
+2026-09-15 12:01:28.982 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2158 ms
+2026-09-15 12:01:28.986 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1631 ms
+2026-09-15 12:01:28.988 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2095 ms
+2026-09-15 12:01:28.990 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.3461 ms
+2026-09-15 12:01:29.005 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.7921 ms
+2026-09-15 12:01:29.005 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.2057 ms
+2026-09-15 12:01:29.017 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.9717 ms
+2026-09-15 12:01:29.078 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 84.8924 ms
+2026-09-15 12:01:29.100 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 19.6858 ms
+2026-09-15 12:01:34.548 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.1430 ms
+2026-09-15 12:01:34.552 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.0587 ms
+2026-09-15 12:01:34.581 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 21.1360 ms
+2026-09-15 12:01:34.592 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 10.4099 ms
+2026-09-15 12:01:53.592 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0552 ms
+2026-09-15 12:01:53.593 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0455 ms
+2026-09-15 12:01:53.611 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.9681 ms
+2026-09-15 12:01:53.622 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.6419 ms
+2026-09-15 12:01:59.655 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 3.8588 ms
+2026-09-15 12:01:59.769 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.7460 ms
+2026-09-15 12:02:00.805 +03:00 [INF] HTTP GET /hubs/location responded 101 in 1020.6806 ms
+2026-09-15 12:02:05.700 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0900 ms
+2026-09-15 12:02:05.700 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0980 ms
+2026-09-15 12:02:05.748 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.8109 ms
+2026-09-15 12:02:05.759 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.5863 ms
+2026-09-15 12:02:05.809 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.1442 ms
+2026-09-15 12:02:05.813 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.6405 ms
+2026-09-15 12:02:06.336 +03:00 [INF] HTTP GET /hubs/location responded 101 in 495.7241 ms
+2026-09-15 12:02:06.347 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.0996 ms
+2026-09-15 12:02:06.352 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1339 ms
+2026-09-15 12:02:06.355 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1234 ms
+2026-09-15 12:02:06.357 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1475 ms
+2026-09-15 12:02:06.360 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.3880 ms
+2026-09-15 12:02:06.371 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.8569 ms
+2026-09-15 12:02:06.374 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.6485 ms
+2026-09-15 12:02:06.381 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 13.6123 ms
+2026-09-15 12:02:06.382 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.3328 ms
+2026-09-15 12:02:06.396 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 14.2198 ms
+2026-09-15 12:02:06.991 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.0774 ms
+2026-09-15 12:02:06.993 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.0824 ms
+2026-09-15 12:02:07.016 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 13.6932 ms
+2026-09-15 12:02:07.027 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 9.3015 ms
+2026-09-15 12:02:13.691 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1015 ms
+2026-09-15 12:02:13.695 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2126 ms
+2026-09-15 12:02:13.696 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0537 ms
+2026-09-15 12:02:13.698 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.2879 ms
+2026-09-15 12:02:13.698 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0696 ms
+2026-09-15 12:02:13.704 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1440 ms
+2026-09-15 12:02:13.722 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.2421 ms
+2026-09-15 12:02:13.722 +03:00 [INF] HTTP GET /api/merchants responded 200 in 7.4717 ms
+2026-09-15 12:02:13.730 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 16.9791 ms
+2026-09-15 12:02:13.731 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.9914 ms
+2026-09-15 12:02:13.732 +03:00 [INF] HTTP GET /api/merchants responded 200 in 7.8210 ms
+2026-09-15 12:02:13.746 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 13.2245 ms
+2026-09-15 12:02:24.298 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2186 ms
+2026-09-15 12:02:24.300 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2361 ms
+2026-09-15 12:02:24.301 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1201 ms
+2026-09-15 12:02:24.305 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1449 ms
+2026-09-15 12:02:24.312 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1349 ms
+2026-09-15 12:02:24.312 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0245 ms
+2026-09-15 12:02:24.327 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.3215 ms
+2026-09-15 12:02:24.331 +03:00 [INF] HTTP GET /api/orders responded 200 in 11.0817 ms
+2026-09-15 12:02:24.332 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.6889 ms
+2026-09-15 12:02:24.337 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.0548 ms
+2026-09-15 12:02:24.339 +03:00 [INF] HTTP GET /api/merchants responded 200 in 5.6051 ms
+2026-09-15 12:02:24.342 +03:00 [INF] HTTP GET /api/orders responded 200 in 9.7594 ms
+2026-09-15 12:02:24.812 +03:00 [INF] HTTP GET /api/merchants responded 200 in 4.9719 ms
+2026-09-15 12:02:24.819 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.1053 ms
+2026-09-15 12:02:40.401 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada/settings responded 204 in 0.1018 ms
+2026-09-15 12:02:40.463 +03:00 [INF] HTTP PUT /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada/settings responded 200 in 56.8227 ms
+2026-09-15 12:02:40.473 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0865 ms
+2026-09-15 12:02:40.485 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.7829 ms
+2026-09-15 12:02:42.082 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0880 ms
+2026-09-15 12:02:42.084 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0666 ms
+2026-09-15 12:02:42.090 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.9824 ms
+2026-09-15 12:02:42.097 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.7722 ms
+2026-09-15 12:02:42.098 +03:00 [INF] HTTP GET /api/merchants responded 200 in 5.5663 ms
+2026-09-15 12:02:42.107 +03:00 [INF] HTTP GET /api/couriers responded 200 in 8.0300 ms
+2026-09-15 12:02:42.156 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.9539 ms
+2026-09-15 12:02:42.179 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.2614 ms
+2026-09-15 12:03:40.248 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.4728 ms
+2026-09-15 12:03:40.299 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1637 ms
+2026-09-15 12:03:40.344 +03:00 [INF] HTTP GET /api/merchants responded 200 in 15.2593 ms
+2026-09-15 12:03:40.362 +03:00 [INF] HTTP GET /api/merchants responded 200 in 11.7625 ms
+2026-09-15 12:11:30.431 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 12:11:31.044 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 12:11:31.119 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 12:11:31.208 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 12:11:31.213 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 12:11:31.214 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 12:11:31.214 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 12:11:31.214 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 12:11:31.214 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 12:11:31.214 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 12:11:31.228 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 12:11:31.229 +03:00 [INF] Hosting environment: Development
+2026-09-15 12:11:31.229 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 12:11:31.372 +03:00 [INF] Server zahir:25068:e1f1a159 successfully announced in 138,1171 ms
+2026-09-15 12:11:31.376 +03:00 [INF] Server zahir:25068:e1f1a159 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 12:11:31.392 +03:00 [INF] Server zahir:25068:e1f1a159 all the dispatchers started
+2026-09-15 12:12:50.387 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 12:12:50.391 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 12:12:50.990 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1382.5327 ms
+2026-09-15 12:12:51.124 +03:00 [INF] HTTP GET /api/merchants responded 200 in 122.7066 ms
+2026-09-15 12:16:31.385 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 15:45:55.409 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 15:46:00.890 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Npgsql.NpgsqlException (0x80004005): Failed to connect to 127.0.0.1:5432
+ ---> System.Net.Sockets.SocketException (10061): Hedef makine etkin olarak reddettiğinden bağlantı kurulamadı.
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.Connect(NpgsqlTimeout timeout)
+   at Npgsql.Internal.NpgsqlConnector.RawOpen(SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.<Open>g__OpenCore|213_1(NpgsqlConnector conn, SslMode sslMode, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken, Boolean isFirstAttempt)
+   at Npgsql.Internal.NpgsqlConnector.Open(NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.OpenNewConnector(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.PoolingDataSource.<Get>g__RentAsync|33_0(NpgsqlConnection conn, NpgsqlTimeout timeout, Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.<Open>g__OpenAsync|42_0(Boolean async, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlConnection.Open()
+   at Hangfire.PostgreSql.PostgreSqlStorage.CreateAndOpenConnection()
+   at Hangfire.PostgreSql.PostgreSqlStorage..ctor(IConnectionFactory connectionFactory, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure, PostgreSqlStorageOptions options)
+   at Hangfire.PostgreSql.PostgreSqlBootstrapperConfigurationExtensions.UsePostgreSqlStorage(IGlobalConfiguration configuration, Action`1 configure)
+   at KuryeSistemi.API.Extensions.DatabaseExtensions.<>c__DisplayClass0_0.<AddDatabase>b__3(IGlobalConfiguration config) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Extensions\DatabaseExtensions.cs:line 42
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass0_0.<AddHangfire>b__0(IServiceProvider provider, IGlobalConfiguration config) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 40
+   at Hangfire.HangfireServiceCollectionExtensions.<>c__DisplayClass1_0.<AddHangfire>b__14(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 103
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSiteMain(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.VisitRootCache(ServiceCallSite callSite, RuntimeResolverContext context)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteVisitor`2.VisitCallSite(ServiceCallSite callSite, TArgument argument)
+   at Microsoft.Extensions.DependencyInjection.ServiceLookup.CallSiteRuntimeResolver.Resolve(ServiceCallSite callSite, ServiceProviderEngineScope scope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.CreateServiceAccessor(ServiceIdentifier serviceIdentifier)
+   at System.Collections.Concurrent.ConcurrentDictionary`2.GetOrAdd(TKey key, Func`2 valueFactory)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(ServiceIdentifier serviceIdentifier, ServiceProviderEngineScope serviceProviderEngineScope)
+   at Microsoft.Extensions.DependencyInjection.ServiceProvider.GetService(Type serviceType)
+   at Microsoft.Extensions.DependencyInjection.ServiceProviderServiceExtensions.GetService[T](IServiceProvider provider)
+   at Hangfire.HangfireServiceCollectionExtensions.ThrowIfNotConfigured(IServiceProvider serviceProvider) in C:\projects\hangfire-525\src\Hangfire.NetCore\HangfireServiceCollectionExtensions.cs:line 307
+   at Hangfire.HangfireApplicationBuilderExtensions.UseHangfireDashboard(IApplicationBuilder app, String pathMatch, DashboardOptions options, JobStorage storage) in C:\projects\hangfire-525\src\Hangfire.AspNetCore\HangfireApplicationBuilderExtensions.cs:line 44
+   at Program.<Main>$(String[] args) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 84
+2026-09-15 15:46:03.704 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-15 15:54:45.497 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 15:54:46.200 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 15:54:46.320 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 15:54:46.607 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 15:54:46.622 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 15:54:46.623 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 15:54:46.623 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 15:54:46.623 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 15:54:46.623 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 15:54:46.623 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 15:54:46.654 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 15:54:46.655 +03:00 [INF] Hosting environment: Development
+2026-09-15 15:54:46.655 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 15:54:47.228 +03:00 [INF] Server zahir:24156:2e7d2979 successfully announced in 555,6198 ms
+2026-09-15 15:54:47.235 +03:00 [INF] Server zahir:24156:2e7d2979 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 15:54:47.260 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 15:54:47.332 +03:00 [INF] Server zahir:24156:2e7d2979 all the dispatchers started
+2026-09-15 15:54:50.614 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 57.5676 ms
+2026-09-15 15:54:50.614 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 57.6324 ms
+2026-09-15 15:54:50.614 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 57.5452 ms
+2026-09-15 15:54:50.614 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 57.5885 ms
+2026-09-15 15:54:50.614 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 57.5982 ms
+2026-09-15 15:54:51.002 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 340.6509 ms
+2026-09-15 15:54:52.153 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 15:54:52.154 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 15:54:52.807 +03:00 [INF] HTTP GET /api/merchants responded 200 in 2140.3814 ms
+2026-09-15 15:54:52.831 +03:00 [INF] HTTP GET /api/couriers responded 200 in 2164.3746 ms
+2026-09-15 15:54:52.916 +03:00 [INF] HTTP GET /api/merchants responded 200 in 110.4300 ms
+2026-09-15 15:54:52.917 +03:00 [INF] HTTP GET /api/couriers responded 200 in 84.1839 ms
+2026-09-15 15:54:53.339 +03:00 [INF] HTTP GET /api/merchants responded 200 in 28.7787 ms
+2026-09-15 15:54:53.354 +03:00 [INF] HTTP GET /api/merchants responded 200 in 12.3903 ms
+2026-09-15 15:54:54.105 +03:00 [INF] HTTP GET /api/couriers responded 200 in 15.9783 ms
+2026-09-15 15:54:54.105 +03:00 [INF] HTTP GET /api/merchants responded 200 in 15.9267 ms
+2026-09-15 15:54:54.118 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.1824 ms
+2026-09-15 15:54:54.120 +03:00 [INF] HTTP GET /api/merchants responded 200 in 13.1859 ms
+2026-09-15 15:55:00.156 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.3544 ms
+2026-09-15 15:55:00.156 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2638 ms
+2026-09-15 15:55:00.171 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.5187 ms
+2026-09-15 15:55:00.171 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.3834 ms
+2026-09-15 15:55:03.475 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.8518 ms
+2026-09-15 15:55:03.475 +03:00 [INF] HTTP GET /api/merchants responded 200 in 12.3304 ms
+2026-09-15 15:55:05.353 +03:00 [INF] HTTP OPTIONS /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 204 in 0.2752 ms
+2026-09-15 15:55:05.803 +03:00 [INF] HTTP PUT /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 200 in 439.9060 ms
+2026-09-15 15:55:05.818 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1497 ms
+2026-09-15 15:55:05.818 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2083 ms
+2026-09-15 15:55:05.837 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.3238 ms
+2026-09-15 15:55:05.837 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.8724 ms
+2026-09-15 15:55:10.025 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.0343 ms
+2026-09-15 15:55:10.025 +03:00 [INF] HTTP GET /api/merchants responded 200 in 5.1813 ms
+2026-09-15 15:55:18.233 +03:00 [INF] HTTP GET /hubs/location responded 101 in 27204.2703 ms
+2026-09-15 15:55:19.109 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3397 ms
+2026-09-15 15:55:19.118 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1105 ms
+2026-09-15 15:55:19.121 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2596 ms
+2026-09-15 15:55:19.122 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1747 ms
+2026-09-15 15:55:19.122 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1553 ms
+2026-09-15 15:55:19.126 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.5393 ms
+2026-09-15 15:55:19.146 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.6196 ms
+2026-09-15 15:55:19.149 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.8254 ms
+2026-09-15 15:55:19.149 +03:00 [INF] HTTP GET /api/merchants responded 200 in 12.2740 ms
+2026-09-15 15:55:19.149 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.8691 ms
+2026-09-15 15:55:24.033 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.2372 ms
+2026-09-15 15:55:24.033 +03:00 [INF] HTTP GET /api/merchants responded 200 in 4.2369 ms
+2026-09-15 15:55:26.002 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2104 ms
+2026-09-15 15:55:26.002 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0251 ms
+2026-09-15 15:55:26.036 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.1743 ms
+2026-09-15 15:55:26.061 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.9707 ms
+2026-09-15 15:55:27.041 +03:00 [INF] HTTP OPTIONS /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 204 in 0.2177 ms
+2026-09-15 15:55:27.104 +03:00 [INF] HTTP PUT /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 200 in 54.0082 ms
+2026-09-15 15:55:27.140 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.9148 ms
+2026-09-15 15:55:27.159 +03:00 [INF] HTTP GET /api/merchants responded 200 in 29.1449 ms
+2026-09-15 15:56:58.295 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0633 ms
+2026-09-15 15:56:58.295 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0640 ms
+2026-09-15 15:56:58.304 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.9939 ms
+2026-09-15 15:56:58.304 +03:00 [INF] HTTP GET /api/merchants responded 200 in 4.4814 ms
+2026-09-15 15:57:00.308 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.4287 ms
+2026-09-15 15:57:00.309 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.7519 ms
+2026-09-15 15:57:23.651 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 15:57:24.152 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 15:57:24.227 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 15:57:24.306 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 15:57:24.312 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 15:57:24.312 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 15:57:24.312 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 15:57:24.312 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 15:57:24.312 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 15:57:24.313 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 15:57:24.325 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 15:57:24.325 +03:00 [INF] Hosting environment: Development
+2026-09-15 15:57:24.326 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 15:57:24.424 +03:00 [INF] Server zahir:27096:4fec6b71 successfully announced in 94,4205 ms
+2026-09-15 15:57:24.427 +03:00 [INF] Server zahir:27096:4fec6b71 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 15:57:24.438 +03:00 [INF] Server zahir:27096:4fec6b71 all the dispatchers started
+2026-09-15 15:57:38.336 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 9.5125 ms
+2026-09-15 15:57:38.448 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 95.0260 ms
+2026-09-15 15:58:07.005 +03:00 [INF] HTTP GET /hubs/location responded 101 in 28550.1899 ms
+2026-09-15 15:58:07.623 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2860 ms
+2026-09-15 15:58:07.628 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2922 ms
+2026-09-15 15:58:07.631 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1668 ms
+2026-09-15 15:58:07.631 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1669 ms
+2026-09-15 15:58:07.650 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.5546 ms
+2026-09-15 15:58:07.659 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 12.8174 ms
+2026-09-15 15:58:08.395 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 15:58:08.395 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 15:58:08.918 +03:00 [INF] HTTP GET /api/merchants responded 200 in 1260.1953 ms
+2026-09-15 15:58:08.956 +03:00 [INF] HTTP GET /api/couriers responded 200 in 1299.4977 ms
+2026-09-15 15:58:09.042 +03:00 [INF] HTTP GET /api/merchants responded 200 in 122.9203 ms
+2026-09-15 15:58:09.043 +03:00 [INF] HTTP GET /api/couriers responded 200 in 84.9334 ms
+2026-09-15 15:58:11.069 +03:00 [INF] HTTP GET /api/couriers responded 200 in 13.2067 ms
+2026-09-15 15:58:11.069 +03:00 [INF] HTTP GET /api/merchants responded 200 in 12.9191 ms
+2026-09-15 15:58:12.730 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1484 ms
+2026-09-15 15:58:12.730 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.9135 ms
+2026-09-15 15:58:12.749 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.6149 ms
+2026-09-15 15:58:12.749 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.9495 ms
+2026-09-15 15:58:13.646 +03:00 [INF] HTTP OPTIONS /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 204 in 0.1818 ms
+2026-09-15 15:58:14.016 +03:00 [INF] HTTP PUT /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15 responded 200 in 364.8913 ms
+2026-09-15 15:58:14.041 +03:00 [INF] HTTP GET /api/couriers responded 200 in 11.7356 ms
+2026-09-15 15:58:14.041 +03:00 [INF] HTTP GET /api/merchants responded 200 in 11.7353 ms
+2026-09-15 15:58:16.078 +03:00 [INF] HTTP GET /api/merchants responded 200 in 11.0468 ms
+2026-09-15 15:58:16.087 +03:00 [INF] HTTP GET /api/merchants responded 200 in 7.3919 ms
+2026-09-15 15:58:28.378 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada/settings responded 204 in 0.1863 ms
+2026-09-15 15:58:28.526 +03:00 [INF] HTTP PUT /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada/settings responded 200 in 143.2239 ms
+2026-09-15 15:58:28.535 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2383 ms
+2026-09-15 15:58:28.551 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.1949 ms
+2026-09-15 15:58:32.964 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.4628 ms
+2026-09-15 15:58:32.964 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2651 ms
+2026-09-15 15:58:32.967 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1427 ms
+2026-09-15 15:58:32.969 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1532 ms
+2026-09-15 15:58:32.975 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.3382 ms
+2026-09-15 15:58:32.988 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.7027 ms
+2026-09-15 15:58:32.988 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.6817 ms
+2026-09-15 15:58:32.999 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.0366 ms
+2026-09-15 15:58:33.131 +03:00 [INF] HTTP GET /api/orders responded 200 in 152.7772 ms
+2026-09-15 15:58:33.147 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.5739 ms
+2026-09-15 15:58:35.704 +03:00 [INF] HTTP GET /hubs/location responded 101 in 28008.7775 ms
+2026-09-15 15:58:35.748 +03:00 [INF] HTTP GET /api/couriers responded 200 in 14.0866 ms
+2026-09-15 15:58:35.756 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.0643 ms
+2026-09-15 15:58:35.826 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2043 ms
+2026-09-15 15:58:35.831 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.1027 ms
+2026-09-15 15:58:38.013 +03:00 [INF] HTTP GET /hubs/location responded 101 in 2170.0834 ms
+2026-09-15 15:58:38.027 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.2336 ms
+2026-09-15 15:58:38.029 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1699 ms
+2026-09-15 15:58:38.032 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.2412 ms
+2026-09-15 15:58:38.040 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2888 ms
+2026-09-15 15:58:38.040 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.1063 ms
+2026-09-15 15:58:38.042 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1351 ms
+2026-09-15 15:58:38.058 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.9162 ms
+2026-09-15 15:58:38.058 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.8183 ms
+2026-09-15 15:58:38.070 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.4456 ms
+2026-09-15 15:58:38.071 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.7181 ms
+2026-09-15 15:58:38.158 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 115.1104 ms
+2026-09-15 15:58:38.178 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 17.7640 ms
+2026-09-15 15:58:54.321 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.1271 ms
+2026-09-15 15:58:54.321 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 204 in 0.1100 ms
+2026-09-15 15:58:54.348 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 21.9710 ms
+2026-09-15 15:58:54.362 +03:00 [INF] HTTP GET /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d responded 200 in 11.8909 ms
+2026-09-15 15:59:31.310 +03:00 [INF] HTTP OPTIONS /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d/settings responded 204 in 0.1793 ms
+2026-09-15 15:59:31.339 +03:00 [INF] HTTP PUT /api/merchants/500d7a83-0f7a-498d-8480-83e87cc7762d/settings responded 200 in 21.0310 ms
+2026-09-15 16:00:48.946 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.4606 ms
+2026-09-15 16:00:48.959 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1389 ms
+2026-09-15 16:00:48.963 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 2.4850 ms
+2026-09-15 16:00:48.963 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2047 ms
+2026-09-15 16:00:49.007 +03:00 [INF] HTTP GET /api/couriers responded 200 in 23.2130 ms
+2026-09-15 16:00:49.029 +03:00 [INF] HTTP GET /api/orders responded 200 in 39.1195 ms
+2026-09-15 16:00:49.044 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.3078 ms
+2026-09-15 16:00:49.048 +03:00 [INF] HTTP GET /api/orders responded 200 in 15.4906 ms
+2026-09-15 16:00:55.911 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0972 ms
+2026-09-15 16:00:55.913 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1523 ms
+2026-09-15 16:00:55.916 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2265 ms
+2026-09-15 16:00:55.917 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0990 ms
+2026-09-15 16:00:55.928 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.8665 ms
+2026-09-15 16:00:55.932 +03:00 [INF] HTTP GET /api/merchants responded 200 in 7.4163 ms
+2026-09-15 16:00:55.938 +03:00 [INF] HTTP GET /api/couriers responded 200 in 8.9885 ms
+2026-09-15 16:00:55.944 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.5083 ms
+2026-09-15 16:00:57.012 +03:00 [INF] HTTP GET /api/merchants responded 200 in 11.5114 ms
+2026-09-15 16:00:57.023 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.6340 ms
+2026-09-15 16:00:57.602 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.3472 ms
+2026-09-15 16:00:57.609 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0849 ms
+2026-09-15 16:00:57.615 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.2931 ms
+2026-09-15 16:00:57.618 +03:00 [INF] HTTP GET /api/merchants responded 200 in 8.3918 ms
+2026-09-15 16:00:57.627 +03:00 [INF] HTTP GET /api/couriers responded 200 in 9.3499 ms
+2026-09-15 16:00:57.631 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.7415 ms
+2026-09-15 16:00:57.634 +03:00 [INF] HTTP GET /api/orders responded 200 in 16.2888 ms
+2026-09-15 16:00:57.651 +03:00 [INF] HTTP GET /api/orders responded 200 in 14.4627 ms
+2026-09-15 16:02:24.436 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 16:10:47.966 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-15 16:10:48.866 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-15 16:10:49.083 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-15 16:10:49.246 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-15 16:10:49.255 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-15 16:10:49.256 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-15 16:10:49.256 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-15 16:10:49.256 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-15 16:10:49.256 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-15 16:10:49.256 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-15 16:10:49.287 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-15 16:10:49.287 +03:00 [INF] Hosting environment: Development
+2026-09-15 16:10:49.288 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-15 16:10:49.515 +03:00 [INF] Server zahir:23284:534543be successfully announced in 221,7778 ms
+2026-09-15 16:10:49.520 +03:00 [INF] Server zahir:23284:534543be is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-15 16:10:49.638 +03:00 [INF] Server zahir:23284:534543be all the dispatchers started
+2026-09-15 16:15:34.470 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 14.8594 ms
+2026-09-15 16:15:35.463 +03:00 [WRN] The 'DispatchMode' property 'DispatchMode' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'DispatchMode' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 16:15:35.464 +03:00 [WRN] The 'ReconciliationPeriod' property 'ReconciliationPeriod' on entity type 'Merchant' is configured with a database-generated default, but has no configured sentinel value. The database-generated default will always be used for inserts when the property has the value '0', since this is the CLR default for the 'ReconciliationPeriod' type. Consider using a nullable type, using a nullable backing field, or setting the sentinel value for the property to ensure the database default is used when, and only when, appropriate. See https://aka.ms/efcore-docs-default-values for more information.
+2026-09-15 16:15:36.071 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 1581.6851 ms
+2026-09-15 16:15:36.213 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2065 ms
+2026-09-15 16:15:36.213 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 2.3432 ms
+2026-09-15 16:15:36.217 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.4321 ms
+2026-09-15 16:15:36.320 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 91.0216 ms
+2026-09-15 16:15:36.419 +03:00 [INF] HTTP GET /api/couriers responded 200 in 188.2503 ms
+2026-09-15 16:15:36.442 +03:00 [INF] HTTP GET /api/couriers responded 200 in 22.8793 ms
+2026-09-15 16:15:44.110 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3981 ms
+2026-09-15 16:15:44.119 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1233 ms
+2026-09-15 16:15:44.119 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1232 ms
+2026-09-15 16:15:44.123 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 3.0264 ms
+2026-09-15 16:15:44.145 +03:00 [INF] HTTP GET /api/couriers responded 200 in 17.6650 ms
+2026-09-15 16:15:44.159 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.9520 ms
+2026-09-15 16:15:44.180 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.2264 ms
+2026-09-15 16:15:44.185 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.8498 ms
+2026-09-15 16:15:48.720 +03:00 [INF] HTTP GET /hubs/location responded 101 in 4519.0897 ms
+2026-09-15 16:15:49.531 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-15 16:15:49.902 +03:00 [INF] HTTP OPTIONS /hubs/location/negotiate responded 204 in 0.3090 ms
+2026-09-15 16:15:49.902 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.0649 ms
+2026-09-15 16:15:49.902 +03:00 [INF] HTTP OPTIONS /api/orders/merchant/today responded 204 in 0.1302 ms
+2026-09-15 16:15:49.911 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.8572 ms
+2026-09-15 16:15:50.177 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 266.4197 ms
+2026-09-15 16:15:50.197 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 17.8494 ms
+2026-09-15 16:15:50.847 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2309 ms
+2026-09-15 16:15:50.847 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.2319 ms
+2026-09-15 16:15:50.866 +03:00 [INF] HTTP GET /api/couriers responded 200 in 10.3379 ms
+2026-09-15 16:15:50.881 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.6436 ms
+2026-09-15 16:15:50.906 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 22.2508 ms
+2026-09-15 16:15:50.920 +03:00 [INF] HTTP GET /api/orders/merchant/today responded 200 in 11.5087 ms
+2026-09-15 16:15:50.952 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.2082 ms
+2026-09-15 16:15:50.973 +03:00 [INF] HTTP OPTIONS /api/reconciliation/settlements responded 204 in 0.2689 ms
+2026-09-15 16:15:51.070 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 94.5936 ms
+2026-09-15 16:15:51.090 +03:00 [INF] HTTP GET /api/reconciliation/settlements responded 200 in 17.9133 ms
+2026-09-15 16:15:52.134 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 204 in 0.1279 ms
+2026-09-15 16:15:52.133 +03:00 [INF] HTTP OPTIONS /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 204 in 0.1748 ms
+2026-09-15 16:15:52.234 +03:00 [INF] HTTP GET /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 200 in 89.9271 ms
+2026-09-15 16:15:52.253 +03:00 [INF] HTTP GET /api/merchants/804c1bbd-70cf-47ae-8056-19c58d1deada responded 200 in 13.0342 ms
+2026-09-15 16:16:02.337 +03:00 [INF] HTTP OPTIONS /api/auth/login responded 204 in 0.1583 ms
+2026-09-15 16:16:02.348 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 8.2993 ms
+2026-09-15 16:16:02.469 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0236 ms
+2026-09-15 16:16:02.469 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1205 ms
+2026-09-15 16:16:02.469 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1255 ms
+2026-09-15 16:16:02.470 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1217 ms
+2026-09-15 16:16:02.544 +03:00 [INF] HTTP GET /api/orders responded 200 in 67.0700 ms
+2026-09-15 16:16:02.550 +03:00 [INF] HTTP GET /api/couriers responded 200 in 73.4102 ms
+2026-09-15 16:16:02.560 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.6221 ms
+2026-09-15 16:16:02.560 +03:00 [INF] HTTP GET /api/orders responded 200 in 15.0886 ms
+2026-09-15 16:17:03.288 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0758 ms
+2026-09-15 16:17:03.288 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0757 ms
+2026-09-15 16:17:03.298 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.9203 ms
+2026-09-15 16:17:03.300 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.8005 ms
+2026-09-15 16:18:03.287 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0628 ms
+2026-09-15 16:18:03.287 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0599 ms
+2026-09-15 16:18:03.294 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.3998 ms
+2026-09-15 16:18:03.297 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.3372 ms
+2026-09-15 16:19:03.287 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0955 ms
+2026-09-15 16:19:03.287 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0188 ms
+2026-09-15 16:19:03.296 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.6590 ms
+2026-09-15 16:19:03.299 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.9630 ms
+2026-09-15 16:20:03.288 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1117 ms
+2026-09-15 16:20:03.288 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1562 ms
+2026-09-15 16:20:03.298 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.5130 ms
+2026-09-15 16:20:03.304 +03:00 [INF] HTTP GET /api/orders responded 200 in 10.8805 ms
+2026-09-15 16:21:03.286 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0523 ms
+2026-09-15 16:21:03.287 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0158 ms
+2026-09-15 16:21:03.293 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.3206 ms
+2026-09-15 16:21:03.295 +03:00 [INF] HTTP GET /api/orders responded 200 in 5.7427 ms
+2026-09-15 16:22:03.290 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1373 ms
+2026-09-15 16:22:03.291 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0585 ms
+2026-09-15 16:22:03.301 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.8177 ms
+2026-09-15 16:22:03.303 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.9403 ms
+2026-09-15 16:23:11.288 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0763 ms
+2026-09-15 16:23:11.288 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0418 ms
+2026-09-15 16:23:11.296 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.1645 ms
+2026-09-15 16:23:11.297 +03:00 [INF] HTTP GET /api/orders responded 200 in 5.0962 ms
+2026-09-15 16:24:11.288 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0343 ms
+2026-09-15 16:24:11.288 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1903 ms
+2026-09-15 16:24:11.297 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.0976 ms
+2026-09-15 16:24:11.300 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.6301 ms
+2026-09-15 16:25:11.288 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0162 ms
+2026-09-15 16:25:11.288 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1088 ms
+2026-09-15 16:25:11.295 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.9683 ms
+2026-09-15 16:25:11.299 +03:00 [INF] HTTP GET /api/orders responded 200 in 8.0713 ms
+2026-09-15 16:26:11.286 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0765 ms
+2026-09-15 16:26:11.287 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0486 ms
+2026-09-15 16:26:11.293 +03:00 [INF] HTTP GET /api/couriers responded 200 in 3.4251 ms
+2026-09-15 16:26:11.295 +03:00 [INF] HTTP GET /api/orders responded 200 in 4.7899 ms
+2026-09-15 16:27:02.461 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0889 ms
+2026-09-15 16:27:02.462 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0695 ms
+2026-09-15 16:27:02.471 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.1421 ms
+2026-09-15 16:27:02.475 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.6145 ms
+2026-09-15 16:28:02.466 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0647 ms
+2026-09-15 16:28:02.466 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0185 ms
+2026-09-15 16:28:02.492 +03:00 [INF] HTTP GET /api/couriers responded 200 in 4.8174 ms
+2026-09-15 16:28:02.497 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.7720 ms
+2026-09-15 16:29:02.470 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0583 ms
+2026-09-15 16:29:02.473 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.1092 ms
+2026-09-15 16:29:02.500 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.2718 ms
+2026-09-15 16:29:02.500 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.3638 ms
+2026-09-15 16:30:02.470 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0655 ms
+2026-09-15 16:30:02.482 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0620 ms
+2026-09-15 16:30:02.498 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.4527 ms
+2026-09-15 16:30:02.499 +03:00 [INF] HTTP GET /api/orders responded 200 in 5.8422 ms
+2026-09-15 16:31:02.469 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0765 ms
+2026-09-15 16:31:02.469 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0322 ms
+2026-09-15 16:31:02.506 +03:00 [INF] HTTP GET /api/orders responded 200 in 6.5723 ms
+2026-09-15 16:31:02.507 +03:00 [INF] HTTP GET /api/couriers responded 200 in 5.1030 ms
+2026-09-15 16:32:02.464 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0698 ms
+2026-09-15 16:32:02.478 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.0670 ms
+2026-09-15 16:32:02.492 +03:00 [INF] HTTP GET /api/couriers responded 200 in 7.5286 ms
+2026-09-15 16:32:02.493 +03:00 [INF] HTTP GET /api/orders responded 200 in 5.4588 ms
+2026-09-15 16:33:02.469 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0737 ms
+2026-09-15 16:33:02.497 +03:00 [INF] HTTP OPTIONS /api/orders responded 204 in 0.2548 ms
+2026-09-15 16:33:02.505 +03:00 [INF] HTTP GET /api/couriers responded 200 in 8.5668 ms
+2026-09-15 16:33:02.514 +03:00 [INF] HTTP GET /api/orders responded 200 in 7.9908 ms
+2026-09-15 16:33:51.787 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.1310 ms
+2026-09-15 16:33:51.788 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.1851 ms
+2026-09-15 16:33:51.788 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0528 ms
+2026-09-15 16:33:51.807 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 19.1401 ms
+2026-09-15 16:33:51.840 +03:00 [INF] HTTP GET /api/couriers responded 200 in 26.4177 ms
+2026-09-15 16:33:51.892 +03:00 [INF] HTTP GET /api/couriers responded 200 in 23.9434 ms
+2026-09-15 16:33:51.934 +03:00 [INF] HTTP GET /api/merchants responded 200 in 120.5947 ms
+2026-09-15 16:33:51.960 +03:00 [INF] HTTP GET /api/merchants responded 200 in 20.4027 ms
+2026-09-15 16:33:52.946 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.7400 ms
+2026-09-15 16:33:52.958 +03:00 [INF] HTTP GET /api/merchants responded 200 in 9.8243 ms
+2026-09-15 16:35:17.848 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0826 ms
+2026-09-15 16:35:17.849 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0272 ms
+2026-09-15 16:35:17.849 +03:00 [INF] HTTP OPTIONS /api/couriers responded 204 in 0.0963 ms
+2026-09-15 16:35:17.851 +03:00 [INF] HTTP OPTIONS /api/merchants responded 204 in 0.0735 ms
+2026-09-15 16:35:17.866 +03:00 [INF] HTTP GET /api/couriers responded 200 in 6.2826 ms
+2026-09-15 16:35:17.867 +03:00 [INF] HTTP GET /api/merchants responded 200 in 6.5618 ms
+2026-09-15 16:35:17.881 +03:00 [INF] HTTP GET /api/couriers responded 200 in 12.9615 ms
+2026-09-15 16:35:17.883 +03:00 [INF] HTTP GET /api/merchants responded 200 in 10.4878 ms
+2026-09-15 16:35:32.679 +03:00 [INF] HTTP GET /hubs/location responded 101 in 1182746.5256 ms

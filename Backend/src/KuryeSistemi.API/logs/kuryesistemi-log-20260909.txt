@@ -1,0 +1,763 @@
+2026-09-09 10:36:26.690 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 10:36:26.830 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 54
+2026-09-09 10:36:26.848 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-09 10:36:53.115 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 10:36:53.228 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in c:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 54
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeDirectByRefWithFewArgs(Object obj, Span`1 copyOfArgs, BindingFlags invokeAttr)
+2026-09-09 10:36:53.246 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-09 11:27:21.380 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 11:27:22.055 +03:00 [FTL] --> [APPLICATION CRASH] Uygulama başlatılırken kritik hata oluştu!
+Microsoft.Extensions.Hosting.HostAbortedException: The host was aborted.
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.ThrowHostAborted()
+   at Microsoft.Extensions.Hosting.HostFactoryResolver.HostingListener.OnNext(KeyValuePair`2 value)
+   at System.Diagnostics.DiagnosticListener.Write(String name, Object value)
+   at Microsoft.Extensions.Hosting.HostBuilder.ResolveHost(IServiceProvider serviceProvider, DiagnosticListener diagnosticListener)
+   at Microsoft.Extensions.Hosting.HostApplicationBuilder.Build()
+   at Microsoft.AspNetCore.Builder.WebApplicationBuilder.Build()
+   at Program.<Main>$(String[] args) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Program.cs:line 54
+2026-09-09 11:27:22.079 +03:00 [INF] --> [APPLICATION STOPPING] KuryeSistemi API kapatılıyor...
+2026-09-09 11:41:36.048 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 11:41:38.095 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-09 11:41:38.177 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-09 11:41:38.484 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-09 11:41:38.486 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-09 11:41:38.548 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-09 11:41:38.550 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-09 11:41:38.551 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-09 11:41:38.552 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-09 11:41:38.553 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-09 11:41:38.555 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-09 11:41:38.585 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-09 11:41:38.587 +03:00 [INF] Hosting environment: Development
+2026-09-09 11:41:38.588 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-09 11:41:38.838 +03:00 [INF] Server zahir:25876:7e4a2be7 successfully announced in 250,7441 ms
+2026-09-09 11:41:38.845 +03:00 [INF] Server zahir:25876:7e4a2be7 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-09 11:41:38.864 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-09 11:41:38.983 +03:00 [INF] Server zahir:25876:7e4a2be7 all the dispatchers started
+2026-09-09 11:41:41.119 +03:00 [INF] HTTP GET /swagger responded 301 in 7.2000 ms
+2026-09-09 11:41:41.262 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 96.0164 ms
+2026-09-09 11:41:41.543 +03:00 [INF] HTTP GET /swagger/swagger-ui.css responded 200 in 225.4236 ms
+2026-09-09 11:41:41.543 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 178.1243 ms
+2026-09-09 11:41:41.665 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 317.9220 ms
+2026-09-09 11:41:42.021 +03:00 [INF] HTTP GET /swagger/favicon-32x32.png responded 200 in 0.3482 ms
+2026-09-09 11:41:42.058 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 63.2491 ms
+2026-09-09 11:41:42.129 +03:00 [INF] HTTP GET /swagger/swagger-ui-standalone-preset.js responded 200 in 32.9055 ms
+2026-09-09 11:41:42.209 +03:00 [INF] HTTP GET /swagger/swagger-ui-bundle.js responded 200 in 112.7609 ms
+2026-09-09 13:20:03.751 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 13:20:05.248 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-09 13:20:05.358 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-09 13:20:05.763 +03:00 [INF] Now listening on: https://localhost:7223
+2026-09-09 13:20:05.764 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-09 13:20:05.864 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-09 13:20:05.866 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-09 13:20:05.867 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-09 13:20:05.868 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-09 13:20:05.869 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-09 13:20:05.871 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-09 13:20:05.913 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-09 13:20:05.914 +03:00 [INF] Hosting environment: Development
+2026-09-09 13:20:05.916 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-09 13:20:06.533 +03:00 [INF] Server zahir:28728:06cd68ea successfully announced in 616,6899 ms
+2026-09-09 13:20:06.590 +03:00 [INF] Server zahir:28728:06cd68ea is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-09 13:20:06.660 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-09 13:20:07.375 +03:00 [INF] Removed 1 outdated record(s) from 'aggregatedcounter' table.
+2026-09-09 13:20:07.765 +03:00 [INF] Server zahir:28728:06cd68ea all the dispatchers started
+2026-09-09 13:20:09.227 +03:00 [INF] Removed 1 outdated record(s) from 'job' table.
+2026-09-09 13:20:09.240 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 275.5336 ms
+2026-09-09 13:20:10.751 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 153.5309 ms
+2026-09-09 13:22:54.447 +03:00 [INF] HTTP GET /swagger/index.html responded 200 in 40.1471 ms
+2026-09-09 13:22:55.617 +03:00 [INF] HTTP GET /swagger/v1/swagger.json responded 200 in 169.7818 ms
+2026-09-09 13:22:57.553 +03:00 [ERR] İşlenmeyen istisna: Unexpected end of request content. | Path: /api/auth/login | Method: POST
+Microsoft.AspNetCore.Server.Kestrel.Core.BadHttpRequestException: Unexpected end of request content.
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.Http1ContentLengthMessageBody.ReadAsyncInternal(CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.HttpRequestStream.ReadAsyncInternal(Memory`1 destination, CancellationToken cancellationToken)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at System.Text.Json.Serialization.ReadBufferState.ReadFromStreamAsync(Stream utf8Json, CancellationToken cancellationToken, Boolean fillBuffer)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at System.Text.Json.Serialization.Metadata.JsonTypeInfo`1.DeserializeAsObjectAsync(Stream utf8Json, CancellationToken cancellationToken)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.Formatters.SystemTextJsonInputFormatter.ReadRequestBodyAsync(InputFormatterContext context, Encoding encoding)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.Binders.BodyModelBinder.BindModelAsync(ModelBindingContext bindingContext)
+   at Microsoft.AspNetCore.Mvc.ModelBinding.ParameterBinder.BindModelAsync(ActionContext actionContext, IModelBinder modelBinder, IValueProvider valueProvider, ParameterDescriptor parameter, ModelMetadata metadata, Object value, Object container)
+   at Microsoft.AspNetCore.Mvc.Controllers.ControllerBinderDelegateProvider.<>c__DisplayClass0_0.<<CreateBinderDelegate>g__Bind|0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+2026-09-09 13:22:57.604 +03:00 [ERR] HTTP POST /api/auth/login responded 500 in 26783.2436 ms
+2026-09-09 13:23:27.455 +03:00 [ERR] Failed executing DbCommand (21ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Address", m."CreatedAt", m."CreatedBy", m."DefaultPackageFee", m."Email", m."IsActive", m."IsDeleted", m."Name", m."PasswordHash", m."PhoneNumber", m."UpdatedAt", m."UpdatedBy"
+FROM "Merchants" AS m
+WHERE NOT (m."IsDeleted") AND lower(m."Email") = @__normalizedEmail_0
+LIMIT 1
+2026-09-09 13:23:27.478 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'KuryeSistemi.Infrastructure.Persistence.AppDbContext'.
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at System.Runtime.CompilerServices.ConfiguredValueTaskAwaitable`1.ConfiguredValueTaskAwaiter.GetResult()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:23:27.883 +03:00 [ERR] İşlenmeyen istisna: 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59 | Path: /api/Auth/login | Method: POST
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:23:27.925 +03:00 [ERR] HTTP POST /api/Auth/login responded 500 in 953.4966 ms
+2026-09-09 13:25:05.389 +03:00 [ERR] Failed executing DbCommand (8ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Address", m."CreatedAt", m."CreatedBy", m."DefaultPackageFee", m."Email", m."IsActive", m."IsDeleted", m."Name", m."PasswordHash", m."PhoneNumber", m."UpdatedAt", m."UpdatedBy"
+FROM "Merchants" AS m
+WHERE NOT (m."IsDeleted") AND lower(m."Email") = @__normalizedEmail_0
+LIMIT 1
+2026-09-09 13:25:05.394 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'KuryeSistemi.Infrastructure.Persistence.AppDbContext'.
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at System.Runtime.ExceptionServices.ExceptionDispatchInfo.Throw()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:05.515 +03:00 [ERR] İşlenmeyen istisna: 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59 | Path: /api/auth/login | Method: POST
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.InvokeInnerFilterAsync()
+--- End of stack trace from previous location ---
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:05.540 +03:00 [ERR] HTTP POST /api/auth/login responded 500 in 184.3758 ms
+2026-09-09 13:25:25.400 +03:00 [ERR] Failed executing DbCommand (17ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Address", m."CreatedAt", m."CreatedBy", m."DefaultPackageFee", m."Email", m."IsActive", m."IsDeleted", m."Name", m."PasswordHash", m."PhoneNumber", m."UpdatedAt", m."UpdatedBy"
+FROM "Merchants" AS m
+WHERE NOT (m."IsDeleted") AND lower(m."Email") = @__normalizedEmail_0
+LIMIT 1
+2026-09-09 13:25:25.406 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'KuryeSistemi.Infrastructure.Persistence.AppDbContext'.
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:25.593 +03:00 [ERR] İşlenmeyen istisna: 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59 | Path: /api/auth/login | Method: POST
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:25.615 +03:00 [ERR] HTTP POST /api/auth/login responded 500 in 240.2561 ms
+2026-09-09 13:25:28.205 +03:00 [ERR] Failed executing DbCommand (4ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Address", m."CreatedAt", m."CreatedBy", m."DefaultPackageFee", m."Email", m."IsActive", m."IsDeleted", m."Name", m."PasswordHash", m."PhoneNumber", m."UpdatedAt", m."UpdatedBy"
+FROM "Merchants" AS m
+WHERE NOT (m."IsDeleted") AND lower(m."Email") = @__normalizedEmail_0
+LIMIT 1
+2026-09-09 13:25:28.210 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'KuryeSistemi.Infrastructure.Persistence.AppDbContext'.
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:28.394 +03:00 [ERR] İşlenmeyen istisna: 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59 | Path: /api/auth/login | Method: POST
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:28.416 +03:00 [ERR] HTTP POST /api/auth/login responded 500 in 217.4269 ms
+2026-09-09 13:25:29.960 +03:00 [ERR] Failed executing DbCommand (9ms) [Parameters=[@__normalizedEmail_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT m."Id", m."Address", m."CreatedAt", m."CreatedBy", m."DefaultPackageFee", m."Email", m."IsActive", m."IsDeleted", m."Name", m."PasswordHash", m."PhoneNumber", m."UpdatedAt", m."UpdatedBy"
+FROM "Merchants" AS m
+WHERE NOT (m."IsDeleted") AND lower(m."Email") = @__normalizedEmail_0
+LIMIT 1
+2026-09-09 13:25:29.967 +03:00 [ERR] An exception occurred while iterating over the results of a query for context type 'KuryeSistemi.Infrastructure.Persistence.AppDbContext'.
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:30.164 +03:00 [ERR] İşlenmeyen istisna: 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59 | Path: /api/auth/login | Method: POST
+Npgsql.PostgresException (0x80004005): 42703: column m.DefaultPackageFee does not exist
+
+POSITION: 59
+   at Npgsql.Internal.NpgsqlConnector.ReadMessageLong(Boolean async, DataRowLoadingMode dataRowLoadingMode, Boolean readingNotifications, Boolean isReadingPrependedMessage)
+   at System.Runtime.CompilerServices.PoolingAsyncValueTaskMethodBuilder`1.StateMachineBox`1.System.Threading.Tasks.Sources.IValueTaskSource<TResult>.GetResult(Int16 token)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlDataReader.NextResult(Boolean async, Boolean isConsuming, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteReader(Boolean async, CommandBehavior behavior, CancellationToken cancellationToken)
+   at Npgsql.NpgsqlCommand.ExecuteDbDataReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.RelationalCommand.ExecuteReaderAsync(RelationalCommandParameterObject parameterObject, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.InitializeReaderAsync(AsyncEnumerator enumerator, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.<>c__DisplayClass30_0`2.<<ExecuteAsync>b__0>d.MoveNext()
+--- End of stack trace from previous location ---
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteImplementationAsync[TState,TResult](Func`4 operation, Func`4 verifySucceeded, TState state, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Storage.ExecutionStrategy.ExecuteAsync[TState,TResult](TState state, Func`4 operation, Func`4 verifySucceeded, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.Internal.SingleQueryingEnumerable`1.AsyncEnumerator.MoveNextAsync()
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at Microsoft.EntityFrameworkCore.Query.ShapedQueryCompilingExpressionVisitor.SingleOrDefaultAsync[TSource](IAsyncEnumerable`1 asyncEnumerable, CancellationToken cancellationToken)
+   at KuryeSistemi.Infrastructure.Repositories.MerchantRepository.GetByEmailAsync(String email) in C:\kuryesistemi\Backend\src\KuryeSistemi.Infrastructure\Repositories\MerchantRepository.cs:line 19
+   at KuryeSistemi.Application.Services.Concrete.AuthService.LoginAsync(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.Application\Services\Concrete\AuthService.cs:line 47
+   at KuryeSistemi.API.Controllers.Auth.AuthController.Login(LoginRequestDto request, CancellationToken cancellationToken) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Controllers\Auth\AuthController.cs:line 31
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ActionMethodExecutor.TaskOfIActionResultExecutor.Execute(ActionContext actionContext, IActionResultTypeMapper mapper, ObjectMethodExecutor executor, Object controller, Object[] arguments)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeActionMethodAsync>g__Awaited|12_0(ControllerActionInvoker invoker, ValueTask`1 actionResultValueTask)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeNextActionFilterAsync>g__Awaited|10_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Rethrow(ActionExecutedContextSealed context)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.Next(State& next, Scope& scope, Object& state, Boolean& isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ControllerActionInvoker.<InvokeInnerFilterAsync>g__Awaited|13_0(ControllerActionInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeFilterPipelineAsync>g__Awaited|20_0(ResourceInvoker invoker, Task lastTask, State next, Scope scope, Object state, Boolean isCompleted)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Mvc.Infrastructure.ResourceInvoker.<InvokeAsync>g__Awaited|17_0(ResourceInvoker invoker, Task task, IDisposable scope)
+   at Microsoft.AspNetCore.Authorization.AuthorizationMiddleware.Invoke(HttpContext context)
+   at Microsoft.AspNetCore.Authentication.AuthenticationMiddleware.Invoke(HttpContext context)
+   at Swashbuckle.AspNetCore.SwaggerUI.SwaggerUIMiddleware.Invoke(HttpContext httpContext)
+   at Swashbuckle.AspNetCore.Swagger.SwaggerMiddleware.Invoke(HttpContext httpContext, ISwaggerProvider swaggerProvider)
+   at KuryeSistemi.API.Middlewares.GlobalExceptionMiddleware.InvokeAsync(HttpContext context) in C:\kuryesistemi\Backend\src\KuryeSistemi.API\Middlewares\GlobalExceptionMiddleware.cs:line 25
+  Exception data:
+    Severity: ERROR
+    SqlState: 42703
+    MessageText: column m.DefaultPackageFee does not exist
+    Position: 59
+    File: parse_relation.c
+    Line: 3716
+    Routine: errorMissingColumn
+2026-09-09 13:25:30.193 +03:00 [ERR] HTTP POST /api/auth/login responded 500 in 246.3307 ms
+2026-09-09 13:28:54.367 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 13:28:54.802 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-09 13:28:54.878 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-09 13:28:54.969 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-09 13:28:54.975 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-09 13:28:54.976 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-09 13:28:54.976 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-09 13:28:54.976 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-09 13:28:54.976 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-09 13:28:54.976 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-09 13:28:54.988 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-09 13:28:54.988 +03:00 [INF] Hosting environment: Development
+2026-09-09 13:28:54.988 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-09 13:28:55.091 +03:00 [INF] Server zahir:26428:d025489a successfully announced in 98,621 ms
+2026-09-09 13:28:55.093 +03:00 [INF] Server zahir:26428:d025489a is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-09 13:28:55.103 +03:00 [INF] Server zahir:26428:d025489a all the dispatchers started
+2026-09-09 13:29:12.910 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1112.8500 ms
+2026-09-09 13:33:41.113 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 51.6995 ms
+2026-09-09 13:33:42.546 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 49.0806 ms
+2026-09-09 13:33:42.658 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/earnings/today responded 200 in 114.5201 ms
+2026-09-09 13:33:42.677 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 138.4076 ms
+2026-09-09 13:33:42.752 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/profile responded 200 in 202.3337 ms
+2026-09-09 13:33:55.102 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-09 13:34:01.677 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 5.0296 ms
+2026-09-09 13:34:08.648 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 9.0868 ms
+2026-09-09 13:34:19.220 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 3.9983 ms
+2026-09-09 13:34:20.318 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 4.1096 ms
+2026-09-09 13:35:14.233 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 3.0842 ms
+2026-09-09 13:37:10.984 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/profile responded 200 in 10.3176 ms
+2026-09-09 13:37:12.310 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/profile responded 200 in 9.6316 ms
+2026-09-09 13:39:01.461 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 6.0679 ms
+2026-09-09 13:41:03.254 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 5.1381 ms
+2026-09-09 13:42:01.079 +03:00 [INF] HTTP GET /hubs/location responded 101 in 498473.6510 ms
+2026-09-09 13:42:59.281 +03:00 [INF] --> [APPLICATION STARTING] KuryeSistemi API başlatılıyor...
+2026-09-09 13:42:59.668 +03:00 [INF] Start installing Hangfire SQL objects...
+2026-09-09 13:42:59.748 +03:00 [INF] Hangfire SQL objects installed.
+2026-09-09 13:42:59.840 +03:00 [INF] Now listening on: http://localhost:5000
+2026-09-09 13:42:59.847 +03:00 [INF] Starting Hangfire Server using job storage: 'PostgreSQL Server: Host: localhost, DB: KuryeDb, Schema: hangfire'
+2026-09-09 13:42:59.847 +03:00 [INF] Using the following options for PostgreSQL job storage:
+2026-09-09 13:42:59.848 +03:00 [INF]     Queue poll interval: 00:00:15.
+2026-09-09 13:42:59.848 +03:00 [INF]     Invisibility timeout: 00:30:00.
+2026-09-09 13:42:59.848 +03:00 [INF]     Use sliding invisibility timeout: False.
+2026-09-09 13:42:59.848 +03:00 [INF] Using the following options for Hangfire Server:
+    Worker count: 20
+    Listening queues: 'default'
+    Shutdown timeout: 00:00:15
+    Schedule polling interval: 00:00:15
+2026-09-09 13:42:59.867 +03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-09-09 13:42:59.868 +03:00 [INF] Hosting environment: Development
+2026-09-09 13:42:59.868 +03:00 [INF] Content root path: C:\kuryesistemi\Backend\src\KuryeSistemi.API
+2026-09-09 13:42:59.999 +03:00 [INF] Server zahir:27856:e0d185f1 successfully announced in 126,8862 ms
+2026-09-09 13:43:00.007 +03:00 [INF] Server zahir:27856:e0d185f1 is starting the registered dispatchers: ServerWatchdog, ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler...
+2026-09-09 13:43:00.047 +03:00 [INF] Server zahir:27856:e0d185f1 all the dispatchers started
+2026-09-09 13:48:00.017 +03:00 [INF] 1 servers were removed due to timeout
+2026-09-09 13:48:29.641 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/earnings/history responded 401 in 58.9374 ms
+2026-09-09 13:48:37.054 +03:00 [INF] HTTP POST /api/Auth/login responded 200 in 1292.9381 ms
+2026-09-09 13:48:37.258 +03:00 [INF] HTTP GET /api/couriers/me/earnings/history responded 200 in 170.9116 ms
+2026-09-09 14:07:30.079 +03:00 [INF] HTTP OPTIONS /api/Auth/login responded 204 in 3.2822 ms
+2026-09-09 14:07:30.128 +03:00 [INF] HTTP POST /api/Auth/login responded 401 in 45.5221 ms
+2026-09-09 14:18:13.456 +03:00 [INF] HTTP POST /api/auth/login responded 200 in 18.1775 ms
+2026-09-09 14:18:14.763 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 18.8888 ms
+2026-09-09 14:18:14.975 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/earnings/today responded 200 in 106.5594 ms
+2026-09-09 14:18:15.145 +03:00 [INF] HTTP GET /api/orders/active/e16dc80c-8950-4707-ab66-0cfe159eaf28 responded 200 in 310.2720 ms
+2026-09-09 14:18:15.270 +03:00 [INF] HTTP GET /api/couriers/90386627-9816-4d9d-8def-eaee73e39b15/profile responded 200 in 344.6364 ms
+2026-09-09 14:26:53.522 +03:00 [INF] HTTP GET /hubs/location responded 101 in 518651.2606 ms
+2026-09-09 14:27:43.169 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 1.1755 ms
+2026-09-09 14:27:43.674 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.5643 ms
+2026-09-09 14:27:52.895 +03:00 [INF] HTTP POST /hubs/location/negotiate responded 200 in 0.4032 ms
+2026-09-09 14:27:56.500 +03:00 [INF] HTTP GET /hubs/location responded 101 in 12801.3334 ms
+2026-09-09 14:30:44.293 +03:00 [INF] HTTP POST /api/auth/login responded 400 in 66.1653 ms
+2026-09-09 14:31:00.165 +03:00 [INF] HTTP POST /api/auth/login responded 400 in 2.1927 ms
+2026-09-09 14:31:24.597 +03:00 [INF] HTTP POST /api/auth/login responded 401 in 12.1808 ms
