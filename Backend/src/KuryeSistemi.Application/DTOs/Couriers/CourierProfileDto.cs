@@ -22,5 +22,6 @@ public sealed record CourierProfileDto(
     decimal TotalEarningsToday,
     int TotalDeliveriesAllTime,
     bool IsOnline = false,
-    Guid CourierCompanyId = default
+    Guid CourierCompanyId = default,
+    bool IsOnBreak = false
 );

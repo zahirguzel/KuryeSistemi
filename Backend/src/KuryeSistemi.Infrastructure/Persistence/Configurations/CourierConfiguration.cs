@@ -63,6 +63,10 @@ internal sealed class CourierConfiguration : IEntityTypeConfiguration<Courier>
                .IsRequired()
                .HasDefaultValue(true);
 
+        builder.Property(c => c.IsOnBreak)
+               .IsRequired()
+               .HasDefaultValue(false);
+
         builder.Property(c => c.IsOnline)
                .IsRequired()
                .HasDefaultValue(false);

@@ -174,14 +174,7 @@ public class CourierService : ICourierService
         var deliveredCount = orders.Count;
         var avgPerPackage = deliveredCount > 0 ? Math.Round(totalEarnings / deliveredCount, 2) : 0.00m;
 
-        var deliveries = orders.Select(o => new DeliveryHistoryItemDto(
-            o.Id,
-            $"#KS-{o.Id.ToString()[..4].ToUpper()}",
-            o.RecipientName,
-            string.IsNullOrWhiteSpace(o.DeliveryDistrict) ? o.DeliveryAddressLine : $"{o.DeliveryDistrict}, {o.DeliveryCity}",
-            o.DeliveredAt ?? o.CreatedAt,
-            o.CourierEarning
-        )).ToList().AsReadOnly();
+        var deliveries = orders.Select(MapHistoryItem).ToList().AsReadOnly();
 
         var earningsDto = new CourierEarningsDto(
             courier.Id,
@@ -226,14 +219,7 @@ public class CourierService : ICourierService
         var deliveredCount = orders.Count;
         var avgPerPackage = deliveredCount > 0 ? Math.Round(totalEarnings / deliveredCount, 2) : 0.00m;
 
-        var deliveries = orders.Select(o => new DeliveryHistoryItemDto(
-            o.Id,
-            $"#KS-{o.Id.ToString()[..4].ToUpper()}",
-            o.RecipientName,
-            string.IsNullOrWhiteSpace(o.DeliveryDistrict) ? o.DeliveryAddressLine : $"{o.DeliveryDistrict}, {o.DeliveryCity}",
-            o.DeliveredAt ?? o.CreatedAt,
-            o.CourierEarning
-        )).ToList().AsReadOnly();
+        var deliveries = orders.Select(MapHistoryItem).ToList().AsReadOnly();
 
         var earningsDto = new CourierEarningsDto(
             courier.Id,
@@ -292,7 +278,8 @@ public class CourierService : ICourierService
             totalEarningsToday,
             totalDeliveriesAllTime,
             courier.IsOnline,
-            courier.CourierCompanyId
+            courier.CourierCompanyId,
+            courier.IsOnBreak
         );
 
         return ServiceResult<CourierProfileDto>.Success(profileDto, "Kurye profil ve kasa bilgileri getirildi.");
@@ -321,6 +308,7 @@ public class CourierService : ICourierService
         // Mesaiye başlayınca müsait, mesai bitince kapalı. Zaten aktif işi olan kurye (uygulama yeniden
         // açıldığında mesai senkronu gibi) tekrar "müsait" yapılıp tur kapasitesi bozulmaz.
         courier.IsAvailable = isOnline && (activeOrdersCount == 0 || courier.IsAvailable);
+        courier.IsOnBreak = false; // Mesai başlarken/biterken mola durumu sıfırlanır
         if (isOnline)
         {
             courier.LastLocationUpdate = DateTime.UtcNow;
@@ -341,9 +329,57 @@ public class CourierService : ICourierService
             courier.IsAvailable,
             message,
             courier.MerchantId,
-            cancellationToken);
+            cancellationToken,
+            isOnBreak: false);
 
         return ServiceResult<bool>.Success(true, message);
+    }
+
+    public async Task<ServiceResult<bool>> SetBreakAsync(
+        Guid courierId,
+        bool onBreak,
+        CancellationToken cancellationToken = default)
+    {
+        var courier = await _courierRepository.GetByIdAsync(courierId);
+        if (courier is null)
+            return ServiceResult<bool>.NotFound($"Kurye bulunamadı: {courierId}");
+
+        if (!courier.IsOnline)
+            return ServiceResult<bool>.Conflict("Mola için önce mesaiye başlamalısınız.");
+
+        if (courier.IsOnBreak == onBreak)
+            return ServiceResult<bool>.Success(onBreak, onBreak ? "Zaten moladasınız." : "Zaten moladan çıkmış durumdasınız.");
+
+        var activeOrdersCount = await _orderRepository.CountActiveOrdersByCourierAsync(courierId);
+        if (onBreak && activeOrdersCount > 0)
+        {
+            return ServiceResult<bool>.Conflict(
+                $"Üzerinizde {activeOrdersCount} aktif sipariş varken mola verilemez. Önce teslimatlarınızı tamamlayın.");
+        }
+
+        courier.IsOnBreak = onBreak;
+        // Molada yeni sipariş alınmaz; moladan dönünce (aktif siparişi yoksa) tekrar müsait olur
+        courier.IsAvailable = !onBreak && activeOrdersCount == 0;
+        courier.UpdatedAt = DateTime.UtcNow;
+        courier.UpdatedBy = onBreak ? "courier:break_start" : "courier:break_end";
+
+        _courierRepository.Update(courier);
+        await _courierRepository.SaveChangesAsync();
+
+        var message = onBreak
+            ? $"☕ {courier.FirstName} {courier.LastName} molaya çıktı."
+            : $"🛵 {courier.FirstName} {courier.LastName} moladan döndü ve müsait.";
+
+        await _notificationService.SendCourierStatusChangedAsync(
+            courierId,
+            courier.IsOnline,
+            courier.IsAvailable,
+            message,
+            courier.MerchantId,
+            cancellationToken,
+            isOnBreak: onBreak);
+
+        return ServiceResult<bool>.Success(onBreak, message);
     }
 
     /// <summary>
@@ -457,6 +493,41 @@ public class CourierService : ICourierService
         return ServiceResult<bool>.Success(true, "Kurye başarıyla silindi (arşive alındı).");
     }
 
+    private static DeliveryHistoryItemDto MapHistoryItem(Domain.Entities.Order o)
+    {
+        var fullAddress = string.Join(", ", new[] { o.DeliveryAddressLine, o.DeliveryNeighborhood, o.DeliveryDistrict, o.DeliveryCity }
+            .Where(p => !string.IsNullOrWhiteSpace(p)));
+
+        return new DeliveryHistoryItemDto(
+            o.Id,
+            $"#KS-{o.Id.ToString()[..4].ToUpper()}",
+            o.RecipientName,
+            string.IsNullOrWhiteSpace(o.DeliveryDistrict) ? o.DeliveryAddressLine : $"{o.DeliveryDistrict}, {o.DeliveryCity}",
+            o.DeliveredAt ?? o.CreatedAt,
+            o.CourierEarning,
+            o.OrderCode,
+            o.Merchant?.Name,
+            o.PickupAddressLine,
+            fullAddress,
+            MaskPhone(o.RecipientPhone),
+            o.PaymentMethod.ToString(),
+            o.TotalOrderAmount,
+            o.Notes,
+            o.CreatedAt,
+            o.AssignedAt,
+            o.PickedUpAt,
+            o.EstimatedDistanceKm);
+    }
+
+    /// <summary>Teslim sonrası müşteri gizliliği: telefonun yalnızca ilk 4 ve son 2 hanesi görünür.</summary>
+    internal static string? MaskPhone(string? phone)
+    {
+        if (string.IsNullOrWhiteSpace(phone)) return null;
+        var digits = new string(phone.Where(char.IsDigit).ToArray());
+        if (digits.Length < 7) return new string('*', digits.Length);
+        return $"{digits[..4]} *** ** {digits[^2..]}";
+    }
+
     private static CourierDto MapToDto(Courier courier)
     {
         return new CourierDto(
@@ -477,6 +548,7 @@ public class CourierService : ICourierService
             courier.CurrentLatitude,
             courier.CurrentLongitude,
             courier.LastLocationUpdate,
-            courier.CourierCompanyId);
+            courier.CourierCompanyId,
+            courier.IsOnBreak);
     }
 }

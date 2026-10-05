@@ -23,5 +23,6 @@ public sealed record CourierDto(
     double?     CurrentLatitude = null,
     double?     CurrentLongitude = null,
     DateTime?   LastLocationUpdate = null,
-    Guid        CourierCompanyId = default
+    Guid        CourierCompanyId = default,
+    bool        IsOnBreak = false
 );

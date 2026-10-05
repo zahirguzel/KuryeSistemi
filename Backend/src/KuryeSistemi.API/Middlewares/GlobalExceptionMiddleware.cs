@@ -46,7 +46,11 @@ public class GlobalExceptionMiddleware
         switch (exception)
         {
             case UnauthorizedAccessException:
-                statusCode = (int)HttpStatusCode.Unauthorized;
+                // Kimliği doğrulanmış kullanıcının yetkisiz işlemi 403'tür. 401 yalnızca "oturum geçersiz" anlamına
+                // gelmelidir: istemciler 401'de otomatik çıkış yapar (kurye tokenıyla işletme ucuna gitmek oturumu düşürmemeli).
+                statusCode = context.User?.Identity?.IsAuthenticated == true
+                    ? (int)HttpStatusCode.Forbidden
+                    : (int)HttpStatusCode.Unauthorized;
                 message = exception.Message ?? "Bu işlem için yetkiniz bulunmuyor.";
                 break;
 

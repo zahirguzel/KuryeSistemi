@@ -167,13 +167,92 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
         }
     }
 
+    public async Task SendCourierSosAsync(
+        Guid courierId,
+        string courierName,
+        string courierPhone,
+        double? latitude,
+        double? longitude,
+        string? note,
+        Guid? merchantId = null,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var payload = new Dictionary<string, object?>
+            {
+                ["courierId"] = courierId.ToString(),
+                ["courierName"] = courierName,
+                ["phoneNumber"] = courierPhone,
+                ["latitude"] = latitude,
+                ["longitude"] = longitude,
+                ["note"] = note,
+                ["timestamp"] = DateTime.UtcNow.ToString("o"),
+            };
+
+            var companyId = await ResolveCompanyIdAsync(merchantId) ?? await ResolveCompanyIdForCourierAsync(courierId);
+            var targetGroups = new HashSet<string>();
+            if (merchantId.HasValue) targetGroups.Add($"merchant_{merchantId.Value}");
+            foreach (var g in BuildFirmGroups(companyId)) targetGroups.Add(g);
+
+            await _hubContext.Clients.Groups(targetGroups.ToList()).SendAsync(
+                "ReceiveCourierSos", payload, cancellationToken);
+
+            _logger.LogWarning(
+                "--> [SIGNALR SOS] Kurye acil çağrısı: {CourierId} ({Name}) Konum: {Lat},{Lng}",
+                courierId, courierName, latitude, longitude);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "--> [SIGNALR ERROR] SOS bildirimi gönderilemedi: {CourierId}", courierId);
+        }
+    }
+
+    public async Task SendMerchantStatusChangedAsync(
+        Guid merchantId,
+        bool isOpen,
+        string merchantName,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var payload = new Dictionary<string, object>
+            {
+                ["merchantId"] = merchantId.ToString(),
+                ["MerchantId"] = merchantId.ToString(),
+                ["isOpen"] = isOpen,
+                ["IsOpen"] = isOpen,
+                ["name"] = merchantName,
+                ["Name"] = merchantName,
+                ["timestamp"] = DateTime.UtcNow.ToString("o"),
+            };
+
+            var companyId = await ResolveCompanyIdAsync(merchantId);
+            var targetGroups = new HashSet<string> { $"merchant_{merchantId}" };
+            foreach (var g in BuildFirmGroups(companyId)) targetGroups.Add(g);
+
+            await _hubContext.Clients.Groups(targetGroups.ToList()).SendAsync(
+                "ReceiveMerchantStatusUpdate",
+                payload,
+                cancellationToken);
+
+            _logger.LogInformation(
+                "--> [SIGNALR BROADCAST] İşletme durumu güncellendi: {MerchantId} -> Açık:{IsOpen}", merchantId, isOpen);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "--> [SIGNALR ERROR] İşletme durum bildirimi gönderilirken hata oluştu: {MerchantId}", merchantId);
+        }
+    }
+
     public async Task SendCourierStatusChangedAsync(
         Guid courierId,
         bool isOnline,
         bool isAvailable,
         string message,
         Guid? merchantId = null,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken = default,
+        bool? isOnBreak = null)
     {
         try
         {
@@ -191,6 +270,13 @@ public sealed class SignalRHubNotificationService : IHubNotificationService
                 ["timestamp"] = now.ToString("o"),
                 ["Timestamp"] = now.ToString("o")
             };
+
+            // Mola bilgisi yalnızca biliniyorsa gönderilir; diğer durum yayınları istemcideki mola durumunu ezmez
+            if (isOnBreak.HasValue)
+            {
+                payload["isOnBreak"] = isOnBreak.Value;
+                payload["IsOnBreak"] = isOnBreak.Value;
+            }
 
             var companyId = await ResolveCompanyIdAsync(merchantId) ?? await ResolveCompanyIdForCourierAsync(courierId);
             var targetGroups = new List<string>();

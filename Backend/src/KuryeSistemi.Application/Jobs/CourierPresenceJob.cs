@@ -61,6 +61,7 @@ public sealed class CourierPresenceJob
 
             courier.IsOnline = false;
             courier.IsAvailable = false;
+            courier.IsOnBreak = false;
             courier.UpdatedAt = DateTime.UtcNow;
             courier.UpdatedBy = "system:presence_timeout";
 

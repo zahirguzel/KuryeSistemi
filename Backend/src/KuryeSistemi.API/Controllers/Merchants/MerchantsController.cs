@@ -2,6 +2,7 @@
 
 using KuryeSistemi.Application.DTOs.Merchants;
 using KuryeSistemi.Application.Features.Merchants.DTOs;
+using KuryeSistemi.Application.Interfaces;
 using KuryeSistemi.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,12 @@ namespace KuryeSistemi.API.Controllers.Merchants;
 public sealed class MerchantsController : BaseController
 {
     private readonly IMerchantService _merchantService;
+    private readonly IHubNotificationService _notificationService;
 
-    public MerchantsController(IMerchantService merchantService)
+    public MerchantsController(IMerchantService merchantService, IHubNotificationService notificationService)
     {
         _merchantService = merchantService;
+        _notificationService = notificationService;
     }
 
     /// <summary>
@@ -140,6 +143,14 @@ public sealed class MerchantsController : BaseController
         }
 
         var result = await _merchantService.UpdateSettingsAsync(merchantId, request, cancellationToken);
+
+        // Açık/kapalı değişimi firma panelinde ve restoran oturumlarında anında görünsün
+        if (result.IsSuccess && result.Data is not null && request.IsOpen.HasValue)
+        {
+            await _notificationService.SendMerchantStatusChangedAsync(
+                merchantId, result.Data.IsOpen, result.Data.Name, cancellationToken);
+        }
+
         return CreateActionResult(result);
     }
 

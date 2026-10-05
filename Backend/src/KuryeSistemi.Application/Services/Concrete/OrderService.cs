@@ -155,6 +155,11 @@ public class OrderService : IOrderService
             return ServiceResult<OrderDto>.NotFound($"İşletme bulunamadı: {request.MerchantId}");
         }
 
+        if (!merchant.IsOpen)
+        {
+            return ServiceResult<OrderDto>.Fail("İşletme şu an kapalı; yeni sipariş oluşturulamaz.", 409);
+        }
+
         // Hızlı Sipariş Formu (POS): Alım adresi gönderilmemişse işletmenin kayıtlı restoran adresi ve koordinatları kullanılır
         var pickupAddressLine = string.IsNullOrWhiteSpace(request.PickupAddressLine)
             ? merchant.Address
@@ -622,15 +627,15 @@ public class OrderService : IOrderService
         var companyId = merchant.CourierCompanyId;
         var candidateCouriers = companyId.HasValue
             ? await _courierRepository.GetAllAsync(c =>
-                c.IsOnline && c.CourierCompanyId == companyId.Value &&
+                c.IsOnline && !c.IsOnBreak && c.CourierCompanyId == companyId.Value &&
                 (c.MerchantId == null || c.MerchantId == merchant.Id))
             : await _courierRepository.GetAllAsync(c =>
-                c.IsOnline && (c.MerchantId == order.MerchantId || c.MerchantId == merchant.Id));
+                c.IsOnline && !c.IsOnBreak && (c.MerchantId == order.MerchantId || c.MerchantId == merchant.Id));
 
         // Yalnızca platform admini firmasız bir restoran için tüm kuryelerden arama yapabilir
         if (candidateCouriers.Count == 0 && merchant.Role == "Admin")
         {
-            candidateCouriers = await _courierRepository.GetAllAsync(c => c.IsOnline);
+            candidateCouriers = await _courierRepository.GetAllAsync(c => c.IsOnline && !c.IsOnBreak);
         }
 
         if (candidateCouriers.Count == 0)

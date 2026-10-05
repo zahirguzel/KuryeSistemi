@@ -28,6 +28,29 @@ public interface IHubNotificationService
         bool isAvailable,
         string message,
         Guid? merchantId = null,
+        CancellationToken cancellationToken = default,
+        bool? isOnBreak = null);
+
+    /// <summary>
+    /// İşletme açık/kapalı durumu değiştiğinde işletmeye, bağlı olduğu firmaya ve SuperAdmin'e anlık bildirim yayınlar.
+    /// </summary>
+    Task SendMerchantStatusChangedAsync(
+        Guid merchantId,
+        bool isOpen,
+        string merchantName,
+        CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Kurye acil durum (SOS) çağrısını firma paneline, SuperAdmin'e ve (varsa) kuryenin işletmesine yayınlar.
+    /// </summary>
+    Task SendCourierSosAsync(
+        Guid courierId,
+        string courierName,
+        string courierPhone,
+        double? latitude,
+        double? longitude,
+        string? note,
+        Guid? merchantId = null,
         CancellationToken cancellationToken = default);
 
     /// <summary>

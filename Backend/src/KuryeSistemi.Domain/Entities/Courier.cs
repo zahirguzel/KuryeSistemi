@@ -79,6 +79,12 @@ public sealed class Courier : BaseEntity
     public bool IsOnline { get; set; } = false;
 
     /// <summary>
+    /// Kurye molada mı? Mesaide (IsOnline) ama yeni sipariş almıyor. Yalnızca aktif siparişi yokken
+    /// başlatılabilir; mesai bitince sıfırlanır. Akıllı atama moladaki kuryeyi aday saymaz.
+    /// </summary>
+    public bool IsOnBreak { get; set; } = false;
+
+    /// <summary>
     /// Kuryenin son bilinen anlık enlem (Latitude) GPS koordinatı.
     /// </summary>
     public double? CurrentLatitude { get; set; }

@@ -19,16 +19,22 @@ public static class CorsExtensions
         {
             options.AddPolicy(PolicyName, policy =>
             {
-                if (allowedOrigins != null && allowedOrigins.Length > 0)
+                if (environment?.IsDevelopment() == true)
                 {
-                    policy.WithOrigins(allowedOrigins)
+                    // Geliştirmede: listedeki origin'ler + herhangi bir localhost portu
+                    // (Flutter web / Vite her çalıştırmada farklı port seçebilir).
+                    var listed = allowedOrigins ?? Array.Empty<string>();
+                    policy.SetIsOriginAllowed(origin =>
+                              listed.Contains(origin, StringComparer.OrdinalIgnoreCase) ||
+                              (Uri.TryCreate(origin, UriKind.Absolute, out var uri) &&
+                               (uri.Host == "localhost" || uri.Host == "127.0.0.1")))
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials();
                 }
-                else if (environment?.IsDevelopment() == true)
+                else if (allowedOrigins != null && allowedOrigins.Length > 0)
                 {
-                    policy.SetIsOriginAllowed(_ => true)
+                    policy.WithOrigins(allowedOrigins)
                           .AllowAnyMethod()
                           .AllowAnyHeader()
                           .AllowCredentials();

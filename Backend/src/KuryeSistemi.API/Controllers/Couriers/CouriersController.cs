@@ -15,13 +15,16 @@ public sealed class CouriersController : BaseController
 {
     private readonly ICourierService _courierService;
     private readonly ICourierRepository _courierRepository;
+    private readonly ICourierSupportService _supportService;
 
     public CouriersController(
         ICourierService courierService,
-        ICourierRepository courierRepository)
+        ICourierRepository courierRepository,
+        ICourierSupportService supportService)
     {
         _courierService = courierService;
         _courierRepository = courierRepository;
+        _supportService = supportService;
     }
 
     /// <summary>
@@ -324,6 +327,57 @@ public sealed class CouriersController : BaseController
             return Forbid();
 
         var result = await _courierService.GetProfileAsync(courierId, cancellationToken);
+        return CreateActionResult(result);
+    }
+
+    /// <summary>
+    /// Oturum açmış kuryenin bağlı olduğu firmanın dispeçer iletişim bilgisini getirir.
+    /// </summary>
+    [HttpGet("me/support")]
+    [Authorize(Roles = "Courier")]
+    [ProducesResponseType(typeof(CourierSupportInfoDto), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetMySupportInfo(CancellationToken cancellationToken)
+    {
+        var courierId = GetCourierId();
+        if (!courierId.HasValue || courierId.Value == Guid.Empty)
+            return Unauthorized(new { message = "Kurye kimliği token içinde bulunamadı." });
+
+        return CreateActionResult(await _supportService.GetSupportInfoAsync(courierId.Value, cancellationToken));
+    }
+
+    /// <summary>
+    /// Acil durum (SOS) çağrısı: firma paneline anlık bildirim gönderir. Dakikada 1 çağrı ile sınırlıdır.
+    /// </summary>
+    [HttpPost("me/sos")]
+    [Authorize(Roles = "Courier")]
+    [ProducesResponseType(typeof(CourierSosResultDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status429TooManyRequests)]
+    public async Task<IActionResult> RaiseSos([FromBody] SosRequest request, CancellationToken cancellationToken)
+    {
+        var courierId = GetCourierId();
+        if (!courierId.HasValue || courierId.Value == Guid.Empty)
+            return Unauthorized(new { message = "Kurye kimliği token içinde bulunamadı." });
+
+        return CreateActionResult(await _supportService.RaiseSosAsync(courierId.Value, request, cancellationToken));
+    }
+
+    /// <summary>
+    /// Oturum açmış kuryeyi molaya alır / moladan çıkarır. Molada yeni sipariş atanmaz.
+    /// Yalnızca mesaideyken ve aktif siparişi yokken mola verilebilir.
+    /// </summary>
+    [HttpPost("me/break")]
+    [Authorize(Roles = "Courier")]
+    [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status409Conflict)]
+    public async Task<IActionResult> SetMyBreak(
+        [FromBody] SetBreakRequest request,
+        CancellationToken cancellationToken)
+    {
+        var courierId = GetCourierId();
+        if (!courierId.HasValue || courierId.Value == Guid.Empty)
+            return Unauthorized(new { message = "Kurye kimliği token içinde bulunamadı. Lütfen kurye hesabınızla giriş yapın." });
+
+        var result = await _courierService.SetBreakAsync(courierId.Value, request.OnBreak, cancellationToken);
         return CreateActionResult(result);
     }
 

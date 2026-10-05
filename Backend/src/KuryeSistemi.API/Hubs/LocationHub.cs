@@ -149,6 +149,17 @@ public sealed class LocationHub : Hub
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, $"company_{companyIdClaim}");
         }
+        else if (isFirmUser && IsRealMerchantClaim(merchantIdClaim) && Context.User?.IsInRole("SuperAdmin") != true)
+        {
+            // Eski tip firma hesabı (CourierFirm/FirmAdmin) bir işletme kaydıdır ve token'ında firma kimliği yoktur.
+            // Firmaya bağlı restoran/kurye yayınları yalnızca company_{id} grubuna gittiğinden, firmanın
+            // kendi işletme kaydından çözülüp gruba eklenir; aksi halde canlı olay hiç alınmaz.
+            var ownCompanyId = await ResolveMerchantCompanyIdAsync(merchantIdClaim!);
+            if (ownCompanyId.HasValue)
+            {
+                await Groups.AddToGroupAsync(Context.ConnectionId, $"company_{ownCompanyId.Value}");
+            }
+        }
 
         var courierIdClaim = Context.User?.FindFirst("courierId")?.Value 
                           ?? Context.User?.FindFirst("CourierId")?.Value;
@@ -187,6 +198,28 @@ public sealed class LocationHub : Hub
         }
 
         await base.OnDisconnectedAsync(exception);
+    }
+
+    /// <summary>İşletme kaydının bağlı olduğu kurye firması. Bağlı değilse veya okunamazsa null.</summary>
+    private async Task<Guid?> ResolveMerchantCompanyIdAsync(string merchantIdClaim)
+    {
+        if (!Guid.TryParse(merchantIdClaim, out var merchantId))
+            return null;
+
+        try
+        {
+            using var scope = _scopeFactory.CreateScope();
+            var db = scope.ServiceProvider.GetRequiredService<IApplicationDbContext>();
+            return await db.Merchants.AsNoTracking()
+                .Where(m => m.Id == merchantId)
+                .Select(m => m.CourierCompanyId)
+                .FirstOrDefaultAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "--> [LocationHub] İşletme firma bilgisi okunamadı: {MerchantId}", merchantId);
+            return null;
+        }
     }
 
     /// <summary>Kuryenin işletmesinin bağlı olduğu kurye firması. Bağlı değilse veya okunamazsa null.</summary>

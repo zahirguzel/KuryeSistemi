@@ -19,3 +19,8 @@ public sealed record CreateCourierRequest(
 public sealed record ToggleShiftRequest(
     bool IsOnline
 );
+
+/// <summary>POST /api/couriers/me/break için istek gövdesi.</summary>
+public sealed record SetBreakRequest(
+    bool OnBreak
+);

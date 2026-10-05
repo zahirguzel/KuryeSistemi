@@ -36,6 +36,11 @@ public interface ICourierService
     /// <summary>Kuryenin mesai durumunu (IsOnline / IsAvailable) günceller ve SignalR ile yayınlar.</summary>
     Task<ServiceResult<bool>> ToggleShiftAsync(Guid courierId, bool isOnline, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Kuryeyi molaya alır / moladan çıkarır. Yalnızca mesaideyken ve aktif siparişi yokken mola başlatılabilir.
+    /// </summary>
+    Task<ServiceResult<bool>> SetBreakAsync(Guid courierId, bool onBreak, CancellationToken cancellationToken = default);
+
     /// <summary>Kuryenin anlık GPS konumunu kaydeder.</summary>
     Task<ServiceResult<bool>> UpdateLocationAsync(Guid courierId, double latitude, double longitude, CancellationToken cancellationToken = default);
 }

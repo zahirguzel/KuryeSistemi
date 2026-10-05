@@ -227,6 +227,7 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
 
         return await _dbSet
             .AsNoTracking()
+            .Include(o => o.Merchant)
             .Where(o => o.CourierId == courierId
                      && o.Status == OrderStatus.Delivered
                      && o.DeliveredAt.HasValue
@@ -249,6 +250,7 @@ public class OrderRepository : GenericRepository<Order>, IOrderRepository
 
         return await _dbSet
             .AsNoTracking()
+            .Include(o => o.Merchant)
             .Where(o => o.CourierId == courierId
                      && o.Status == OrderStatus.Delivered
                      && o.DeliveredAt.HasValue

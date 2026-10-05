@@ -31,6 +31,7 @@ public static class ServiceExtensions
         services.AddScoped<IProductService, ProductService>();
         services.AddScoped<IAuditService, AuditService>();
         services.AddScoped<ICreditService, CreditService>();
+        services.AddScoped<ICourierSupportService, CourierSupportService>();
         services.AddScoped<ICompanyService, CompanyService>();
         services.AddScoped<ICompanyAdminService, CompanyAdminService>();
         services.AddSingleton<ILoginAttemptTracker, DistributedLoginAttemptTracker>();
