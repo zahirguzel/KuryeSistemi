@@ -26,6 +26,8 @@ interface BackendCourierDto {
   createdAt: string;
   isOnline?: boolean;
   IsOnline?: boolean;
+  isOnBreak?: boolean;
+  IsOnBreak?: boolean;
   currentLatitude?: number | null;
   CurrentLatitude?: number | null;
   currentLongitude?: number | null;
@@ -58,6 +60,7 @@ function mapToCourierState(dto: BackendCourierDto): CourierState {
     speed: 0,
     lastUpdate: rawDate ? new Date(rawDate) : null,
     isOnline,
+    isOnBreak: Boolean(dto.isOnBreak ?? dto.IsOnBreak),
   };
 }
 

@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { audioAlert } from '../utils/audioAlert';
 
-export type NotificationType = 'new_order' | 'assigned' | 'delivered' | 'cancelled' | 'info' | 'warning';
+export type NotificationType = 'new_order' | 'assigned' | 'delivered' | 'cancelled' | 'info' | 'warning' | 'sos';
 
 export interface AppNotification {
   id: string;
@@ -100,7 +100,7 @@ export const useNotificationStore = create<NotificationState>()(
             audioAlert.playAssignedSound();
           } else if (notif.type === 'delivered') {
             audioAlert.playDeliveredSound();
-          } else if (notif.type === 'cancelled' || notif.type === 'warning') {
+          } else if (notif.type === 'cancelled' || notif.type === 'warning' || notif.type === 'sos') {
             audioAlert.playWarningSound();
           } else {
             audioAlert.playNewOrderSound();

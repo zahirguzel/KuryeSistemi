@@ -12,6 +12,7 @@ import { DispatchMode, ReconciliationPeriod } from '../../types';
 import { useAuthStore } from '../../stores/authStore';
 import { getFirmOperatingZone, findCity, type QuickHub } from '../../constants/locations';
 import { searchAddressOSM, type GeocodingResult } from '../../services/geocodingService';
+import { startSignalR, onMerchantStatusUpdate } from '../../services/signalRService';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -946,6 +947,14 @@ export const FirmMerchants: React.FC = () => {
   }, []);
 
   useEffect(() => { loadMerchants(); }, [loadMerchants]);
+
+  // Restoran aç/kapa anında listeye yansır
+  useEffect(() => {
+    startSignalR().catch(() => {});
+    return onMerchantStatusUpdate(({ merchantId, isOpen }) => {
+      setMerchants(prev => prev.map(m => (m.id === merchantId ? { ...m, isOpen } : m)));
+    });
+  }, []);
 
   useEffect(() => {
     const q = search.toLowerCase();

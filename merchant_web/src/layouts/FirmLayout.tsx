@@ -35,6 +35,7 @@ import {
   XCircle,
 } from 'lucide-react';
 import { useAuthStore } from '../stores/authStore';
+import { stopSignalR } from '../services/signalRService';
 import { NotificationBell } from '../components/notifications/NotificationBell';
 import { NotificationToastContainer } from '../components/notifications/NotificationToast';
 import { useNotificationListener } from '../hooks/useNotificationListener';
@@ -156,6 +157,7 @@ export const FirmLayout: React.FC = () => {
   useNotificationListener();
 
   const handleLogout = () => {
+    stopSignalR().catch(() => {});
     logout();
     navigate('/login');
   };

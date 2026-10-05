@@ -4,6 +4,7 @@ import { create } from 'zustand';
 import type { Merchant } from '../types';
 import type { AuthTokenDto, AuthUser } from '../types/auth';
 import { merchantService } from '../services/merchantService';
+import { isJwtExpired } from '../utils/jwt';
 
 interface AuthState {
   token: string | null;
@@ -24,7 +25,13 @@ const STORAGE_KEYS = {
 
 // LocalStorage'dan başlangıç durumunu güvenli yükle
 const getInitialState = () => {
-  const savedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
+  let savedToken = localStorage.getItem(STORAGE_KEYS.TOKEN);
+
+  // Süresi dolmuş token'la uygulama açılmaz: oturum verisi temizlenir, kullanıcı login ekranına düşer
+  if (savedToken && isJwtExpired(savedToken)) {
+    Object.values(STORAGE_KEYS).forEach((key) => localStorage.removeItem(key));
+    savedToken = null;
+  }
   const savedUser = localStorage.getItem(STORAGE_KEYS.USER);
   const savedMerchant = localStorage.getItem(STORAGE_KEYS.MERCHANT);
 

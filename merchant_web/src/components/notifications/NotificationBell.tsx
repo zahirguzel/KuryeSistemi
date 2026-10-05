@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import {
   Bell, Volume2, VolumeX, Check, Trash2,
-  Package, CheckCircle2, XCircle, Clock, Truck
+  Package, CheckCircle2, XCircle, Clock, Truck, AlertTriangle
 } from 'lucide-react';
 import { useNotificationStore, type AppNotification } from '../../stores/notificationStore';
 
@@ -17,6 +17,8 @@ function getNotificationIcon(type: AppNotification['type']) {
       return <CheckCircle2 className="w-4 h-4 text-emerald-500" />;
     case 'cancelled':
       return <XCircle className="w-4 h-4 text-rose-500" />;
+    case 'sos':
+      return <AlertTriangle className="w-4 h-4 text-red-600" />;
     default:
       return <Clock className="w-4 h-4 text-teal-500" />;
   }

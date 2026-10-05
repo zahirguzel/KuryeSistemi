@@ -16,7 +16,7 @@ import {
   AlertTriangle, Users, CheckCircle2, TrendingUp, Bike,
   Package, Phone, Wallet, RotateCw, X,
 } from 'lucide-react';
-import { startSignalR, stopSignalR } from '../../services/signalRService';
+import { startSignalR } from '../../services/signalRService';
 import { useCourierStore, selectCourierList } from '../../stores/courierStore';
 import { financeService } from '../../services/financeService';
 import { courierService } from '../../services/courierService';
@@ -270,7 +270,7 @@ export const FirmRadar: React.FC = () => {
     return () => {
       mounted = false;
       signalRRef.current = false;
-      stopSignalR().catch(() => {});
+      // Ortak SignalR bağlantısı sayfa çıkışında kapatılmaz (diğer sayfalar kullanıyor); logout'ta kapanır.
     };
   }, [loadAll]);
 

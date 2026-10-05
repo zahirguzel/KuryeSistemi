@@ -27,6 +27,9 @@ export interface CourierState {
 
   // Bağlantı durumu
   isOnline: boolean;
+
+  // Kurye molada mı (mesaide ama yeni sipariş almıyor)
+  isOnBreak?: boolean;
 }
 
 /**

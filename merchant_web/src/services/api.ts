@@ -29,7 +29,11 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    // Yalnızca JWT doğrulama reddi (gövdesiz 401) oturum bitti sayılır; iş kuralı 401'leri (ServiceResult gövdeli) çıkış yaptırmaz
+    const data = error.response?.data;
+    const isAuthChallenge = data === undefined || data === null || data === '' ||
+      (typeof data === 'object' && Object.keys(data).length === 0);
+    if (error.response && error.response.status === 401 && isAuthChallenge) {
       console.warn('[API Interceptor] 401 Yetkisiz Erişim tespit edildi. Oturum kapatılıyor...');
       
       // Zustand store'daki logout aksiyonunu tetikle

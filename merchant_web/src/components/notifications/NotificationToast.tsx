@@ -46,6 +46,14 @@ function getToastTheme(type: NotificationType) {
         badge: 'bg-rose-50 text-rose-700 border-rose-200',
         accentBar: 'bg-rose-500',
       };
+    case 'sos':
+      return {
+        icon: AlertTriangle,
+        iconBg: 'bg-red-600 text-white animate-pulse',
+        border: 'border-red-600/60',
+        badge: 'bg-red-50 text-red-800 border-red-300',
+        accentBar: 'bg-red-600',
+      };
     case 'warning':
       return {
         icon: AlertTriangle,
@@ -72,12 +80,14 @@ interface SingleToastProps {
 
 const SingleToast: React.FC<SingleToastProps> = ({ toast, onDismiss }) => {
   useEffect(() => {
+    // Acil durum (SOS) uyarısı kendiliğinden kapanmaz; yetkili görene kadar ekranda kalır
+    if (toast.type === 'sos') return;
     const timer = setTimeout(() => {
       onDismiss(toast.id);
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, [toast.id, onDismiss]);
+  }, [toast.id, toast.type, onDismiss]);
 
   const theme = getToastTheme(toast.type);
   const Icon = theme.icon;

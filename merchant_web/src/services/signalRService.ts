@@ -77,6 +77,44 @@ export function onOrderUpdate(callback: OrderUpdateCallback): () => void {
   };
 }
 
+// ── Kurye Acil Durum (SOS) Dinleyicileri ──────────────────────────────────
+export type CourierSosPayload = {
+  courierId: string;
+  courierName: string;
+  phoneNumber: string;
+  latitude: number | null;
+  longitude: number | null;
+  note: string | null;
+  timestamp: string;
+};
+
+type CourierSosCallback = (payload: CourierSosPayload) => void;
+const sosListeners = new Set<CourierSosCallback>();
+
+export function onCourierSos(callback: CourierSosCallback): () => void {
+  sosListeners.add(callback);
+  return () => {
+    sosListeners.delete(callback);
+  };
+}
+
+// ── İşletme Açık/Kapalı Dinleyicileri ────────────────────────────────────
+export type MerchantStatusPayload = {
+  merchantId: string;
+  isOpen: boolean;
+  name: string;
+};
+
+type MerchantStatusCallback = (payload: MerchantStatusPayload) => void;
+const merchantListeners = new Set<MerchantStatusCallback>();
+
+export function onMerchantStatusUpdate(callback: MerchantStatusCallback): () => void {
+  merchantListeners.add(callback);
+  return () => {
+    merchantListeners.delete(callback);
+  };
+}
+
 /** Olay dinleyicilerini hub bağlantısına ekler */
 function attachEventHandlers(connection: HubConnection): void {
   const { updateCourierLocation, updateCourierStatus, setSignalRStatus } = useCourierStore.getState();
@@ -93,9 +131,48 @@ function attachEventHandlers(connection: HubConnection): void {
     const cid = payload?.courierId ?? payload?.CourierId;
     const isOnline = payload?.isOnline ?? payload?.IsOnline;
     const isAvailable = payload?.isAvailable ?? payload?.IsAvailable;
+    const rawBreak = payload?.isOnBreak ?? payload?.IsOnBreak;
     if (cid) {
-      updateCourierStatus(cid, Boolean(isOnline), Boolean(isAvailable));
+      updateCourierStatus(cid, Boolean(isOnline), Boolean(isAvailable), rawBreak === undefined ? undefined : Boolean(rawBreak));
     }
+  });
+
+  // ── Kurye Acil Durum (SOS) ────────────────────────────────────────────────
+  connection.on('ReceiveCourierSos', (raw: any) => {
+    const payload: CourierSosPayload = {
+      courierId: String(raw?.courierId ?? raw?.CourierId ?? ''),
+      courierName: String(raw?.courierName ?? raw?.CourierName ?? 'Kurye'),
+      phoneNumber: String(raw?.phoneNumber ?? raw?.PhoneNumber ?? ''),
+      latitude: typeof (raw?.latitude ?? raw?.Latitude) === 'number' ? (raw?.latitude ?? raw?.Latitude) : null,
+      longitude: typeof (raw?.longitude ?? raw?.Longitude) === 'number' ? (raw?.longitude ?? raw?.Longitude) : null,
+      note: (raw?.note ?? raw?.Note) ? String(raw?.note ?? raw?.Note) : null,
+      timestamp: String(raw?.timestamp ?? raw?.Timestamp ?? new Date().toISOString()),
+    };
+    console.warn('[SignalR] KURYE ACİL ÇAĞRISI:', payload);
+    sosListeners.forEach((listener) => {
+      try {
+        listener(payload);
+      } catch (err) {
+        console.error('[SignalR] SOS listener hatası:', err);
+      }
+    });
+  });
+
+  // ── İşletme Açık/Kapalı Güncellemesi ──────────────────────────────────────
+  connection.on('ReceiveMerchantStatusUpdate', (rawPayload: any) => {
+    const normalized: MerchantStatusPayload = {
+      merchantId: String(rawPayload?.merchantId ?? rawPayload?.MerchantId ?? ''),
+      isOpen: Boolean(rawPayload?.isOpen ?? rawPayload?.IsOpen),
+      name: String(rawPayload?.name ?? rawPayload?.Name ?? ''),
+    };
+    console.info(`[SignalR] İşletme durumu: ${normalized.name} → ${normalized.isOpen ? 'Açık' : 'Kapalı'}`);
+    merchantListeners.forEach((listener) => {
+      try {
+        listener(normalized);
+      } catch (err) {
+        console.error('[SignalR] Merchant listener hatası:', err);
+      }
+    });
   });
 
   // ── Sipariş Durum Güncellemesi ────────────────────────────────────────────

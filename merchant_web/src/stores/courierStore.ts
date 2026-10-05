@@ -33,7 +33,7 @@ interface CourierStoreState {
    * Kurye'nin mesai ve müsaitlik durumunu anlık günceller.
    * (SignalR ReceiveCourierStatusUpdate olayında tetiklenir)
    */
-  updateCourierStatus: (courierId: string, isOnline: boolean, isAvailable: boolean) => void;
+  updateCourierStatus: (courierId: string, isOnline: boolean, isAvailable: boolean, isOnBreak?: boolean) => void;
 
   /**
    * Kurye'yi çevrimiçi veya çevrimdışı olarak işaretle.
@@ -66,6 +66,7 @@ export const useCourierStore = create<CourierStoreState>((set, get) => ({
           lng: c.lng ?? c.currentLongitude ?? null,
           isOnline: Boolean(c.isOnline),
           isAvailable: Boolean(c.isAvailable),
+          isOnBreak: Boolean(c.isOnBreak),
         },
       ])
     );
@@ -110,7 +111,7 @@ export const useCourierStore = create<CourierStoreState>((set, get) => ({
     set({ couriers: newMap });
   },
 
-  updateCourierStatus: (courierId, isOnline, isAvailable) => {
+  updateCourierStatus: (courierId, isOnline, isAvailable, isOnBreak) => {
     const { couriers } = get();
     if (!couriers.has(courierId)) return;
     const existing = couriers.get(courierId)!;
@@ -119,6 +120,8 @@ export const useCourierStore = create<CourierStoreState>((set, get) => ({
       ...existing,
       isOnline,
       isAvailable,
+      // Mola bilgisi yalnızca sunucu gönderdiyse güncellenir (diğer yayınlar mevcut durumu ezmez)
+      isOnBreak: isOnBreak ?? existing.isOnBreak ?? false,
       lastUpdate: new Date(),
     });
     set({ couriers: newMap });

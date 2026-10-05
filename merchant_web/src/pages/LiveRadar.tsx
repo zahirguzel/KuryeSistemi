@@ -28,7 +28,7 @@ import { useAuthStore } from '../stores/authStore';
 import { useCourierStore, selectCourierList } from '../stores/courierStore';
 import { courierService } from '../services/courierService';
 import { merchantService } from '../services/merchantService';
-import { startSignalR, stopSignalR } from '../services/signalRService';
+import { startSignalR } from '../services/signalRService';
 import type { CourierState } from '../types/courier';
 
 // ── 1. Dinamik Harita Merkezi (Çok Şehirli / Global-Scale) ────────────────────
@@ -403,9 +403,7 @@ export const LiveRadar: React.FC = () => {
     return () => {
       mounted = false;
       signalRStartedRef.current = false;
-      // NOT: stopSignalR() asenkron ama await etmiyoruz (cleanup sync olmalı)
-      // Bağlantı kırılmaz, sadece tab/component kapandığında kesilir
-      stopSignalR().catch(console.warn);
+      // Ortak SignalR bağlantısı sayfa çıkışında kapatılmaz (diğer sayfalar kullanıyor); logout'ta kapanır.
     };
   }, [loadCouriers]);
 

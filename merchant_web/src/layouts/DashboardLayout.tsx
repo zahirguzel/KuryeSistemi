@@ -19,6 +19,7 @@ import { merchantService } from '../services/merchantService';
 import { NotificationBell } from '../components/notifications/NotificationBell';
 import { NotificationToastContainer } from '../components/notifications/NotificationToast';
 import { useNotificationListener } from '../hooks/useNotificationListener';
+import { onMerchantStatusUpdate, stopSignalR } from '../services/signalRService';
 
 export const DashboardLayout: React.FC = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -52,6 +53,15 @@ export const DashboardLayout: React.FC = () => {
   // Canlı SignalR olaylarını ve sesli bildirimleri dinle
   useNotificationListener();
 
+  // Aynı işletmenin başka oturumunda (veya firma panelinden) yapılan aç/kapa değişimini yansıt
+  useEffect(() => {
+    return onMerchantStatusUpdate(({ merchantId, isOpen }) => {
+      if (merchant?.id && merchantId.toLowerCase() === merchant.id.toLowerCase() && merchant.isOpen !== isOpen) {
+        updateMerchant({ isOpen });
+      }
+    });
+  }, [merchant?.id, merchant?.isOpen, updateMerchant]);
+
   const isFirmAdmin = user?.roles?.some((r) => ['CourierFirm', 'Admin', 'FirmAdmin'].includes(r));
   const isSmartAuto = (merchant?.dispatchMode as unknown) === 'SmartAuto' || String(merchant?.dispatchMode) === '3';
   const hasGps = typeof merchant?.latitude === 'number' && typeof merchant?.longitude === 'number' && merchant.latitude !== 0 && merchant.longitude !== 0;
@@ -67,6 +77,7 @@ export const DashboardLayout: React.FC = () => {
 
 
   const handleLogout = () => {
+    stopSignalR().catch(() => {});
     logout();
     navigate('/login');
   };

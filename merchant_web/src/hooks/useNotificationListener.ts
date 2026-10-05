@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { startSignalR, onOrderUpdate, type OrderUpdatePayload } from '../services/signalRService';
+import { startSignalR, onOrderUpdate, onCourierSos, type OrderUpdatePayload } from '../services/signalRService';
 import { useNotificationStore, type NotificationType } from '../stores/notificationStore';
 import { useAuthStore } from '../stores/authStore';
 import { audioAlert } from '../utils/audioAlert';
@@ -110,7 +110,20 @@ export function useNotificationListener(): void {
       }
     });
 
+    // Kurye acil durum çağrısı: kapanmayan kırmızı uyarı + alarm sesi
+    const unsubscribeSos = onCourierSos((sos) => {
+      const where = sos.latitude != null && sos.longitude != null
+        ? ` • Konum: ${sos.latitude.toFixed(5)}, ${sos.longitude.toFixed(5)}`
+        : '';
+      addNotifRef.current({
+        type: 'sos',
+        title: `🚨 ACİL DURUM: ${sos.courierName}`,
+        message: `Tel: ${sos.phoneNumber || '—'}${sos.note ? ` • "${sos.note}"` : ''}${where}`,
+      });
+    });
+
     return () => {
+      unsubscribeSos();
       unsubscribe();
     };
   }, []);

@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 import { api } from '../../services/api';
 import { useCourierStore } from '../../stores/courierStore';
-import { startSignalR, onOrderUpdate } from '../../services/signalRService';
+import { startSignalR, onOrderUpdate, onMerchantStatusUpdate } from '../../services/signalRService';
 import { orderService } from '../../services/orderService';
 import { courierService } from '../../services/courierService';
 import { merchantService, type MerchantDto } from '../../services/merchantService';
@@ -564,6 +564,7 @@ export const FirmDashboard: React.FC = () => {
           ...c,
           isOnline: live.isOnline,
           isAvailable: live.isAvailable,
+          isOnBreak: live.isOnBreak ?? c.isOnBreak,
           lat: live.lat ?? c.lat,
           lng: live.lng ?? c.lng,
         };
@@ -603,9 +604,10 @@ export const FirmDashboard: React.FC = () => {
     return allOrders.filter(o => (o as any).courierId === selectedCourierId);
   }, [allOrders, selectedCourierId]);
 
-  const boştaKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && c.isAvailable), [activeCouriers]);
-  const moladaKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && !c.isAvailable && (activeOrdersByCourier[c.id] ?? 0) === 0), [activeCouriers, activeOrdersByCourier]);
-  const çalışanKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && (activeOrdersByCourier[c.id] ?? 0) > 0), [activeCouriers, activeOrdersByCourier]);
+  // Sekmeler birbirini dışlar: Molada (mesaide + mola) / Çalışan (paketi var) / Boşta (paketi yok, molada değil)
+  const moladaKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && c.isOnBreak), [activeCouriers]);
+  const çalışanKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && !c.isOnBreak && (activeOrdersByCourier[c.id] ?? 0) > 0), [activeCouriers, activeOrdersByCourier]);
+  const boştaKuryeler = useMemo(() => activeCouriers.filter(c => c.isOnline && !c.isOnBreak && (activeOrdersByCourier[c.id] ?? 0) === 0), [activeCouriers, activeOrdersByCourier]);
 
   const tabCouriers = useMemo(() => {
     if (courierTab === 'boşta') return boştaKuryeler;
@@ -615,16 +617,13 @@ export const FirmDashboard: React.FC = () => {
 
   const paginatedCouriers = tabCouriers.slice(courierPage * COURIERS_PER_PAGE, (courierPage + 1) * COURIERS_PER_PAGE);
 
-  const mapCouriers = useMemo(() => {
-    const cm = merchants.filter(m => typeof m.latitude === 'number');
-    const clat = cm.length > 0 ? cm.reduce((s, m) => s + (m.latitude ?? 0), 0) / cm.length : FALLBACK_CENTER[0];
-    const clng = cm.length > 0 ? cm.reduce((s, m) => s + (m.longitude ?? 0), 0) / cm.length : FALLBACK_CENTER[1];
-    return activeCouriers.map((c, i) => ({
-      ...c,
-      lat: c.lat || clat + ((i % 3) - 1) * 0.005 + Math.floor(i / 3) * 0.004,
-      lng: c.lng || clng + (((i + 1) % 3) - 1) * 0.005,
-    }));
-  }, [activeCouriers, merchants]);
+  // Yalnızca gerçek GPS konumu olan kuryeler haritada gösterilir (uydurma konum yok)
+  const mapCouriers = useMemo(
+    () => activeCouriers
+      .filter(c => c.isOnline && typeof c.lat === 'number' && typeof c.lng === 'number' && (c.lat !== 0 || c.lng !== 0))
+      .map(c => ({ ...c, lat: c.lat as number, lng: c.lng as number })),
+    [activeCouriers],
+  );
 
   // ─ Uber H3 Altıgen Bölgeler
   const h3Cells = useMemo(() => {
@@ -648,21 +647,15 @@ export const FirmDashboard: React.FC = () => {
   // ─ Haritada gösterilecek aktif sipariş paketleri (Teslimat Noktaları)
   const mapOrders = useMemo(() => {
     if (!layerSiparisler) return [];
-    return activeOrdersForMap.map((o, idx) => {
-      let lat = (o as any).deliveryLatitude || (o as any).latitude;
-      let lng = (o as any).deliveryLongitude || (o as any).longitude;
-      if (!lat || !lng) {
-        const m = merchants.find(m => m.id === o.merchantId);
-        const baseLat = m?.latitude ?? FALLBACK_CENTER[0];
-        const baseLng = m?.longitude ?? FALLBACK_CENTER[1];
-        const angle = (idx * 137.5) * (Math.PI / 180);
-        const dist = 0.007 + (idx % 5) * 0.0035;
-        lat = baseLat + Math.sin(angle) * dist;
-        lng = baseLng + Math.cos(angle) * dist;
-      }
-      return { ...o, lat: Number(lat), lng: Number(lng) };
-    });
-  }, [layerSiparisler, activeOrdersForMap, merchants]);
+    // Teslimat koordinatı olmayan sipariş haritada gösterilmez (uydurma konum yok)
+    return activeOrdersForMap
+      .map(o => {
+        const lat = Number((o as any).deliveryLatitude || (o as any).latitude);
+        const lng = Number((o as any).deliveryLongitude || (o as any).longitude);
+        return { ...o, lat, lng };
+      })
+      .filter(o => Number.isFinite(o.lat) && Number.isFinite(o.lng) && (o.lat !== 0 || o.lng !== 0));
+  }, [layerSiparisler, activeOrdersForMap]);
 
   // ─ loadData ──────────────────────────────────────────────────────────────────
 
@@ -735,8 +728,12 @@ export const FirmDashboard: React.FC = () => {
     loadData();
     startSignalR().catch(() => {});
     const unsub = onOrderUpdate(() => loadData(true));
+    // Restoran aç/kapa anında yansır (tam yeniden yükleme gerekmez)
+    const unsubMerchant = onMerchantStatusUpdate(({ merchantId, isOpen }) => {
+      setMerchants(prev => prev.map(m => (m.id === merchantId ? { ...m, isOpen } : m)));
+    });
     const interval = setInterval(() => loadData(true), 30_000);
-    return () => { unsub(); clearInterval(interval); };
+    return () => { unsub(); unsubMerchant(); clearInterval(interval); };
   }, [loadData]);
 
   // ─ Handlers ──────────────────────────────────────────────────────────────────
