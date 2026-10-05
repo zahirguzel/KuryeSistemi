@@ -18,10 +18,8 @@ class OrderRepository {
     try {
       final response = await _dioClient.get('/api/orders/courier/active');
       if (response.statusCode == 200 && response.data != null) {
-        final list = _parseOrderList(response.data);
-        if (list.isNotEmpty) {
-          return list;
-        }
+        // Başarılı yanıt boş liste olsa bile kesindir; kurye için işletme uçlarına yedek istek atılmaz
+        return _parseOrderList(response.data);
       }
     } catch (e) {
       debugPrint('[OrderRepository] /api/orders/courier/active çağrısı: $e');

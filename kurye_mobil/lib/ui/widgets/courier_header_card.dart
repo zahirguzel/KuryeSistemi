@@ -73,7 +73,7 @@ class _CourierHeaderCardState extends State<CourierHeaderCard> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.schedule_outlined,
                     color: AppColors.tertiary,
                     size: 16,
@@ -107,7 +107,7 @@ class _CourierHeaderCardState extends State<CourierHeaderCard> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.workspace_premium,
                     color: AppColors.primary,
                     size: 16,

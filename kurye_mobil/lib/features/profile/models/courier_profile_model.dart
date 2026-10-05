@@ -19,9 +19,11 @@ class CourierProfileModel {
     required this.totalEarningsToday,
     required this.totalDeliveriesAllTime,
     this.isOnline = false,
+    this.isOnBreak = false,
   });
 
   final String id;
+  final bool isOnBreak;
   final String merchantId;
   final String merchantName;
   final String firstName;
@@ -78,6 +80,7 @@ class CourierProfileModel {
       vehicleModel: data['vehicleModel']?.toString() ?? '',
       isAvailable: data['isAvailable'] as bool? ?? true,
       isOnline: data['isOnline'] as bool? ?? false,
+      isOnBreak: data['isOnBreak'] as bool? ?? false,
       currentBalance: (data['currentBalance'] as num?)?.toDouble() ?? 0.0,
       completedDeliveriesToday: (data['completedDeliveriesToday'] as num?)?.toInt() ?? 0,
       totalEarningsToday: (data['totalEarningsToday'] as num?)?.toDouble() ?? 0.0,

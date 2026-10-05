@@ -8,11 +8,15 @@ class QuickActionsStrip extends StatelessWidget {
   const QuickActionsStrip({
     super.key,
     this.onTakeBreak,
+    this.isOnBreak = false,
     this.onOpenSurgeMap,
     this.onEmergencySupport,
   });
 
   final VoidCallback? onTakeBreak;
+
+  /// Kurye şu an molada mı? Buton "Moladan Dön" olarak vurgulanır.
+  final bool isOnBreak;
   final VoidCallback? onOpenSurgeMap;
   final VoidCallback? onEmergencySupport;
 
@@ -40,9 +44,12 @@ class QuickActionsStrip extends StatelessWidget {
               child: _QuickActionButton(
                 icon: Icons.coffee_rounded,
                 iconColor: AppColors.tertiary,
-                label: 'Mola Ver',
+                label: isOnBreak ? 'Moladan Dön' : 'Mola Ver',
                 textColor: AppColors.onSurface,
-                backgroundColor: AppColors.surfaceContainer,
+                backgroundColor: isOnBreak
+                    ? AppColors.tertiary.withValues(alpha: 0.18)
+                    : AppColors.surfaceContainer,
+                borderColor: isOnBreak ? AppColors.tertiary.withValues(alpha: 0.5) : null,
                 onTap: onTakeBreak,
               ),
             ),

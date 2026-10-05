@@ -123,7 +123,7 @@ class NotificationAlertService {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: const BorderSide(
+          side: BorderSide(
             color: AppColors.primaryContainer,
             width: 1.5,
           ),
@@ -138,7 +138,7 @@ class NotificationAlertService {
                 color: AppColors.primaryContainer.withValues(alpha: 0.2),
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.notifications_active_rounded,
                 color: AppColors.primaryContainer,
                 size: 22,

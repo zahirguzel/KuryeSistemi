@@ -136,7 +136,7 @@ class ActiveTaskCard extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             alignment: Alignment.center,
-                            child: const Icon(
+                            child: Icon(
                               Icons.storefront_rounded,
                               size: 18,
                               color: AppColors.tertiary,
@@ -171,7 +171,7 @@ class ActiveTaskCard extends ConsumerWidget {
                           ),
                         ],
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(left: 15, top: 4, bottom: 4),
                         child: Align(
                           alignment: Alignment.centerLeft,
@@ -197,7 +197,7 @@ class ActiveTaskCard extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(8),
                             ),
                             alignment: Alignment.center,
-                            child: const Icon(
+                            child: Icon(
                               Icons.location_on_rounded,
                               size: 18,
                               color: AppColors.secondary,

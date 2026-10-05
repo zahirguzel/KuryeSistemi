@@ -138,7 +138,7 @@ class _GiantActionButtonState extends State<GiantActionButton>
       leadingIcon = Icons.check_circle_rounded;
       title = 'TESLİMAT TAMAMLANDI ✓';
       subtitle = 'Yeni sipariş aranıyor...';
-      trailingWidget = const Icon(
+      trailingWidget = Icon(
         Icons.done_all_rounded,
         color: AppColors.secondary,
         size: 24,

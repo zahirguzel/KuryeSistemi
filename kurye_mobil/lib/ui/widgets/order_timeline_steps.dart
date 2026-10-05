@@ -64,7 +64,7 @@ class OrderTimelineSteps extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.restaurant_rounded,
                       color: AppColors.tertiary,
                       size: 20,
@@ -139,7 +139,7 @@ class OrderTimelineSteps extends StatelessWidget {
                               color: AppColors.surfaceContainerHigh,
                               borderRadius: BorderRadius.circular(10),
                             ),
-                            child: const Icon(
+                            child: Icon(
                               Icons.call_rounded,
                               size: 18,
                               color: AppColors.onSurface,
@@ -164,7 +164,7 @@ class OrderTimelineSteps extends StatelessWidget {
                             ),
                             child: Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.directions_rounded,
                                   size: 16,
                                   color: AppColors.onPrimaryContainer,
@@ -201,7 +201,7 @@ class OrderTimelineSteps extends StatelessWidget {
                     Expanded(
                       child: Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.lunch_dining_rounded,
                             size: 16,
                             color: AppColors.tertiary,
@@ -261,7 +261,7 @@ class OrderTimelineSteps extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.person_pin_circle_rounded,
                       color: AppColors.secondary,
                       size: 22,
@@ -312,7 +312,7 @@ class OrderTimelineSteps extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.phone_in_talk_rounded,
                               size: 16,
                               color: AppColors.secondary,
@@ -348,7 +348,7 @@ class OrderTimelineSteps extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.notifications_active_rounded,
                       size: 18,
                       color: AppColors.primaryContainer,

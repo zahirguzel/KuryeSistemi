@@ -139,7 +139,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  gradient: const LinearGradient(
+                  gradient: LinearGradient(
                     colors: [AppColors.primary, AppColors.primaryContainer],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
@@ -275,7 +275,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
               children: [
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.calendar_today_rounded,
                       size: 14,
                       color: AppColors.onSurfaceVariant,
@@ -304,7 +304,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.verified_rounded,
                         size: 12,
                         color: AppColors.secondary,
@@ -399,7 +399,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
                             borderRadius: BorderRadius.circular(10),
                           ),
                           alignment: Alignment.center,
-                          child: const Icon(
+                          child: Icon(
                             Icons.local_shipping_rounded,
                             color: AppColors.primary,
                             size: 20,
@@ -450,7 +450,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
                             borderRadius: BorderRadius.circular(10),
                           ),
                           alignment: Alignment.center,
-                          child: const Icon(
+                          child: Icon(
                             Icons.trending_up_rounded,
                             color: AppColors.secondary,
                             size: 20,
@@ -495,7 +495,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
                     SnackBar(
                       content: Row(
                         children: [
-                          const Icon(Icons.flash_on_rounded, color: AppColors.secondary),
+                          Icon(Icons.flash_on_rounded, color: AppColors.secondary),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
@@ -585,7 +585,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
   // ─── 4. Teslimat Listesi / Boş Durum ────────────────────────────────────────
   Widget _buildDeliveriesContent(WalletState state) {
     if (state.isLoading && !state.isRefreshing) {
-      return const Center(
+      return Center(
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 40),
           child: CircularProgressIndicator(color: AppColors.primary),
@@ -603,7 +603,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
         ),
         child: Row(
           children: [
-            const Icon(Icons.error_outline_rounded, color: AppColors.error),
+            Icon(Icons.error_outline_rounded, color: AppColors.error),
             const SizedBox(width: 10),
             Expanded(
               child: Text(
@@ -612,7 +612,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
               ),
             ),
             IconButton(
-              icon: const Icon(Icons.refresh_rounded, color: AppColors.error),
+              icon: Icon(Icons.refresh_rounded, color: AppColors.error),
               onPressed: () {
                 ref.read(walletProvider.notifier).fetchTodayEarnings();
               },
@@ -641,11 +641,11 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
             Container(
               width: 56,
               height: 56,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: AppColors.surfaceContainerHighest,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.inbox_rounded,
                 size: 28,
                 color: AppColors.onSurfaceVariant,
@@ -712,7 +712,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.check_circle_rounded,
                   size: 16,
                   color: AppColors.secondary,
@@ -836,7 +836,7 @@ class _WalletScreenState extends ConsumerState<WalletScreen>
               color: AppColors.primaryContainer.withValues(alpha: 0.2),
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.shield_rounded,
               color: AppColors.primary,
               size: 16,

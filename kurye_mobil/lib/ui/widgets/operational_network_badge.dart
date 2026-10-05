@@ -32,7 +32,7 @@ class OperationalNetworkBadge extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.satellite_alt_outlined,
                 color: AppColors.secondary,
                 size: 16,

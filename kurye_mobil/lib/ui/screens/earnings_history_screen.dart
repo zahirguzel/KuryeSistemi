@@ -4,6 +4,7 @@ import '../../features/wallet/models/courier_earnings_model.dart';
 import '../../features/wallet/providers/wallet_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
+import '../widgets/delivery_detail_sheet.dart';
 
 /// Tarih Bazlı Kurye Kazanç ve Teslimat Raporu Ekranı
 class EarningsHistoryScreen extends ConsumerStatefulWidget {
@@ -15,6 +16,22 @@ class EarningsHistoryScreen extends ConsumerStatefulWidget {
 }
 
 class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _query = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  /// Arama metni kod, alıcı, adres veya restoran adıyla eşleşiyor mu? (büyük/küçük harf duyarsız)
+  bool _matchesQuery(DeliveryHistoryItemModel item) {
+    final q = _query.trim().toLowerCase();
+    if (q.isEmpty) return true;
+    return item.searchText.contains(q);
+  }
+
   String _formatDate(DateTime d) {
     final day = d.day.toString().padLeft(2, '0');
     final month = d.month.toString().padLeft(2, '0');
@@ -44,14 +61,13 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
         end: historyState.endDate.isAfter(now) ? now : historyState.endDate,
       ),
       builder: (context, child) {
+        // Seçici, uygulamanın aktif temasını (açık/karanlık) izler
         return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: const ColorScheme.dark(
-              primary: AppColors.primaryContainer,
-              onPrimary: AppColors.onPrimaryContainer,
-              surface: AppColors.surfaceContainerHigh,
-              onSurface: AppColors.onSurface,
-            ),
+          data: Theme.of(context).copyWith(
+            colorScheme: Theme.of(context).colorScheme.copyWith(
+                  primary: AppColors.primaryContainer,
+                  onPrimary: AppColors.onPrimaryContainer,
+                ),
           ),
           child: child!,
         );
@@ -83,7 +99,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
         elevation: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded,
+          icon: Icon(Icons.arrow_back_ios_new_rounded,
               color: AppColors.onSurface, size: 20),
           onPressed: () => Navigator.of(context).pop(),
         ),
@@ -109,7 +125,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.refresh_rounded,
+            icon: Icon(Icons.refresh_rounded,
                 color: AppColors.onSurfaceVariant),
             onPressed: state.isLoading
                 ? null
@@ -130,7 +146,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
             // ── 2. Ana İçerik ────────────────────────────────────────────────
             Expanded(
               child: state.isLoading
-                  ? const Center(
+                  ? Center(
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
                             AppColors.primaryContainer),
@@ -204,12 +220,19 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                           ),
                           const SizedBox(height: 12),
 
+                          // ── Arama ──────────────────────────────────────────
+                          if (state.hasDeliveries) _buildSearchField(state),
+
                           // ── Teslimat Öğeleri ───────────────────────────────
                           if (!state.hasDeliveries)
                             _buildEmptyState()
-                          else
+                          else ...[
                             ...state.earnings!.deliveries
+                                .where(_matchesQuery)
                                 .map((item) => _buildDeliveryCard(item)),
+                            if (!state.earnings!.deliveries.any(_matchesQuery))
+                              _buildNoSearchResult(),
+                          ],
                           const SizedBox(height: 24),
                         ],
                       ),
@@ -318,7 +341,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: const LinearGradient(
+        gradient: LinearGradient(
           colors: [
             AppColors.surfaceContainerLow,
             AppColors.surfaceContainerLowest,
@@ -355,7 +378,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.calendar_today_rounded,
+                    Icon(Icons.calendar_today_rounded,
                         size: 12, color: AppColors.primaryContainer),
                     const SizedBox(width: 6),
                     Text(
@@ -369,7 +392,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                   ],
                 ),
               ),
-              const Icon(Icons.auto_graph_rounded,
+              Icon(Icons.auto_graph_rounded,
                   color: AppColors.secondary, size: 20),
             ],
           ),
@@ -399,7 +422,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
             ),
           ),
           const SizedBox(height: 18),
-          const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+          Divider(color: AppColors.surfaceContainerHigh, height: 1),
           const SizedBox(height: 16),
 
           // Alt 2'li İstatistik Barı
@@ -475,7 +498,69 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
   }
 
   // ── 3. Teslimat Kartı ──────────────────────────────────────────────────────
+  Widget _buildSearchField(EarningsHistoryState state) {
+    final total = state.earnings?.deliveries.length ?? 0;
+    final shown = state.earnings?.deliveries.where(_matchesQuery).length ?? 0;
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: TextField(
+        controller: _searchController,
+        onChanged: (v) => setState(() => _query = v),
+        textInputAction: TextInputAction.search,
+        style: TextStyle(color: AppColors.onSurface),
+        decoration: InputDecoration(
+          hintText: 'Ara: sipariş kodu, alıcı, adres veya restoran',
+          prefixIcon: Icon(Icons.search_rounded, color: AppColors.onSurfaceVariant),
+          suffixIcon: _query.isEmpty
+              ? null
+              : IconButton(
+                  icon: const Icon(Icons.close_rounded),
+                  tooltip: 'Aramayı temizle',
+                  onPressed: () {
+                    _searchController.clear();
+                    setState(() => _query = '');
+                  },
+                ),
+          helperText: _query.trim().isEmpty ? null : '$shown / $total teslimat gösteriliyor',
+          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNoSearchResult() {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 32, horizontal: 20),
+      alignment: Alignment.center,
+      child: Column(
+        children: [
+          Icon(Icons.search_off_rounded, size: 34, color: AppColors.onSurfaceVariant),
+          const SizedBox(height: 10),
+          Text(
+            '"${_query.trim()}" ile eşleşen teslimat yok',
+            style: AppTextStyles.bodyMedium.copyWith(color: AppColors.onSurface, fontWeight: FontWeight.w700),
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Seçili tarih aralığında arama yapılır. Aralığı genişletmeyi deneyin.',
+            style: AppTextStyles.caption.copyWith(color: AppColors.onSurfaceVariant),
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildDeliveryCard(DeliveryHistoryItemModel item) {
+    return InkWell(
+      onTap: () => showDeliveryDetailSheet(context, item),
+      borderRadius: BorderRadius.circular(14),
+      child: _buildDeliveryCardBody(item),
+    );
+  }
+
+  Widget _buildDeliveryCardBody(DeliveryHistoryItemModel item) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(14),
@@ -498,7 +583,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
               color: AppColors.secondary.withValues(alpha: 0.12),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
+            child: Icon(
               Icons.done_all_rounded,
               color: AppColors.secondary,
               size: 20,
@@ -515,7 +600,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      item.shortCode,
+                      item.orderCode ?? item.shortCode,
                       style: AppTextStyles.bodyMedium.copyWith(
                         fontWeight: FontWeight.w800,
                         color: AppColors.onSurface,
@@ -523,7 +608,7 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                       ),
                     ),
                     Text(
-                      _formatTime(item.deliveredAt),
+                      '${_formatDate(item.deliveredAt)} ${_formatTime(item.deliveredAt)}',
                       style: AppTextStyles.caption.copyWith(
                         color: AppColors.onSurfaceVariant,
                         fontSize: 11,
@@ -533,12 +618,14 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  item.recipientName,
+                  item.merchantName != null ? '${item.merchantName} → ${item.recipientName}' : item.recipientName,
                   style: AppTextStyles.caption.copyWith(
                     color: AppColors.onSurface,
                     fontWeight: FontWeight.w600,
                     fontSize: 12,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 2),
                 Text(
@@ -597,11 +684,11 @@ class _EarningsHistoryScreenState extends ConsumerState<EarningsHistoryScreen> {
           Container(
             width: 64,
             height: 64,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: AppColors.surfaceContainerHigh,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.inventory_2_outlined,
               size: 30,
               color: AppColors.onSurfaceVariant,

@@ -158,7 +158,7 @@ class _SwipeShiftToggleState extends State<SwipeShiftToggle>
                   ],
                 ),
               ),
-              const Icon(
+              Icon(
                 Icons.moped_outlined,
                 color: AppColors.outline,
                 size: 28,

@@ -4,6 +4,7 @@ import 'package:latlong2/latlong.dart';
 import '../../core/navigation/navigation_provider.dart';
 import '../../features/location/providers/location_provider.dart';
 import '../../features/orders/providers/order_provider.dart';
+import '../../features/settings/providers/settings_provider.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../widgets/custom_bottom_nav.dart';
@@ -115,7 +116,7 @@ class _ActiveOrderMapScreenState extends ConsumerState<ActiveOrderMapScreen>
                         );
                       },
                       onOpenExternalNav: () {
-                        _showExternalNavDialog(context, deliveryLatLng, activeOrder?.deliveryAddressLine);
+                        _startNavigation(context, deliveryLatLng, activeOrder?.deliveryAddressLine);
                       },
                     ),
 
@@ -147,7 +148,7 @@ class _ActiveOrderMapScreenState extends ConsumerState<ActiveOrderMapScreen>
                               children: [
                                 Row(
                                   children: [
-                                    const Icon(Icons.layers_rounded, size: 16, color: AppColors.secondary),
+                                    Icon(Icons.layers_rounded, size: 16, color: AppColors.secondary),
                                     const SizedBox(width: 6),
                                     Text(
                                       'Çoklu Teslimat (${orderState.orders.length} Paket)',
@@ -393,7 +394,7 @@ class _ActiveOrderMapScreenState extends ConsumerState<ActiveOrderMapScreen>
                       ),
                     ),
                     alignment: Alignment.center,
-                    child: const Icon(
+                    child: Icon(
                       Icons.person_rounded,
                       color: AppColors.onSurface,
                       size: 22,
@@ -463,6 +464,21 @@ class _ActiveOrderMapScreenState extends ConsumerState<ActiveOrderMapScreen>
     }
   }
 
+  /// Profil ayarındaki varsayılan navigasyon uygulamasıyla rotayı doğrudan açar.
+  /// Tercih "Dahili Harita" ise (harici uygulama seçilmemiş) seçim penceresi gösterilir.
+  void _startNavigation(BuildContext context, LatLng? deliveryLatLng, String? deliveryAddress) {
+    final preferred = ref.read(navigationAppProvider);
+    if (preferred == 'Google Haritalar') {
+      _launchGoogleMaps(deliveryLatLng?.latitude, deliveryLatLng?.longitude, deliveryAddress);
+    } else if (preferred == 'Yandex Navigasyon' &&
+        deliveryLatLng != null &&
+        (deliveryLatLng.latitude != 0 || deliveryLatLng.longitude != 0)) {
+      _launchYandexNavi(deliveryLatLng.latitude, deliveryLatLng.longitude);
+    } else {
+      _showExternalNavDialog(context, deliveryLatLng, deliveryAddress);
+    }
+  }
+
   void _showExternalNavDialog(BuildContext context, LatLng? deliveryLatLng, String? deliveryAddress) {
     showDialog(
       context: context,
@@ -488,7 +504,7 @@ class _ActiveOrderMapScreenState extends ConsumerState<ActiveOrderMapScreen>
                   deliveryAddress,
                 );
               },
-              child: const Text(
+              child: Text(
                 'Google Haritalar',
                 style: TextStyle(color: AppColors.tertiary, fontWeight: FontWeight.bold),
               ),

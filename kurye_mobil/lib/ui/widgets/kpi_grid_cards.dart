@@ -14,6 +14,7 @@ class KpiGridCards extends StatelessWidget {
     this.avgPerPackage = '₺101.4/ort',
     this.completedCount = 14,
     this.targetCount = 20,
+    this.onGoalTap,
   });
 
   final String todayEarnings;
@@ -23,6 +24,9 @@ class KpiGridCards extends StatelessWidget {
   final String avgPerPackage;
   final int completedCount;
   final int targetCount;
+
+  /// Hedef kartına dokunulunca (hedef belirleme).
+  final VoidCallback? onGoalTap;
 
   double get _progressFraction =>
       (completedCount / targetCount).clamp(0.0, 1.0);
@@ -42,12 +46,18 @@ class KpiGridCards extends StatelessWidget {
         )),
         const SizedBox(width: 12),
         // ── Tamamlanan ──────────────────────────────────────────────────
-        Expanded(child: _CompletedCard(
-          completed: completedCount,
-          target: targetCount,
-          progress: _progressFraction,
-          remaining: _remaining,
-        )),
+        Expanded(
+          child: InkWell(
+            onTap: onGoalTap,
+            borderRadius: BorderRadius.circular(12),
+            child: _CompletedCard(
+              completed: completedCount,
+              target: targetCount,
+              progress: _progressFraction,
+              remaining: _remaining,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -105,7 +115,7 @@ class _EarningsCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              const Icon(Icons.payments_outlined,
+              Icon(Icons.payments_outlined,
                   color: AppColors.primary, size: 18),
             ],
           ),
@@ -138,7 +148,7 @@ class _EarningsCard extends StatelessWidget {
           // Growth
           Row(
             children: [
-              const Icon(Icons.trending_up,
+              Icon(Icons.trending_up,
                   color: AppColors.secondary, size: 16),
               const SizedBox(width: 3),
               Flexible(
@@ -155,7 +165,7 @@ class _EarningsCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 8),
-          const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+          Divider(color: AppColors.surfaceContainerHigh, height: 1),
           const SizedBox(height: 8),
           // Footer
           Row(
@@ -233,7 +243,7 @@ class _CompletedCard extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              const Icon(Icons.local_shipping_outlined,
+              Icon(Icons.local_shipping_outlined,
                   color: AppColors.tertiary, size: 18),
             ],
           ),
@@ -272,11 +282,11 @@ class _CompletedCard extends StatelessWidget {
               minHeight: 8,
               backgroundColor: AppColors.surfaceContainerHighest,
               valueColor:
-                  const AlwaysStoppedAnimation<Color>(AppColors.secondary),
+                  AlwaysStoppedAnimation<Color>(AppColors.secondary),
             ),
           ),
           const SizedBox(height: 8),
-          const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+          Divider(color: AppColors.surfaceContainerHigh, height: 1),
           const SizedBox(height: 8),
           // Footer
           Row(

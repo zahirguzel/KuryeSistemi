@@ -1,7 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:signalr_netcore/signalr_client.dart';
+import '../config/api_config.dart';
 import '../storage/secure_storage_service.dart';
 
 /// SignalR Bağlantı Durumu
@@ -16,7 +16,7 @@ enum SignalRConnectionStatus {
 /// Backend LocationHub (/hubs/location) ile gerçek zamanlı WebSocket bağlantısını yönetir.
 class SignalRService {
   SignalRService(this._storageService, {String? customHubUrl}) {
-    _hubUrl = customHubUrl ?? _resolveDefaultHubUrl();
+    _hubUrl = customHubUrl ?? ApiConfig.hubUrl;
   }
 
   final SecureStorageService _storageService;
@@ -33,19 +33,6 @@ class SignalRService {
 
   /// Sunucudan gelen sipariş durum ve yeni paket bildirim akışı
   Stream<Map<String, dynamic>> get orderUpdatesStream => _orderUpdatesController.stream;
-
-  /// Platforma göre varsayılan SignalR Hub URL'si
-  static String _resolveDefaultHubUrl() {
-    if (kIsWeb) {
-      return 'http://localhost:5000/hubs/location';
-    }
-    if (Platform.isAndroid) {
-      // adb reverse tcp:5000 tcp:5000 ile fiziksel telefon ve emülatör
-      return 'http://127.0.0.1:5000/hubs/location';
-    }
-    // iOS Simulator, Windows, macOS, Linux
-    return 'http://localhost:5000/hubs/location';
-  }
 
   void _updateStatus(SignalRConnectionStatus status) {
     if (_currentStatus != status) {

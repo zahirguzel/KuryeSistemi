@@ -69,6 +69,18 @@ class DeliveryHistoryItemModel {
     required this.deliveryAddress,
     required this.deliveredAt,
     required this.earning,
+    this.orderCode,
+    this.merchantName,
+    this.pickupAddress,
+    this.deliveryAddressFull,
+    this.recipientPhoneMasked,
+    this.paymentMethod,
+    this.totalOrderAmount = 0.0,
+    this.notes,
+    this.createdAt,
+    this.assignedAt,
+    this.pickedUpAt,
+    this.distanceKm,
   });
 
   final String orderId;
@@ -78,21 +90,70 @@ class DeliveryHistoryItemModel {
   final DateTime deliveredAt;
   final double earning;
 
+  // Detay alanları (sunucu teslim geçmişinde döner)
+  final String? orderCode;
+  final String? merchantName;
+  final String? pickupAddress;
+  final String? deliveryAddressFull;
+  final String? recipientPhoneMasked;
+  final String? paymentMethod;
+  final double totalOrderAmount;
+  final String? notes;
+  final DateTime? createdAt;
+  final DateTime? assignedAt;
+  final DateTime? pickedUpAt;
+  final double? distanceKm;
+
+  /// Arama için birleştirilmiş, küçük harfe çevrilmiş metin.
+  String get searchText => [
+        shortCode,
+        orderCode,
+        recipientName,
+        deliveryAddress,
+        deliveryAddressFull,
+        merchantName,
+        pickupAddress,
+      ].whereType<String>().join(' ').toLowerCase();
+
   factory DeliveryHistoryItemModel.fromJson(Map<String, dynamic> json) {
-    final orderId = json['orderId'] ?? json['OrderId'] ?? '';
-    final shortCode = json['shortCode'] ?? json['ShortCode'] ?? '';
-    final recipientName = json['recipientName'] ?? json['RecipientName'] ?? '';
-    final deliveryAddress = json['deliveryAddress'] ?? json['DeliveryAddress'] ?? '';
-    final deliveredAtStr = json['deliveredAt'] ?? json['DeliveredAt'];
-    final earning = (json['earning'] ?? json['Earning'] ?? 0.0) as num;
+    dynamic pick(String camel) {
+      final pascal = camel[0].toUpperCase() + camel.substring(1);
+      return json[camel] ?? json[pascal];
+    }
+
+    String? str(String key) {
+      final v = pick(key);
+      if (v == null) return null;
+      final t = v.toString().trim();
+      return t.isEmpty ? null : t;
+    }
+
+    DateTime? date(String key) {
+      final v = pick(key);
+      return v == null ? null : DateTime.tryParse(v.toString())?.toLocal();
+    }
+
+    final deliveredAt = date('deliveredAt');
 
     return DeliveryHistoryItemModel(
-      orderId: orderId.toString(),
-      shortCode: shortCode.toString(),
-      recipientName: recipientName.toString(),
-      deliveryAddress: deliveryAddress.toString(),
-      deliveredAt: deliveredAtStr != null ? DateTime.tryParse(deliveredAtStr.toString()) ?? DateTime.now() : DateTime.now(),
-      earning: earning.toDouble(),
+      orderId: (pick('orderId') ?? '').toString(),
+      shortCode: (pick('shortCode') ?? '').toString(),
+      recipientName: (pick('recipientName') ?? '').toString(),
+      deliveryAddress: (pick('deliveryAddress') ?? '').toString(),
+      deliveredAt: deliveredAt ?? DateTime.now(),
+      earning: ((pick('earning') ?? 0.0) as num).toDouble(),
+      orderCode: str('orderCode'),
+      merchantName: str('merchantName'),
+      pickupAddress: str('pickupAddress'),
+      deliveryAddressFull: str('deliveryAddressFull'),
+      recipientPhoneMasked: str('recipientPhoneMasked'),
+      paymentMethod: str('paymentMethod'),
+      totalOrderAmount: ((pick('totalOrderAmount') ?? 0.0) as num).toDouble(),
+      notes: str('notes'),
+      createdAt: date('createdAt'),
+      assignedAt: date('assignedAt'),
+      pickedUpAt: date('pickedUpAt'),
+      distanceKm: (pick('distanceKm') as num?)?.toDouble(),
     );
   }
 }

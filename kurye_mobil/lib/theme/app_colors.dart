@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// KuryeSistemi Açık (Beyaz - Göz Yormayan) Renk Paleti (Varsayılan)
 /// Tüm widget'lar const olarak bu sınıftan faydalanır.
-abstract final class AppColors {
+abstract final class AppLightColors {
   // ─── Background / Surface (Açık Beyaz Tema) ───────────────────────────────
   static const Color background           = Color(0xFFF8FAFC); // Slate 50 (Ferah Arka Plan)
   static const Color surface              = Colors.white;
@@ -63,6 +63,61 @@ abstract final class AppColors {
   // ─── Outline & Kenarlıklar ───────────────────────────────────────────────
   static const Color outline              = Color(0xFFE2E8F0); // Slate 200
   static const Color outlineVariant       = Color(0xFFCBD5E1); // Slate 300
+}
+
+/// Tema duyarlı renk erişimi. Widget'lar `AppColors.x` ile okur; aktif palet [isDark] bayrağına göre seçilir.
+/// Bayrak MaterialApp seviyesinde (main.dart) tema değişince güncellenir ve ağaç yeniden çizilir.
+abstract final class AppColors {
+  /// Karanlık palet aktif mi?
+  static bool isDark = false;
+
+  static Color get background => isDark ? AppDarkColors.background : AppLightColors.background;
+  static Color get surface => isDark ? AppDarkColors.surface : AppLightColors.surface;
+  static Color get surfaceDim => isDark ? AppDarkColors.surfaceDim : AppLightColors.surfaceDim;
+  static Color get surfaceBright => isDark ? AppDarkColors.surfaceBright : AppLightColors.surfaceBright;
+  static Color get surfaceContainerLowest => isDark ? AppDarkColors.surfaceContainerLowest : AppLightColors.surfaceContainerLowest;
+  static Color get surfaceContainerLow => isDark ? AppDarkColors.surfaceContainerLow : AppLightColors.surfaceContainerLow;
+  static Color get surfaceContainer => isDark ? AppDarkColors.surfaceContainer : AppLightColors.surfaceContainer;
+  static Color get surfaceContainerHigh => isDark ? AppDarkColors.surfaceContainerHigh : AppLightColors.surfaceContainerHigh;
+  static Color get surfaceContainerHighest => isDark ? AppDarkColors.surfaceContainerHighest : AppLightColors.surfaceContainerHighest;
+  static Color get surfaceVariant => isDark ? AppDarkColors.surfaceVariant : AppLightColors.surfaceVariant;
+  static Color get inverseSurface => isDark ? AppDarkColors.inverseSurface : AppLightColors.inverseSurface;
+  static Color get inverseOnSurface => isDark ? AppDarkColors.inverseOnSurface : AppLightColors.inverseOnSurface;
+  static Color get surfaceTint => isDark ? AppDarkColors.surfaceTint : AppLightColors.surfaceTint;
+  static Color get onSurface => isDark ? AppDarkColors.onSurface : AppLightColors.onSurface;
+  static Color get onSurfaceVariant => isDark ? AppDarkColors.onSurfaceVariant : AppLightColors.onSurfaceVariant;
+  static Color get onBackground => isDark ? AppDarkColors.onBackground : AppLightColors.onBackground;
+  static Color get primary => isDark ? AppDarkColors.primary : AppLightColors.primary;
+  static Color get primaryFixed => isDark ? AppDarkColors.primaryFixed : AppLightColors.primaryFixed;
+  static Color get primaryFixedDim => isDark ? AppDarkColors.primaryFixedDim : AppLightColors.primaryFixedDim;
+  static Color get primaryContainer => isDark ? AppDarkColors.primaryContainer : AppLightColors.primaryContainer;
+  static Color get onPrimary => isDark ? AppDarkColors.onPrimary : AppLightColors.onPrimary;
+  static Color get onPrimaryFixed => isDark ? AppDarkColors.onPrimaryFixed : AppLightColors.onPrimaryFixed;
+  static Color get onPrimaryFixedVariant => isDark ? AppDarkColors.onPrimaryFixedVariant : AppLightColors.onPrimaryFixedVariant;
+  static Color get onPrimaryContainer => isDark ? AppDarkColors.onPrimaryContainer : AppLightColors.onPrimaryContainer;
+  static Color get inversePrimary => isDark ? AppDarkColors.inversePrimary : AppLightColors.inversePrimary;
+  static Color get secondary => isDark ? AppDarkColors.secondary : AppLightColors.secondary;
+  static Color get secondaryFixed => isDark ? AppDarkColors.secondaryFixed : AppLightColors.secondaryFixed;
+  static Color get secondaryFixedDim => isDark ? AppDarkColors.secondaryFixedDim : AppLightColors.secondaryFixedDim;
+  static Color get secondaryContainer => isDark ? AppDarkColors.secondaryContainer : AppLightColors.secondaryContainer;
+  static Color get onSecondary => isDark ? AppDarkColors.onSecondary : AppLightColors.onSecondary;
+  static Color get onSecondaryFixed => isDark ? AppDarkColors.onSecondaryFixed : AppLightColors.onSecondaryFixed;
+  static Color get onSecondaryFixedVariant => isDark ? AppDarkColors.onSecondaryFixedVariant : AppLightColors.onSecondaryFixedVariant;
+  static Color get onSecondaryContainer => isDark ? AppDarkColors.onSecondaryContainer : AppLightColors.onSecondaryContainer;
+  static Color get tertiary => isDark ? AppDarkColors.tertiary : AppLightColors.tertiary;
+  static Color get tertiaryFixed => isDark ? AppDarkColors.tertiaryFixed : AppLightColors.tertiaryFixed;
+  static Color get tertiaryFixedDim => isDark ? AppDarkColors.tertiaryFixedDim : AppLightColors.tertiaryFixedDim;
+  static Color get tertiaryContainer => isDark ? AppDarkColors.tertiaryContainer : AppLightColors.tertiaryContainer;
+  static Color get onTertiary => isDark ? AppDarkColors.onTertiary : AppLightColors.onTertiary;
+  static Color get onTertiaryFixed => isDark ? AppDarkColors.onTertiaryFixed : AppLightColors.onTertiaryFixed;
+  static Color get onTertiaryFixedVariant => isDark ? AppDarkColors.onTertiaryFixedVariant : AppLightColors.onTertiaryFixedVariant;
+  static Color get onTertiaryContainer => isDark ? AppDarkColors.onTertiaryContainer : AppLightColors.onTertiaryContainer;
+  static Color get error => isDark ? AppDarkColors.error : AppLightColors.error;
+  static Color get errorContainer => isDark ? AppDarkColors.errorContainer : AppLightColors.errorContainer;
+  static Color get onError => isDark ? AppDarkColors.onError : AppLightColors.onError;
+  static Color get onErrorContainer => isDark ? AppDarkColors.onErrorContainer : AppLightColors.onErrorContainer;
+  static Color get outline => isDark ? AppDarkColors.outline : AppLightColors.outline;
+  static Color get outlineVariant => isDark ? AppDarkColors.outlineVariant : AppLightColors.outlineVariant;
 }
 
 /// KuryeSistemi Gece / Karanlık Mod Paleti (Dark Mode)

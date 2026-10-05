@@ -146,7 +146,7 @@ class _SignalHudBarState extends State<SignalHudBar>
           // ── GPS Hassasiyeti ─────────────────────────────────────────────
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.satellite_alt_rounded,
                 size: 15,
                 color: AppColors.tertiary,

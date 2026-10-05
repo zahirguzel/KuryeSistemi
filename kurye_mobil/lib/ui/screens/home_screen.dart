@@ -1,3 +1,6 @@
+import '../../features/settings/providers/settings_provider.dart';
+import '../widgets/daily_goal_sheet.dart';
+import '../widgets/sos_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/navigation/navigation_provider.dart';
@@ -112,7 +115,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   packageCount: '${walletState.deliveredCount} Paket',
                   avgPerPackage: '₺${walletState.averagePerPackage.toStringAsFixed(1)}/ort',
                   completedCount: walletState.deliveredCount,
-                  targetCount: walletState.deliveredCount > 20 ? walletState.deliveredCount + 5 : 20,
+                  targetCount: ref.watch(dailyGoalProvider),
+                  onGoalTap: () => showDailyGoalSheet(context),
                 ),
                 const SizedBox(height: 16),
 
@@ -128,7 +132,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                             Container(
                               width: 8,
                               height: 8,
-                              decoration: const BoxDecoration(
+                              decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: AppColors.secondary,
                               ),
@@ -180,22 +184,24 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
 
                 // ── 5. Eldiven Dostu Hızlı Eylemler Çubuğu ────────────────────
                 QuickActionsStrip(
-                  onTakeBreak: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Mola modu talebi iletildi')),
+                  isOnBreak: shiftState.isOnBreak,
+                  onTakeBreak: () async {
+                    final messenger = ScaffoldMessenger.of(context);
+                    final goingOnBreak = !shiftState.isOnBreak;
+                    final error = await ref.read(shiftProvider.notifier).toggleBreak(goingOnBreak);
+                    messenger.showSnackBar(
+                      SnackBar(
+                        content: Text(error ?? (goingOnBreak
+                            ? 'Moladasınız. Yeni sipariş atanmayacak.'
+                            : 'Moladan döndünüz. Yeni siparişler için müsaitsiniz.')),
+                        backgroundColor: error != null ? AppColors.errorContainer : null,
+                      ),
                     );
                   },
                   onOpenSurgeMap: () {
                     ref.read(currentTabProvider.notifier).setTab(1);
                   },
-                  onEmergencySupport: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Acil destek hattına bağlanılıyor...'),
-                        backgroundColor: AppColors.errorContainer,
-                      ),
-                    );
-                  },
+                  onEmergencySupport: () => showSosDialog(context),
                 ),
               ],
             ),

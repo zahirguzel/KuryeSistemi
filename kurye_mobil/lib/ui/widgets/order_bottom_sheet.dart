@@ -254,7 +254,7 @@ class OrderBottomSheet extends ConsumerWidget {
                 onTap: onReportProblemTap ??
                     () {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                        SnackBar(
                           content: Text('Sorun bildirimi formu açılıyor...'),
                           backgroundColor: AppColors.errorContainer,
                         ),
@@ -382,7 +382,7 @@ class OrderBottomSheet extends ConsumerWidget {
               ),
             ),
             alignment: Alignment.center,
-            child: const Icon(
+            child: Icon(
               Icons.hourglass_top_rounded,
               size: 28,
               color: AppColors.onSurfaceVariant,

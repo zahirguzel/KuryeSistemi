@@ -17,6 +17,7 @@ class SecureStorageService {
   static const String _keyMerchantName = 'merchant_name';
   static const String _keyEmail = 'email';
   static const String _keyCourierId = 'courier_id';
+  static const String _keyRememberMe = 'remember_me';
 
   /// JWT Token kaydet
   Future<void> saveToken(String token) async {
@@ -46,6 +47,34 @@ class SecureStorageService {
     await _storage.write(key: _keyEmail, value: email);
     if (courierId != null && courierId.isNotEmpty) {
       await _storage.write(key: _keyCourierId, value: courierId);
+    } else {
+      // Önceki kullanıcıdan kalan kurye kimliği yeni oturuma taşınmasın
+      await _storage.delete(key: _keyCourierId);
+    }
+  }
+
+  /// "Beni Hatırla" tercihi: false ise uygulama yeniden açıldığında oturum sürdürülmez.
+  Future<void> saveRememberMe(bool value) async {
+    await _storage.write(key: _keyRememberMe, value: value.toString());
+  }
+
+  /// Varsayılan true: eski sürümde giriş yapmış kullanıcıların oturumu bozulmaz.
+  Future<bool> getRememberMe() async {
+    final val = await _storage.read(key: _keyRememberMe);
+    return val == null ? true : val == 'true';
+  }
+
+  /// Yalnızca oturum verilerini siler; bildirim/tema gibi cihaz tercihleri korunur.
+  Future<void> clearSession() async {
+    for (final key in [
+      _keyJwtToken,
+      _keyMerchantId,
+      _keyMerchantName,
+      _keyEmail,
+      _keyCourierId,
+      _keyRememberMe,
+    ]) {
+      await _storage.delete(key: key);
     }
   }
 
@@ -103,6 +132,30 @@ class SecureStorageService {
   /// Titreşimli bildirim tercihini kaydet
   Future<void> setVibrationNotificationEnabled(bool enabled) async {
     await _storage.write(key: _keyVibrationNotification, value: enabled.toString());
+  }
+
+  // ─── Günlük Hedef & Navigasyon Tercihi ──────────────────────────────────────
+  static const String _keyDailyGoal = 'settings_daily_goal';
+  static const String _keyNavigationApp = 'settings_navigation_app';
+
+  /// Günlük teslimat hedefi (paket). Varsayılan 20.
+  Future<int> getDailyGoal() async {
+    final val = await _storage.read(key: _keyDailyGoal);
+    final parsed = int.tryParse(val ?? '');
+    return (parsed != null && parsed > 0) ? parsed : 20;
+  }
+
+  Future<void> setDailyGoal(int goal) async {
+    await _storage.write(key: _keyDailyGoal, value: goal.toString());
+  }
+
+  /// Varsayılan navigasyon uygulaması ('Google Haritalar' | 'Yandex Navigasyon' | 'Dahili Harita (OSM)').
+  Future<String> getNavigationApp() async {
+    return await _storage.read(key: _keyNavigationApp) ?? 'Google Haritalar';
+  }
+
+  Future<void> setNavigationApp(String app) async {
+    await _storage.write(key: _keyNavigationApp, value: app);
   }
 
   // ─── Tema Ayarları (Açık Beyaz / Karanlık Mod) ──────────────────────────────

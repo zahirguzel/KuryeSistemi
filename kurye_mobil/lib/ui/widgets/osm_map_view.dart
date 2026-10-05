@@ -297,7 +297,7 @@ class _OsmMapViewState extends State<OsmMapView> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.map_outlined,
                         size: 13,
                         color: AppColors.secondary,

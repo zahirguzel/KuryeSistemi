@@ -6,12 +6,16 @@ import '../../features/auth/providers/auth_provider.dart';
 import '../../features/location/providers/location_provider.dart';
 import '../../features/profile/models/courier_profile_model.dart';
 import '../../features/profile/providers/profile_provider.dart';
+import '../../features/settings/providers/settings_provider.dart';
+import '../../features/support/providers/support_provider.dart';
+import '../widgets/daily_goal_sheet.dart';
+import '../widgets/sos_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_text_styles.dart';
 import '../../theme/theme_provider.dart';
 import '../widgets/custom_bottom_nav.dart';
 import 'earnings_history_screen.dart';
-import 'login_screen.dart';
 
 /// Kurye Profil, Ayarlar ve Kasa Mahsuplaşma Ekranı (ProfileScreen)
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -34,7 +38,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   // ── Kurye Çalışma & Bildirim Ayarları ────────────────────────────────────
   bool _soundNotification = true;
   bool _vibrationNotification = true;
-  String _selectedNavigationApp = 'Google Haritalar';
 
   @override
   void initState() {
@@ -131,7 +134,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                     width: 1,
                   ),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.person_rounded,
                   color: AppColors.primaryContainer,
                   size: 20,
@@ -165,7 +168,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           Row(
             children: [
               if (state.isRefreshing)
-                const SizedBox(
+                SizedBox(
                   width: 20,
                   height: 20,
                   child: CircularProgressIndicator(
@@ -186,7 +189,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 ),
               const SizedBox(width: 4),
               IconButton(
-                icon: const Icon(Icons.logout_rounded, size: 22, color: AppColors.error),
+                icon: Icon(Icons.logout_rounded, size: 22, color: AppColors.error),
                 tooltip: 'Çıkış Yap',
                 onPressed: _showLogoutConfirmDialog,
               ),
@@ -200,7 +203,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
   // ─── 2. Ana Gövde ──────────────────────────────────────────────────────────
   Widget _buildBody(ProfileState state) {
     if (state.isLoading && !state.isRefreshing) {
-      return const Center(
+      return Center(
         child: CircularProgressIndicator(
           valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryContainer),
         ),
@@ -218,7 +221,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.error_outline_rounded,
                     color: AppColors.error,
                     size: 48,
@@ -259,10 +262,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                       const SizedBox(width: 10),
                       OutlinedButton.icon(
                         onPressed: _showLogoutConfirmDialog,
-                        icon: const Icon(Icons.logout_rounded, size: 18, color: AppColors.error),
-                        label: const Text('Çıkış Yap', style: TextStyle(color: AppColors.error)),
+                        icon: Icon(Icons.logout_rounded, size: 18, color: AppColors.error),
+                        label: Text('Çıkış Yap', style: TextStyle(color: AppColors.error)),
                         style: OutlinedButton.styleFrom(
-                          side: const BorderSide(color: AppColors.error),
+                          side: BorderSide(color: AppColors.error),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12),
                           ),
@@ -284,7 +287,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.account_circle_outlined, size: 64, color: AppColors.surfaceVariant),
+            Icon(Icons.account_circle_outlined, size: 64, color: AppColors.surfaceVariant),
             const SizedBox(height: 12),
             Text(
               'Profil Yüklenemedi',
@@ -578,7 +581,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
             ],
           ),
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.surfaceBright),
+          Divider(height: 1, color: AppColors.surfaceBright),
           const SizedBox(height: 14),
 
           // İletişim Satırları
@@ -621,7 +624,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.two_wheeler_rounded,
                 size: 20,
                 color: AppColors.primaryContainer,
@@ -748,7 +751,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   children: [
                     Row(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.insights_rounded,
                           size: 20,
                           color: AppColors.secondary,
@@ -774,7 +777,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                           ),
                         ),
                         const SizedBox(width: 4),
-                        const Icon(
+                        Icon(
                           Icons.arrow_forward_ios_rounded,
                           size: 11,
                           color: AppColors.primaryContainer,
@@ -832,7 +835,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.calendar_month_rounded,
                         size: 14,
                         color: AppColors.primaryContainer,
@@ -914,7 +917,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 }
               },
             ),
-            const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+            Divider(color: AppColors.surfaceContainerHigh, height: 1),
             _buildSwitchTile(
               title: 'Titreşimli Uyarı',
               subtitle: 'Telefon cebinizdeyken güçlü titreşim üretir',
@@ -927,7 +930,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 }
               },
             ),
-            const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+            Divider(color: AppColors.surfaceContainerHigh, height: 1),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
               leading: Container(
@@ -936,7 +939,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   color: AppColors.primaryContainer.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.volume_up_rounded,
                   color: AppColors.primaryContainer,
                   size: 20,
@@ -976,6 +979,37 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
         ),
         const SizedBox(height: 12),
 
+        // 1.5 Grup: Günlük Hedef
+        _buildSettingsCard(
+          title: 'Günlük Hedef',
+          icon: Icons.flag_rounded,
+          iconColor: AppColors.primaryContainer,
+          children: [
+            ListTile(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+              title: Text(
+                'Günlük Teslimat Hedefi',
+                style: AppTextStyles.bodyMedium.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.onSurface,
+                  fontSize: 13.5,
+                ),
+              ),
+              subtitle: Text(
+                '${ref.watch(dailyGoalProvider)} paket / gün',
+                style: AppTextStyles.caption.copyWith(
+                  color: AppColors.primaryContainer,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 12,
+                ),
+              ),
+              trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.onSurfaceVariant),
+              onTap: () => showDailyGoalSheet(context),
+            ),
+          ],
+        ),
+        const SizedBox(height: 12),
+
         // 2. Grup: Harita & Navigasyon Tercihi
         _buildSettingsCard(
           title: 'Harita & Navigasyon',
@@ -993,14 +1027,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 ),
               ),
               subtitle: Text(
-                _selectedNavigationApp,
+                ref.watch(navigationAppProvider),
                 style: AppTextStyles.caption.copyWith(
                   color: AppColors.secondary,
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
                 ),
               ),
-              trailing: const Icon(
+              trailing: Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 14,
                 color: AppColors.onSurfaceVariant,
@@ -1023,14 +1057,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               isHealthy: true,
               icon: Icons.gps_fixed_rounded,
             ),
-            const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+            Divider(color: AppColors.surfaceContainerHigh, height: 1),
             _buildStatusItem(
               title: 'Pil Optimizasyonu',
               status: 'Kısıtlamasız (Yüksek Hassasiyet)',
               isHealthy: true,
               icon: Icons.battery_charging_full_rounded,
             ),
-            const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+            Divider(color: AppColors.surfaceContainerHigh, height: 1),
             _buildStatusItem(
               title: 'Canlı Sunucu Bağlantısı',
               status: 'SignalR Çevrimiçi',
@@ -1049,7 +1083,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           children: [
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-              leading: const Icon(Icons.lock_reset_rounded, size: 20, color: AppColors.onSurfaceVariant),
+              leading: Icon(Icons.lock_reset_rounded, size: 20, color: AppColors.onSurfaceVariant),
               title: Text(
                 'Giriş Şifresini Değiştir',
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -1058,13 +1092,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   fontSize: 13.5,
                 ),
               ),
-              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.onSurfaceVariant),
+              trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.onSurfaceVariant),
               onTap: _showChangePasswordDialog,
             ),
-            const Divider(color: AppColors.surfaceContainerHigh, height: 1),
+            Divider(color: AppColors.surfaceContainerHigh, height: 1),
             ListTile(
               contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-              leading: const Icon(Icons.support_agent_rounded, size: 20, color: AppColors.secondary),
+              leading: Icon(Icons.support_agent_rounded, size: 20, color: AppColors.secondary),
               title: Text(
                 'Kurye Saha Destek & WhatsApp',
                 style: AppTextStyles.bodyMedium.copyWith(
@@ -1073,7 +1107,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   fontSize: 13.5,
                 ),
               ),
-              trailing: const Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.onSurfaceVariant),
+              trailing: Icon(Icons.arrow_forward_ios_rounded, size: 14, color: AppColors.onSurfaceVariant),
               onTap: _showSupportDialog,
             ),
           ],
@@ -1236,7 +1270,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
   // ── Navigasyon Seçici BottomSheet ──────────────────────────────────────────
   void _showNavigationPickerSheet() {
-    final apps = ['Google Haritalar', 'Yandex Navigasyon', 'Dahili Harita (OSM)'];
+    final apps = NavigationAppNotifier.options;
+    final currentApp = ref.read(navigationAppProvider);
 
     showModalBottomSheet(
       context: context,
@@ -1268,7 +1303,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 ),
                 const SizedBox(height: 16),
                 ...apps.map((app) {
-                  final isSelected = _selectedNavigationApp == app;
+                  final isSelected = currentApp == app;
                   return ListTile(
                     contentPadding: EdgeInsets.zero,
                     leading: Icon(
@@ -1283,7 +1318,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                       ),
                     ),
                     onTap: () {
-                      setState(() => _selectedNavigationApp = app);
+                      ref.read(navigationAppProvider.notifier).setApp(app);
                       Navigator.pop(ctx);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
@@ -1317,7 +1352,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: Row(
             children: [
-              const Icon(Icons.lock_outline_rounded, color: AppColors.primaryContainer),
+              Icon(Icons.lock_outline_rounded, color: AppColors.primaryContainer),
               const SizedBox(width: 8),
               Text(
                 'Şifre Değiştir',
@@ -1334,7 +1369,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               TextField(
                 controller: oldPasswordController,
                 obscureText: true,
-                style: const TextStyle(color: AppColors.onSurface),
+                style: TextStyle(color: AppColors.onSurface),
                 decoration: const InputDecoration(
                   labelText: 'Mevcut Şifre',
                   prefixIcon: Icon(Icons.key_outlined, size: 18),
@@ -1344,7 +1379,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               TextField(
                 controller: newPasswordController,
                 obscureText: true,
-                style: const TextStyle(color: AppColors.onSurface),
+                style: TextStyle(color: AppColors.onSurface),
                 decoration: const InputDecoration(
                   labelText: 'Yeni Şifre (En az 6 karakter)',
                   prefixIcon: Icon(Icons.password_outlined, size: 18),
@@ -1354,7 +1389,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               TextField(
                 controller: confirmPasswordController,
                 obscureText: true,
-                style: const TextStyle(color: AppColors.onSurface),
+                style: TextStyle(color: AppColors.onSurface),
                 decoration: const InputDecoration(
                   labelText: 'Yeni Şifre Tekrar',
                   prefixIcon: Icon(Icons.check_circle_outline, size: 18),
@@ -1371,7 +1406,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               onPressed: () {
                 if (newPasswordController.text.length < 6) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text('Yeni şifre en az 6 karakter olmalıdır.'),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
@@ -1381,7 +1416,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                 }
                 if (newPasswordController.text != confirmPasswordController.text) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text('Yeni şifreler birbiriyle uyuşmuyor.'),
                       backgroundColor: AppColors.error,
                       behavior: SnackBarBehavior.floating,
@@ -1392,7 +1427,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
 
                 Navigator.pop(dialogCtx);
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
+                  SnackBar(
                     content: Text('Şifreniz başarıyla güncellendi!'),
                     backgroundColor: AppColors.secondary,
                     behavior: SnackBarBehavior.floating,
@@ -1416,75 +1451,110 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     showDialog(
       context: context,
       builder: (dialogCtx) {
-        return AlertDialog(
-          backgroundColor: AppColors.surfaceContainerHigh,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: Row(
-            children: [
-              const Icon(Icons.headset_mic_rounded, color: AppColors.secondary),
-              const SizedBox(width: 8),
-              Text(
-                'Kurye Saha Desteği',
-                style: AppTextStyles.titleMedium.copyWith(
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.onSurface,
+        return Consumer(builder: (ctx, ref, _) {
+          final support = ref.watch(supportInfoProvider);
+          final info = support.asData?.value;
+          final phone = info?.hasPhone == true ? info!.dispatcherPhone : null;
+
+          return AlertDialog(
+            backgroundColor: AppColors.surfaceContainerHigh,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            title: Row(
+              children: [
+                Icon(Icons.headset_mic_rounded, color: AppColors.secondary),
+                const SizedBox(width: 8),
+                Text(
+                  'Kurye Saha Desteği',
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: FontWeight.w800,
+                    color: AppColors.onSurface,
+                  ),
                 ),
-              ),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Sipariş teslimatı, adres bulma veya müşteri ulaşılamama durumlarında merkez dispeçer hattına 7/24 ulaşabilirsiniz.',
-                style: AppTextStyles.bodyMedium.copyWith(
-                  color: AppColors.onSurfaceVariant,
-                  fontSize: 13,
-                ),
-              ),
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.all(12),
-                decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Row(
-                  children: [
-                    const Icon(Icons.phone_in_talk_rounded, color: AppColors.secondary),
-                    const SizedBox(width: 12),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Dispeçer Acil Çağrı',
-                          style: AppTextStyles.caption.copyWith(
-                            color: AppColors.onSurfaceVariant,
-                            fontSize: 11,
-                          ),
-                        ),
-                        Text(
-                          '0850 300 00 00',
-                          style: AppTextStyles.bodyLarge.copyWith(
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.onSurface,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(dialogCtx),
-              child: const Text('Kapat'),
+              ],
             ),
-          ],
-        );
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Sipariş teslimatı, adres bulma veya müşteri ulaşılamama durumlarında firmanızın dispeçer hattına ulaşabilirsiniz.',
+                  style: AppTextStyles.bodyMedium.copyWith(
+                    color: AppColors.onSurfaceVariant,
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceContainerLowest,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.phone_in_talk_rounded, color: AppColors.secondary),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              (info?.companyName.isNotEmpty ?? false) ? '${info!.companyName} Dispeçer' : 'Dispeçer Hattı',
+                              style: AppTextStyles.caption.copyWith(
+                                color: AppColors.onSurfaceVariant,
+                                fontSize: 11,
+                              ),
+                            ),
+                            Text(
+                              support.isLoading
+                                  ? 'Yükleniyor...'
+                                  : (phone ?? 'Firmanız henüz bir dispeçer numarası tanımlamamış'),
+                              style: AppTextStyles.bodyLarge.copyWith(
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.onSurface,
+                                fontSize: phone != null ? 16 : 12.5,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (phone != null) ...[
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () => launchUrl(Uri(scheme: 'tel', path: phone.replaceAll(RegExp(r'[^0-9+]'), ''))),
+                      icon: const Icon(Icons.call_rounded),
+                      label: const Text('Dispeçeri Ara'),
+                    ),
+                  ),
+                ],
+                const SizedBox(height: 8),
+                SizedBox(
+                  width: double.infinity,
+                  child: OutlinedButton.icon(
+                    style: OutlinedButton.styleFrom(foregroundColor: AppColors.error),
+                    onPressed: () {
+                      Navigator.pop(dialogCtx);
+                      showSosDialog(context);
+                    },
+                    icon: const Icon(Icons.sos_rounded),
+                    label: const Text('Acil Durum Bildir'),
+                  ),
+                ),
+              ],
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogCtx),
+                child: const Text('Kapat'),
+              ),
+            ],
+          );
+        });
       },
     );
   }
@@ -1500,7 +1570,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
               Container(
                 width: 6,
                 height: 6,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.secondary,
                 ),
@@ -1623,7 +1693,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 Icons.logout_rounded,
                 color: AppColors.error,
                 size: 20,
@@ -1662,7 +1732,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
                   color: AppColors.error.withValues(alpha: 0.15),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.power_settings_new_rounded,
                   color: AppColors.error,
                   size: 22,
@@ -1730,11 +1800,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen>
     // 2. Token ve yerel oturum verilerini sil
     await ref.read(authProvider.notifier).logout();
 
-    // 3. Login ekranına temiz yönlendirme
-    if (!mounted) return;
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const LoginScreen()),
-      (route) => false,
-    );
+    // 3. Login ekranına yönlendirme main.dart'taki auth dinleyicisi tarafından yapılır
   }
 }

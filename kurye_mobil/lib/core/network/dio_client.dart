@@ -1,13 +1,12 @@
-import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import '../config/api_config.dart';
 import '../storage/secure_storage_service.dart';
 
 /// Merkezi Dio HTTP İstemcisi (DioClient)
 /// Base URL yapılandırması, otomatik JWT header ekleme ve hata yönetimi içerir.
 class DioClient {
-  DioClient(this._storageService, {String? customBaseUrl}) {
-    final defaultBaseUrl = _resolveDefaultBaseUrl();
+  DioClient(this._storageService, {String? customBaseUrl, this.onUnauthorized}) {
+    final defaultBaseUrl = ApiConfig.baseUrl;
     _dio = Dio(
       BaseOptions(
         baseUrl: customBaseUrl ?? defaultBaseUrl,
@@ -31,6 +30,17 @@ class DioClient {
           return handler.next(options);
         },
         onError: (DioException error, handler) {
+          // Oturum geçersizse (süresi dolmuş / iptal edilmiş token) kullanıcıyı login'e döndür.
+          // Giriş isteğinin kendi 401'i (yanlış şifre) bu akışa girmez.
+          // Yalnızca JWT doğrulama reddi (gövdesiz 401) oturum bitti sayılır; iş kuralı 401'leri
+          // (ServiceResult gövdeli) oturumu düşürmez.
+          final path = error.requestOptions.path.toLowerCase();
+          if (error.response?.statusCode == 401 &&
+              !path.contains('/auth/login') &&
+              _isAuthChallenge(error.response?.data) &&
+              onUnauthorized != null) {
+            onUnauthorized!();
+          }
           final friendlyError = _mapDioException(error);
           return handler.next(friendlyError);
         },
@@ -39,21 +49,19 @@ class DioClient {
   }
 
   final SecureStorageService _storageService;
+
+  /// 401 (oturum geçersiz) alındığında çağrılır.
+  final void Function()? onUnauthorized;
   late final Dio _dio;
 
   Dio get dio => _dio;
 
-  /// Platforma göre varsayılan API URL'si
-  static String _resolveDefaultBaseUrl() {
-    if (kIsWeb) {
-      return 'http://localhost:5000';
-    }
-    if (Platform.isAndroid) {
-      // adb reverse tcp:5000 tcp:5000 ile fiziksel telefon ve emülatör desteği
-      return 'http://127.0.0.1:5000';
-    }
-    // iOS Simulator, Windows, macOS, Linux
-    return 'http://localhost:5000';
+  /// ASP.NET JwtBearer reddinin gövdesi boştur; uygulama hataları ServiceResult JSON'u taşır.
+  static bool _isAuthChallenge(dynamic data) {
+    if (data == null) return true;
+    if (data is String) return data.trim().isEmpty;
+    if (data is Map) return data.isEmpty;
+    return false;
   }
 
   /// Dio Exception'larını anlaşılır mesajlara dönüştürür

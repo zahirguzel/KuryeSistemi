@@ -62,7 +62,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
 
-    ref.read(authProvider.notifier).login(email, password);
+    ref.read(authProvider.notifier).login(email, password, rememberMe: _rememberMe);
   }
 
   @override
@@ -95,7 +95,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           SnackBar(
             content: Row(
               children: [
-                const Icon(Icons.check_circle_rounded, color: AppColors.secondary),
+                Icon(Icons.check_circle_rounded, color: AppColors.secondary),
                 const SizedBox(width: 8),
                 Text('Giriş başarılı$welcomeSuffix!'),
               ],
@@ -181,7 +181,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
             ],
           ),
-          child: const Center(
+          child: Center(
             child: Icon(
               Icons.two_wheeler_rounded,
               color: AppColors.primaryContainer,

@@ -175,7 +175,7 @@ class _RadarScannerViewState extends State<RadarScannerView>
                         builder: (context, child) {
                           return Transform.rotate(
                             angle: _rotationController.value * 2 * math.pi,
-                            child: const Icon(
+                            child: Icon(
                               Icons.radar_rounded,
                               size: 32,
                               color: AppColors.primaryContainer,
@@ -255,7 +255,7 @@ class _RadarScannerViewState extends State<RadarScannerView>
                     Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: AppColors.secondary,
                         shape: BoxShape.circle,
                       ),
